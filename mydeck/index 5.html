@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 5: Linear Regression Pt. 1</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week 5: Linear Regression Pt. 1">
+  <meta name="author" content="Jake Campbell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Week 5: Linear Regression Pt. 1</h1>
+    <h2>08/11/2019</h2>
+    <p>Jake Campbell<br/></p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:white;">
+  <hgroup>
+    <h2>What is Linear Regression?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Statistical model used to identify a relationship between a predictor, x, and a response, y.</li>
+<li>Linear regression identifies a line of best fit between the predictor and the response.</li>
+<li>Not only can we identify relationships between x and y, we can also predict future relationships using the regression line. </li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  <hgroup>
+    <h2>The Linear Regression Equation</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>\(\hat{Y} = b_{0} + b_{1}x + i\)</p>
+
+<ul>
+<li>\(\hat{Y}\) is the predicted value of the dependent variable</li>
+<li>\(b_{0}\) is the y-intercept term 
+
+<ul>
+<li>This is what \(\hat{Y}\) equals when \(x\) is 0</li>
+</ul></li>
+<li>x is the value of the independent variable</li>
+<li>\(b_{1}\) is the slope (referred to as the coefficient) of x
+
+<ul>
+<li>For every 1 unit increase in \(x\), \(\hat{Y}\) increases by \(b_{1}\)</li>
+</ul></li>
+<li>There is also random error, \(i\), that encapsulates the randomness that the model can&#39;t catch</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:white;">
+  <hgroup>
+    <h2>Ordinary Least Squares</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted y values
+
+<ul>
+<li>Also known as residuals</li>
+</ul></li>
+<li>A perfect model would have no difference between actual values and predictions</li>
+<li>Influential outliers can have a large impact on the line of best fit</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:white;">
+  <hgroup>
+    <h2>Developing a Linear Model in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>In R, we can use <code>lm()</code> to develop a linear regression model</li>
+<li>We use the <code>y ~ x</code> formula interface while specifying the data we are using</li>
+<li>We need to call <code>summary()</code> to see model output</li>
+</ul>
+
+<pre><code class="r">pres.lm1 &lt;- lm(prestige ~ education, data = prestige)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:white;">
+  <hgroup>
+    <h2>Model Output in R</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>First we get the spread of the residuals</li>
+<li>The residual is the difference between actual and predicted y-value</li>
+<li>Next we get coefficient info
+
+<ul>
+<li>Slope estimates, standard error, and p-values</li>
+</ul></li>
+<li>The final block of text includes several additional pieces of model information, mainly used to validate our model</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  <hgroup>
+    <h2>Coefficient Estimates</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">coefficients(pres.lm1)
+</code></pre>
+
+<pre><code>## (Intercept)   education 
+##  -10.731982    5.360878
+</code></pre>
+
+<ul>
+<li>The coefficient estimates are the constants of the linear regression formula</li>
+<li>In this case, our model would look as follows:
+
+<ul>
+<li>\(\hat(Y) = -10.732 + 5.361(x)\)</li>
+</ul></li>
+<li>The intercept value suggests that when education is <code>0</code>, our predicted value for prestige is <code>-10.732</code></li>
+<li>The education estimate suggests that for each additional point of education, prestige increases by <code>5.361</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  <hgroup>
+    <h2>How Good is Our Model???</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>The R-squared value is a measure between <code>0</code> and <code>1</code> showing how much variance the model explains
+
+<ul>
+<li>The closer the value is to <code>1</code>, the more the model explains</li>
+</ul></li>
+<li>Mathematically, it&#39;s <code>1</code> minus the ratio of the sum of squared errors and the total sum of squares
+
+<ul>
+<li>SST is the total error between the mean of y and its specific observations</li>
+<li>SSE is the unexplained error; the difference between the prediction and the observations</li>
+</ul></li>
+<li>The F-value explains whether the model fits the data better than random guessing
+
+<ul>
+<li>Random guessing would just be predicting the mean value of y for all observations</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  <hgroup>
+    <h2>Linear Regression Assumptions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Normality of Residuals: use a QQ plot to determine normality of model residuals</li>
+<li>Constant Variance: variance of the residuals are the same for different values of x</li>
+<li>Linearity: Relationship between <code>x</code> and <code>y</code> is linear</li>
+<li>Independent observations: observations don&#39;t influence each other</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  <hgroup>
+    <h2>Normality</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We can use a QQ plot to determine if our residuals follow a normal distribution</li>
+<li>The points should follow along the straight QQ line
+
+<ul>
+<li>This line represents perfectly normal data; don&#39;t expect all of your residuals to follow it exactly</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">qqnorm(pres.lm1$residuals)
+qqline(pres.lm1$residuals)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+
+<h2>Constant Variance and Linearity</h2>
+
+<ul>
+<li>We can check out constant variance and linearity by plotting residuals vs. fitted values</li>
+<li>If the points are spread out evenly around <code>0</code>, we can assume constant variance</li>
+<li>If the points show no real pattern or trend, sticking close to <code>0</code>, we can assume linearity</li>
+</ul>
+
+<pre><code class="r">scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:white;">
+  <hgroup>
+    <h2>What if Our Model Doesn&#39;t Meet Assumptions?</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>It doesn&#39;t necessarily mean we have a bad model, it just means that we could improve upon it</li>
+<li>Can improve through transforming variables, getting additional data, or even going with a non-linear model!</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:white;">
+  <hgroup>
+    <h2>Making Predictions</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>One of the benefits of linear regression is that we can predict new data</li>
+<li>Use the <code>predict()</code> function to make these predictions
+
+<ul>
+<li>The first argument should be the name of the model</li>
+<li>Without additional arguments, this will just predict on the data used to train the model</li>
+<li>Specify the argument <code>newdata = x</code> where x is the new data to make additional predictions</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:white;">
+  <hgroup>
+    <h2>Linear Regression with Categorical Data</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Categorical data is treated a little differently than numeric data</li>
+<li>Categorical data are treated as dummy variables
+
+<ul>
+<li>Acting as a numeric flag for the different categories</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:white;">
+  <hgroup>
+    <h2>Coefficient Output of a Categorical Predictor</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">pres.lm2 &lt;- lm(prestige ~ type, data = prestige)
+
+coefficients(pres.lm2)
+</code></pre>
+
+<pre><code>## (Intercept)    typeprof      typewc 
+##   35.527273   32.321114    6.716206
+</code></pre>
+
+<ul>
+<li>The first factor level is represented by the intercept
+
+<ul>
+<li>Baseline or reference level</li>
+</ul></li>
+<li>The coefficients of the other two factor levels would be added to the intercept if the observation is one of those levels; if it is the baseline level, nothing is added</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='What is Linear Regression?'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The Linear Regression Equation'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Ordinary Least Squares'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Developing a Linear Model in R'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Model Output in R'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Coefficient Estimates'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='How Good is Our Model???'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Linear Regression Assumptions'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Normality'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Making Predictions'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Linear Regression with Categorical Data'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Coefficient Output of a Categorical Predictor'>
+         13
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

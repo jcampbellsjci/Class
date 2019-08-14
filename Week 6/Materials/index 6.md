@@ -1,6 +1,6 @@
 ---
 title       : "Week 6: Linear Regression Pt. 1"
-subtitle    : '`r format(Sys.Date(), "%m/%d/%Y")`'
+subtitle    : '08/14/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -11,12 +11,7 @@ mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
 ---
 
-```{r, results='hide', echo=F, message=F, warning=F}
-library(broom)
-library(tidyverse)
 
-prestige <- read_csv(file = "~/Class/Week 6/prestige.csv")
-```
 
 ## What is Linear Regression?
 
@@ -55,7 +50,8 @@ $\hat{Y} = b_{0} + b_{1}x + i$
 - We use the `y ~ x` formula interface while specifying the data we are using
 - We need to call `summary()` to see model output
 
-```{r}
+
+```r
 pres.lm1 <- lm(prestige ~ education, data = prestige)
 ```
 
@@ -73,8 +69,14 @@ pres.lm1 <- lm(prestige ~ education, data = prestige)
 
 ## Coefficient Estimates
 
-```{r}
+
+```r
 coefficients(pres.lm1)
+```
+
+```
+## (Intercept)   education 
+##  -10.731982    5.360878
 ```
 
 - The coefficient estimates are the constants of the linear regression formula
@@ -111,14 +113,22 @@ coefficients(pres.lm1)
 - We can use a QQ plot to determine if our residuals follow a normal distribution
 - The points should follow along the straight QQ line
   + This line represents perfectly normal data; don't expect all of your residuals to follow it exactly
+  
 
----
-
-## Normality
-
-```{r, fig.align="center"}
+```r
 qqnorm(pres.lm1$residuals)
+```
+
+```
+## Error in qqnorm(pres.lm1$residuals): object 'pres.lm1' not found
+```
+
+```r
 qqline(pres.lm1$residuals)
+```
+
+```
+## Error in quantile(y, probs, names = FALSE, type = qtype, na.rm = TRUE): object 'pres.lm1' not found
 ```
 
 ---
@@ -129,13 +139,12 @@ qqline(pres.lm1$residuals)
 - If the points are spread out evenly around `0`, we can assume constant variance
 - If the points show no real pattern or trend, sticking close to `0`, we can assume linearity
 
----
 
-## Constant Variance and Linearity
-
-```{r, fig.align="center"}
+```r
 scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
 ```
+
+![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.png)
 
 ---
 
@@ -166,10 +175,16 @@ scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
 
 ## Coefficient Output of a Categorical Predictor
 
-```{r}
+
+```r
 pres.lm2 <- lm(prestige ~ type, data = prestige)
 
 coefficients(pres.lm2)
+```
+
+```
+## (Intercept)    typeprof      typewc 
+##   35.527273   32.321114    6.716206
 ```
 
 - The first factor level is represented by the intercept

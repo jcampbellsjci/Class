@@ -13,8 +13,7 @@
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
   <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
-  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
-
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  
   
   <!-- Grab CDN jQuery, fall back to local if offline -->
   <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
@@ -33,7 +32,7 @@
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
     <h1>Week 6: Linear Regression Pt. 1</h1>
-    <h2>08/13/2019</h2>
+    <h2>08/14/2019</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   <article></article>  
@@ -41,7 +40,7 @@
     
 
     <!-- SLIDES -->
-    <slide class="" id="slide-1" style="background:white;">
+    <slide class="" id="slide-1" style="background:;">
   <hgroup>
     <h2>What is Linear Regression?</h2>
   </hgroup>
@@ -56,7 +55,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-2" style="background:white;">
+<slide class="" id="slide-2" style="background:;">
   <hgroup>
     <h2>The Linear Regression Equation</h2>
   </hgroup>
@@ -83,7 +82,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-3" style="background:white;">
+<slide class="" id="slide-3" style="background:;">
   <hgroup>
     <h2>Ordinary Least Squares</h2>
   </hgroup>
@@ -102,7 +101,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-4" style="background:white;">
+<slide class="" id="slide-4" style="background:;">
   <hgroup>
     <h2>Developing a Linear Model in R</h2>
   </hgroup>
@@ -120,7 +119,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-5" style="background:white;">
+<slide class="" id="slide-5" style="background:;">
   <hgroup>
     <h2>Model Output in R</h2>
   </hgroup>
@@ -140,7 +139,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-6" style="background:white;">
+<slide class="" id="slide-6" style="background:;">
   <hgroup>
     <h2>Coefficient Estimates</h2>
   </hgroup>
@@ -167,7 +166,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-7" style="background:white;">
+<slide class="" id="slide-7" style="background:;">
   <hgroup>
     <h2>How Good is Our Model???</h2>
   </hgroup>
@@ -195,7 +194,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-8" style="background:white;">
+<slide class="" id="slide-8" style="background:;">
   <hgroup>
     <h2>Linear Regression Assumptions</h2>
   </hgroup>
@@ -211,7 +210,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-9" style="background:white;">
+<slide class="" id="slide-9" style="background:;">
   <hgroup>
     <h2>Normality</h2>
   </hgroup>
@@ -226,14 +225,27 @@
 </ul>
 
 <pre><code class="r">qqnorm(pres.lm1$residuals)
-qqline(pres.lm1$residuals)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
+<pre><code>## Error in qqnorm(pres.lm1$residuals): object &#39;pres.lm1&#39; not found
+</code></pre>
 
-<h2>Constant Variance and Linearity</h2>
+<pre><code class="r">qqline(pres.lm1$residuals)
+</code></pre>
 
-<ul>
+<pre><code>## Error in quantile(y, probs, names = FALSE, type = qtype, na.rm = TRUE): object &#39;pres.lm1&#39; not found
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>Constant Variance and Linearity</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
 <li>We can check out constant variance and linearity by plotting residuals vs. fitted values</li>
 <li>If the points are spread out evenly around <code>0</code>, we can assume constant variance</li>
 <li>If the points show no real pattern or trend, sticking close to <code>0</code>, we can assume linearity</li>
@@ -248,7 +260,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-10" style="background:white;">
+<slide class="" id="slide-11" style="background:;">
   <hgroup>
     <h2>What if Our Model Doesn&#39;t Meet Assumptions?</h2>
   </hgroup>
@@ -262,7 +274,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:white;">
+<slide class="" id="slide-12" style="background:;">
   <hgroup>
     <h2>Making Predictions</h2>
   </hgroup>
@@ -282,7 +294,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:white;">
+<slide class="" id="slide-13" style="background:;">
   <hgroup>
     <h2>Linear Regression with Categorical Data</h2>
   </hgroup>
@@ -300,7 +312,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:white;">
+<slide class="" id="slide-14" style="background:;">
   <hgroup>
     <h2>Coefficient Output of a Categorical Predictor</h2>
   </hgroup>
@@ -387,26 +399,32 @@ coefficients(pres.lm2)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
+        data-slide=10 title='Constant Variance and Linearity'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Making Predictions'>
+        data-slide=11 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Linear Regression with Categorical Data'>
+        data-slide=12 title='Making Predictions'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Coefficient Output of a Categorical Predictor'>
+        data-slide=13 title='Linear Regression with Categorical Data'>
          13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Coefficient Output of a Categorical Predictor'>
+         14
       </a>
     </li>
   </ul>

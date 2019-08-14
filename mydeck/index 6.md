@@ -1,6 +1,6 @@
 ---
 title       : "Week 6: Linear Regression Pt. 1"
-subtitle    : '08/13/2019'
+subtitle    : '08/14/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -113,15 +113,20 @@ coefficients(pres.lm1)
 - We can use a QQ plot to determine if our residuals follow a normal distribution
 - The points should follow along the straight QQ line
   + This line represents perfectly normal data; don't expect all of your residuals to follow it exactly
-  
+
+---
+
+## Normality
+
 
 ```r
 qqnorm(pres.lm1$residuals)
 qqline(pres.lm1$residuals)
 ```
 
-![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4-1.png)
+<img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
 
+---
 
 ## Constant Variance and Linearity
 
@@ -129,12 +134,16 @@ qqline(pres.lm1$residuals)
 - If the points are spread out evenly around `0`, we can assume constant variance
 - If the points show no real pattern or trend, sticking close to `0`, we can assume linearity
 
+---
+
+## Constant Variance and Linearity
+
 
 ```r
 scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
 ```
 
-![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.png)
+<img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
 
 ---
 

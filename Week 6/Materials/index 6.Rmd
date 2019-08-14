@@ -15,7 +15,7 @@ knit        : slidify::knit2slides
 library(broom)
 library(tidyverse)
 
-prestige <- read_csv(file = "~/Class/Week 6/prestige.csv")
+prestige <- read_csv(file = "/Users/jcampbell2/Documents/tests/test2/Week 6/Materials/prestige.csv")
 ```
 
 ## What is Linear Regression?
@@ -117,6 +117,7 @@ qqnorm(pres.lm1$residuals)
 qqline(pres.lm1$residuals)
 ```
 
+---
 
 ## Constant Variance and Linearity
 

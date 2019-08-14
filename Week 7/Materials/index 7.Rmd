@@ -18,10 +18,6 @@ library(GGally)
 library(mlbench)
 library(MASS)
 
-# We're going to be loading up the crime dataset
-crime <- read_csv(file = "~/Class/Week 6/uscrime.csv")
-# Also going to load up the Ozone dataset
-data("Ozone")
 # One more dataset: a version of that famous mtcars dataset!
 mtcars <- read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data")
   # Editing column V4 to make it numeric

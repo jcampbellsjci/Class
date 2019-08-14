@@ -33,7 +33,7 @@
         <slide class="title-slide segue nobackground">
   <hgroup class="auto-fadein">
     <h1>Week 6: Linear Regression Pt. 1</h1>
-    <h2>08/13/2019</h2>
+    <h2>08/14/2019</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   <article></article>  
@@ -225,30 +225,55 @@
 </ul></li>
 </ul>
 
-<pre><code class="r">qqnorm(pres.lm1$residuals)
-qqline(pres.lm1$residuals)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
-
-<h2>Constant Variance and Linearity</h2>
-
-<ul>
-<li>We can check out constant variance and linearity by plotting residuals vs. fitted values</li>
-<li>If the points are spread out evenly around <code>0</code>, we can assume constant variance</li>
-<li>If the points show no real pattern or trend, sticking close to <code>0</code>, we can assume linearity</li>
-</ul>
-
-<pre><code class="r">scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
-
   </article>
   <!-- Presenter Notes -->
 </slide>
 
 <slide class="" id="slide-10" style="background:white;">
+  <hgroup>
+    <h2>Normality</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">qqnorm(pres.lm1$residuals)
+qqline(pres.lm1$residuals)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:white;">
+  <hgroup>
+    <h2>Constant Variance and Linearity</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>We can check out constant variance and linearity by plotting residuals vs. fitted values</li>
+<li>If the points are spread out evenly around <code>0</code>, we can assume constant variance</li>
+<li>If the points show no real pattern or trend, sticking close to <code>0</code>, we can assume linearity</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:white;">
+  <hgroup>
+    <h2>Constant Variance and Linearity</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:white;">
   <hgroup>
     <h2>What if Our Model Doesn&#39;t Meet Assumptions?</h2>
   </hgroup>
@@ -262,7 +287,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-11" style="background:white;">
+<slide class="" id="slide-14" style="background:white;">
   <hgroup>
     <h2>Making Predictions</h2>
   </hgroup>
@@ -282,7 +307,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-12" style="background:white;">
+<slide class="" id="slide-15" style="background:white;">
   <hgroup>
     <h2>Linear Regression with Categorical Data</h2>
   </hgroup>
@@ -300,7 +325,7 @@ qqline(pres.lm1$residuals)
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="" id="slide-13" style="background:white;">
+<slide class="" id="slide-16" style="background:white;">
   <hgroup>
     <h2>Coefficient Output of a Categorical Predictor</h2>
   </hgroup>
@@ -387,26 +412,44 @@ coefficients(pres.lm2)
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
+        data-slide=10 title='Normality'>
          10
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Making Predictions'>
+        data-slide=11 title='Constant Variance and Linearity'>
          11
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Linear Regression with Categorical Data'>
+        data-slide=12 title='Constant Variance and Linearity'>
          12
       </a>
     </li>
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Coefficient Output of a Categorical Predictor'>
+        data-slide=13 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
          13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Making Predictions'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Linear Regression with Categorical Data'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Coefficient Output of a Categorical Predictor'>
+         16
       </a>
     </li>
   </ul>

@@ -1,6 +1,6 @@
 ---
-title       : "Week 5: Linear Regression Pt. 1"
-subtitle    : '08/11/2019'
+title       : "Week 6: Linear Regression Pt. 1"
+subtitle    : '08/13/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -120,7 +120,7 @@ qqnorm(pres.lm1$residuals)
 qqline(pres.lm1$residuals)
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4-1.png)
 
 
 ## Constant Variance and Linearity
@@ -134,7 +134,7 @@ qqline(pres.lm1$residuals)
 scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
+![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.png)
 
 ---
 

@@ -1,6 +1,6 @@
 ###############################################
 ########## R Statistical Programming ##########
-####   Lesson 5: Linear Regression Pt. 1   ####
+####   Lesson 6: Linear Regression Pt. 1   ####
 ###############################################
 
 # We're going to load up an outside dataset called prestige

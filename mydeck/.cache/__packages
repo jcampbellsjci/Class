@@ -8,3 +8,9 @@ purrr
 dplyr
 stringr
 forcats
+carData
+car
+GGally
+mlbench
+MASS
+broom

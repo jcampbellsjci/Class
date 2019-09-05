@@ -132,3 +132,21 @@ test_output + 3
 - Just be straightforward and succint
   + `model_gbm` is probably holding a `gbm` model in it
     + Quick and to the point
+
+---
+
+## Functions
+
+- R has several built in functions
+  + These allow us to code common problems much more quickly
+  
+- For example, to get the absolute value of a number, we could use `abs()`
+
+- We can look up the documentation for a function by typing `?` before it
+
+```{r, eval=1}
+abs(x = -1)
+
+# Look up the help page
+?abs
+```

@@ -1,3 +1,9 @@
+###########################################
+####     R Statistical Programming     ####
+####      Lesson 2: Data Objects       ####
+###########################################
+
+
 #### Data Types ####
 
 # Use class() to identify data type
@@ -8,7 +14,8 @@ class(FALSE)
 
 # Factors can be a bit confusing
 # They have labels and levels
-test_factor <- factor(c("second", "first"), levels = c("first", "second"))
+test_factor <- factor(c("second", "first", "first", "second"), 
+                      levels = c("first", "second"))
 test_factor
 # The levels provide a specific order
 sort(test_factor)
@@ -33,14 +40,17 @@ as.numeric(as.character(test_factor))
 # Vectors hold one data type in one dimension
 test_vector <- c(1:10)
 test_vector
+
 # Matrices hold one data type in two dimensions
 # We have to specify the number of rows and columns in a matrix
 test_matrix <- matrix(data = 1:9, nrow = 3, ncol = 3)
 test_matrix
+
 # Lists hold multiple data types
 test_list <- list(name = c("Jake", "Hannah", "Jim"), 
                   age = c(25, 26, 33))
 test_list
+
 # Data frames hold multiple data types in two dimensions
 test_df <- data.frame(name = c("Jake", "Hannah", "Jim"), 
                       age = c(25, 26, 33))

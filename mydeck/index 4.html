@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 4: The Grammar of Graphics</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week 4: The Grammar of Graphics">
+  <meta name="author" content="Jake Campbell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Week 4: The Grammar of Graphics</h1>
+    <h2>09/19/2019</h2>
+    <p>Jake Campbell<br/></p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:white;">
+  
+  <hgroup>
+    <h2>Identifying Relationships Graphically</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>The most straightforward method for identifying relationships among variables is graphically</li>
+<li>R has several plotting functions in its base code
+
+<ul>
+<li>Quick to access, but hard to customize and not very visually appealing</li>
+</ul></li>
+<li><code>ggplot2</code> is an outside plotting package that is part of the tidyverse
+
+<ul>
+<li>Similar grammar and ideas to what we&#39;ve seen with <code>dplyr</code></li>
+</ul></li>
+<li>Great for publication-ready graphs</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  
+  <hgroup>
+    <h2>The Grammar of Graphics</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Think of a graph as a sentence</li>
+<li>A sentence has several different aspects (noun, verb, adjective, etc.)</li>
+<li>A graph can be thought of as doing the same thing (data, geom, scale, etc.)
+
+<ul>
+<li><code>ggplot</code> allows us to plot in this grammar of graphics style</li>
+<li>Each part is connected by a <code>+</code></li>
+<li>Similar to how we connect each line of code in <code>dplyr</code> with a <code>%&gt;%</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:white;">
+  
+  <hgroup>
+    <h2>Data</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>The first argument in our ggplot code signifies where the data is coming from</li>
+<li>Specific aesthetics about the data (i.e. how data is mapped)
+
+<ul>
+<li>x and y values</li>
+<li>Colors, fills, shapes</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:white;">
+  
+  <hgroup>
+    <h2>Aesthetics</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>If we want to map a variable to an aspect of our plot, we can include it in <code>aes()</code></li>
+</ul>
+
+<pre><code class="r"># Map gender to color
+ggplot(aex(x = height, y = weight, col = gender))
+</code></pre>
+
+<ul>
+<li>If we just want to map a single characteristic, we should do it outside of the <code>aes()</code> call</li>
+</ul>
+
+<pre><code class="r"># Map the color blue to color
+ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-5" style="background:white;">
+  
+  <hgroup>
+    <h2>Geom Object</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>How we choose to visually represent our data</li>
+<li>Anything from a scatter plot to a text label</li>
+<li>Geoms can have their own attributes or aesthetics
+
+<ul>
+<li>i.e. color, transparency, size, etc.</li>
+</ul></li>
+<li>Geoms can easily be layered on top of each other</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  
+  <hgroup>
+    <h2>Scatter Plots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We use <code>geom_point()</code> to specify a scatterplot</li>
+</ul>
+
+<pre><code class="r">ggplot(data = diamonds, aes(x = carat, y = price)) +
+  geom_point()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  
+  <hgroup>
+    <h2>Scatter Plots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  
+  <hgroup>
+    <h2>Histograms</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We use <code>geom_histogram()</code> to create a histogram</li>
+</ul>
+
+<pre><code class="r">ggplot(data = diamonds, aes(x = price)) +
+  geom_histogram()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  
+  <hgroup>
+    <h2>Histograms</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-10" style="background:white;">
+  
+  <hgroup>
+    <h2>Density Plots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We use <code>geom_density()</code> to create a density plot</li>
+</ul>
+
+<pre><code class="r">ggplot(data = diamonds, aes(x = price)) +
+  geom_density()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-11" style="background:white;">
+  
+  <hgroup>
+    <h2>Density Plots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-9-1.png" title="plot of chunk unnamed-chunk-9" alt="plot of chunk unnamed-chunk-9" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-12" style="background:white;">
+  
+  <hgroup>
+    <h2>Barplots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We use <code>geom_bar()</code> to create a barplot</li>
+<li>Could use the <code>position</code> argument to change bar placements
+
+<ul>
+<li><code>&quot;dodge&quot;</code> creates side-by-side bars for groups</li>
+<li><code>&quot;stack&quot;</code> creates a stacked bar chart for groups</li>
+<li><code>&quot;fill&quot;</code> stacks the groups using ratios instead of counts</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">ggplot(data = diamonds, aes(x = cut)) +
+  geom_bar()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-13" style="background:white;">
+  
+  <hgroup>
+    <h2>Barplots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-14" style="background:white;">
+  
+  <hgroup>
+    <h2>Boxplots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We can plot boxplots with <code>geom_boxplot()</code></li>
+</ul>
+
+<pre><code class="r">ggplot(data = diamonds, aes(x = cut, y = price)) +
+  geom_boxplot()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-15" style="background:white;">
+  
+  <hgroup>
+    <h2>Boxplots</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <p><img src="assets/fig/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-16" style="background:white;">
+  
+  <hgroup>
+    <h2>Faceting</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>What if we want to look at the same x-y relationship for different groups or factor levels?
+
+<ul>
+<li>ex: the relationship between pain measure and time after surgery by gender</li>
+</ul></li>
+<li>Faceting allows us to do this</li>
+<li><code>facet_wrap()</code> takes a look at our data by group
+
+<ul>
+<li><code>facet_grid()</code> allows us to do this with multiple dimensions</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-17" style="background:white;">
+  
+  <hgroup>
+    <h2>Scale Functions</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>There are several scale functions that allow us to edit scales to either better represent our data, or customize our graph (notice functions I write here can be applied to the y axis by substituting x for y)
+
+<ul>
+<li><code>scale_x_discrete()</code>: allows us to edit scale info on categorical data</li>
+<li><code>scale_x_continuous()</code>: allows us to edit scale info on numeric data</li>
+<li><code>scale_color_.</code>: can be used to edit scale info for data that has been mapped to color</li>
+<li>Note, you can specify discrete, continuous, or manual</li>
+<li>Also commonly applied to fill with <code>scale_fill_continuous</code> or <code>scale_fill_manual</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-18" style="background:white;">
+  
+  <hgroup>
+    <h2>Additional Components</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Graph labels can be edited using the <code>labs()</code> argument
+
+<ul>
+<li>x, y, title, fill, color, etc.</li>
+</ul></li>
+<li><code>theme()</code> can be used to make changes to non-data aspects of the graph
+
+<ul>
+<li>Font type, color, legend position, etc.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Identifying Relationships Graphically'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The Grammar of Graphics'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Data'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Aesthetics'>
+         4
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Geom Object'>
+         5
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Scatter Plots'>
+         6
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Scatter Plots'>
+         7
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Histograms'>
+         8
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Histograms'>
+         9
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='Density Plots'>
+         10
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Density Plots'>
+         11
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Barplots'>
+         12
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Barplots'>
+         13
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Boxplots'>
+         14
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Boxplots'>
+         15
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Faceting'>
+         16
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Scale Functions'>
+         17
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='Additional Components'>
+         18
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

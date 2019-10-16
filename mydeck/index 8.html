@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 8: Logistic Regression</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week 8: Logistic Regression">
+  <meta name="author" content="Jake Campbell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Week 8: Logistic Regression</h1>
+    <h2>10/13/2019</h2>
+    <p>Jake Campbell<br/></p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Moving On From Linear Problems</p>
+
+<ul>
+<li>Up to now, we&#39;ve only looked at modeling continuous response variables
+
+<ul>
+<li>Miles per gallon, rate of crime, etc.</li>
+</ul></li>
+<li>There are several problems where we need to model a categorical response
+
+<ul>
+<li>Does a team win a game?; Does a student accept an offer of admission?</li>
+</ul></li>
+<li>These problems involving categorical response variables are classification problems</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Issues With Modeling This Problem Linearly</p>
+
+<ul>
+<li>Let&#39;s say we were trying to model a yes/no problem</li>
+<li>We can treat all yes as <code>1</code> and no as <code>0</code> and predict the probability of either a <code>1</code> or <code>0</code></li>
+<li>A simple linear line isn&#39;t really flexible to this scenario</li>
+<li>Predictions can go above and beyond <code>0</code> or <code>100%</code> probability</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Issues With Modeling This Problem Linearly</p>
+
+<ul>
+<li><em>Insert plot</em></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Logistic Regression</p>
+
+<ul>
+<li>We can deal with binary classification using the logistic function
+
+<ul>
+<li>Can take any input and return a value between 0 and 1</li>
+<li><em>Function</em></li>
+</ul></li>
+<li>By using some simple math, we can edit the logistic function to get something similar to the linear regression equation
+
+<ul>
+<li>Instead of predicting y, we are predicting the log odds of y</li>
+<li><em>Function</em></li>
+</ul></li>
+</ul>
+
+<hr>
+
+<p>#Odds and Probability</p>
+
+<ul>
+<li>We aren&#39;t predicting probability in logistic regression, we are predicting the log of the odds ratio</li>
+<li>Probability can be easily changed to odds and vice versa</li>
+<li>The odds ratio is simply the odds of event A happening in the numerator and the odds of it not happening in the denominator</li>
+<li>For example, if a football team had an 80% chance of winning, their odds of winning would be .8 / 1 - .8 or 4 / 1
+
+<ul>
+<li>The team has 4 to 1 odds of winning; if the game was played 5 times, the team would win 4 times</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-5" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Logistic Regression in R</p>
+
+<ul>
+<li>We will use <code>glm()</code> or generalized linear model to fit logistic regression models</li>
+<li><code>glm</code> can fit several non-linear functions</li>
+<li>Specify the argument <code>family = binomial</code> to perform logistic regression</li>
+<li><code>summary()</code> can be used similarly to how we use it for <code>lm()</code> models</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Logistic Regression Output</p>
+
+<ul>
+<li>Like in our <code>lm</code> output, we get coefficient estimates and p-values.</li>
+<li>Coefficient estimates are the increase in the log odds of <code>y</code> for a one unit increase in <code>x</code></li>
+<li>Deviance is a measure of model fit
+
+<ul>
+<li>The lower the better</li>
+</ul></li>
+<li>Residual deviance is the model&#39;s deviance, while null deviance is the deviance with only an intercept
+
+<ul>
+<li>Similar to F-test in <code>lm</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Logistic Regression Assumptions</p>
+
+<ul>
+<li>Response is binary (two classes)</li>
+<li>Independent observations</li>
+<li>No multicollinearity issues</li>
+<li>Large sample sizes
+
+<ul>
+<li>Logistic regression fit by maximum likelihood which requires larger sample sizes</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  
+  <article data-timings="">
+    <p>#The Role of Polynomials</p>
+
+<ul>
+<li>We don&#39;t expect variables to have a linear relation with the response; we do expect variables to have a linear relation with the log odds</li>
+<li>The log odds of a model can be plotted against an independent variable</li>
+<li>Relationships that don&#39;t appear linear might be improved with the use of polynomials</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Measuring Accuracy</p>
+
+<ul>
+<li>We can make class probability predictions using <code>predict()</code> and specifying <code>type = &quot;response&quot;</code></li>
+<li>Without specifying type, we get log odds predictions</li>
+<li>We can round the predicted probabilities to the nearest whole number and measure how accurate our model is</li>
+<li>Straightforward method of determining how good our model is</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-10" style="background:white;">
+  
+  <article data-timings="">
+    <p>#Going Beyond Accuracy</p>
+
+<ul>
+<li>We might want to see accuracy by predicted class</li>
+<li>Unbalanced classes can return a high accuracy, but only predict one class well</li>
+<li>Look at a confusion matrix to get a better sense of true positives and true negatives (correctly predicted yes class and correctly predicted no class)
+
+<ul>
+<li>Sensitivity: Accuracy rate of positive class</li>
+<li><code>TP / (TP + FN)</code></li>
+<li>Specificity: Accuracy rate of negative class</li>
+<li><code>TN / (TN + FP)</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='NA'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='NA'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='NA'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='NA'>
+         4
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='NA'>
+         5
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='NA'>
+         6
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='NA'>
+         7
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='NA'>
+         8
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='NA'>
+         9
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='NA'>
+         10
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

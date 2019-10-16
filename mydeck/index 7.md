@@ -1,6 +1,6 @@
 ---
 title       : "Week 7: Linear Regression Pt. 2"
-subtitle    : '08/14/2019'
+subtitle    : '10/10/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -34,7 +34,7 @@ knit        : slidify::knit2slides
 ## What Does our Output Mean?
 
 - Our summary output is very similar to the output in simple linear regression
-- Coefficient estimates are the change in y with each additional unit of `x` WITH all other independent variables held constant
+- Coefficient estimates are the change in `y` with each additional unit of `x` WITH all other independent variables held constant
 - R squared never decreases with each additional variable
   + Adding variables of little to no importance can inflate our R squared value
   + Adjusted R squared takes into account the number of variables in the model and penalizes additional variables that don’t improve the model
@@ -101,7 +101,7 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 
 ## Box-Cox Transformation
 
-- Searches all possible values of lambda for the one that has the lowest error
+- Searches all possible values of lambda for the one that maximizes the likelihood that `y` comes from a normal distribution
 - Instead of looking at the lambda that produces the most normal y, look at the range to see if it includes a more common value
   + Using a specific lambda can make our results more confusing
 

@@ -52,7 +52,7 @@ initial.starwars<- starwars[, 1:10]
 
 - Wide format makes every value a column
 
-- Long format puts multiple values in a single column, creating another column that provides a key to the value column 
+- Long format puts multiple values in a single column, creating another column that acts as a key
 
 - Consider the goal of your analysis when choosing which format
 
@@ -93,6 +93,14 @@ spread(data = long.tb, key = Year, value = Cases)
 
 ---
 
+## Tibbles
+
+- Tibbles are an updated version of data frames
+
+- Biggest reason I like them: they print out a preview of your data frame
+
+---
+
 ## Data Manipulation with `dplyr`
 
 - `dplyr` has several functions for manipulating data frames
@@ -104,7 +112,7 @@ spread(data = long.tb, key = Year, value = Cases)
 ```{r, eval=F}
 # Format would look like this
 
-data_frame_x %>%
+tibble_x %>%
   function_x()
 ```
 
@@ -126,7 +134,9 @@ data_frame_x %>%
 - With `select`, we just specify the variables we want to choose
   + We can instead specify what columns we don't want by putting a `-` before the column
   
-```{r}
+```{r, echo=-1}
+select <- dplyr::select
+
 initial.starwars %>%
   # Select height and birth year of all characters
   select(height, birth_year) %>%
@@ -168,14 +178,15 @@ initial.starwars %>%
 - `mutate` allows us to create new columns
   + Remember to save your output if you want to keep it!
   
-```{r}
+```{r, echo=-1}
+select <- dplyr::select
 new.starwars<-
   initial.starwars %>%
   # Creating a new column that is the square root of height
   mutate(sqrt_height = sqrt(height))
 
 new.starwars %>%
-  select(height, sqrt_height)
+  select(height, sqrt_height) %>%
   head(3)
 ```
 
@@ -229,7 +240,9 @@ initial.starwars %>%
 
 - With the `%>%` operator, we can easily chain several functions together
 
-```{r}
+```{r, echo=-1}
+select <- dplyr::select
+
 initial.starwars %>%
   # Filter characters taller than 200 cm
   filter(height > 200) %>%

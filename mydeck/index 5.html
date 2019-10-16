@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Week 6: Linear Regression Pt. 1</title>
+  <title>Week 5: The Importance of Exploratory Analysis</title>
   <meta charset="utf-8">
-  <meta name="description" content="Week 6: Linear Regression Pt. 1">
+  <meta name="description" content="Week 5: The Importance of Exploratory Analysis">
   <meta name="author" content="Jake Campbell">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -31,385 +31,490 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  
   <hgroup class="auto-fadein">
-    <h1>Week 6: Linear Regression Pt. 1</h1>
-    <h2>08/13/2019</h2>
+    <h1>Week 5: The Importance of Exploratory Analysis</h1>
+    <h2>09/26/2019</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
+  
   <article></article>  
+  
 </slide>
     
 
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:white;">
+  
   <hgroup>
-    <h2>What is Linear Regression?</h2>
+    <h2>What is Exploratory Analysis?</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>Statistical model used to identify a relationship between a predictor, x, and a response, y.</li>
-<li>Linear regression identifies a line of best fit between the predictor and the response.</li>
-<li>Not only can we identify relationships between x and y, we can also predict future relationships using the regression line. </li>
+<li><p>Exploratory analysis is an initial investigative approach to our data prior to more complex analysis</p></li>
+<li><p>Helps us get a good understanding of any general patterns in our data</p></li>
+<li><p>Very visual-based</p>
+
+<ul>
+<li>Lots of plotting!</li>
+</ul></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-2" style="background:white;">
+  
   <hgroup>
-    <h2>The Linear Regression Equation</h2>
+    <h2>Why is Exploratory Analysis Important</h2>
   </hgroup>
+  
   <article data-timings="">
-    <p>\(\hat{Y} = b_{0} + b_{1}x + i\)</p>
+    <ul>
+<li><p>Machine learning models are great, but they do not have the eye that humans do</p>
 
 <ul>
-<li>\(\hat{Y}\) is the predicted value of the dependent variable</li>
-<li>\(b_{0}\) is the y-intercept term 
-
-<ul>
-<li>This is what \(\hat{Y}\) equals when \(x\) is 0</li>
+<li>An important variable to the model may just be the result of an error in our data that we would&#39;ve captured with exploratory analysis</li>
 </ul></li>
-<li>x is the value of the independent variable</li>
-<li>\(b_{1}\) is the slope (referred to as the coefficient) of x
+<li><p>By doing some initial investigation with our data, we can build better models down the road</p></li>
+<li><p>Important to get a feel for our data</p>
 
 <ul>
-<li>For every 1 unit increase in \(x\), \(\hat{Y}\) increases by \(b_{1}\)</li>
+<li>You may not have a ton of knowledge about the topic you&#39;re analyzing, but it&#39;s important to build some understanding!</li>
 </ul></li>
-<li>There is also random error, \(i\), that encapsulates the randomness that the model can&#39;t catch</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-3" style="background:white;">
+  
   <hgroup>
-    <h2>Ordinary Least Squares</h2>
+    <h2>Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted y values
+<li><p>Summary statistics give us a quick overview of different aspects of our data (how spread out it is, what&#39;s the typical value, etc.)</p></li>
+<li><p>Good for quick insight, but don&#39;t always tell the whole story</p>
 
 <ul>
-<li>Also known as residuals</li>
+<li>Ex: <code>mean</code> of a skewed variable</li>
 </ul></li>
-<li>A perfect model would have no difference between actual values and predictions</li>
-<li>Influential outliers can have a large impact on the line of best fit</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-4" style="background:white;">
+  
   <hgroup>
-    <h2>Developing a Linear Model in R</h2>
+    <h2>Common Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>In R, we can use <code>lm()</code> to develop a linear regression model</li>
-<li>We use the <code>y ~ x</code> formula interface while specifying the data we are using</li>
-<li>We need to call <code>summary()</code> to see model output</li>
+<li><p>The mean is the average of a vector of values</p>
+
+<ul>
+<li><code>R</code> function is <code>mean()</code></li>
+</ul></li>
+<li><p>The median is the middle value in a vector of values</p>
+
+<ul>
+<li><code>R</code> function is <code>median()</code></li>
+</ul></li>
 </ul>
 
-<pre><code class="r">pres.lm1 &lt;- lm(prestige ~ education, data = prestige)
+<pre><code class="r">mean(iris$Sepal.Length)
+</code></pre>
+
+<pre><code>## [1] 5.843333
+</code></pre>
+
+<pre><code class="r">median(iris$Sepal.Length)
+</code></pre>
+
+<pre><code>## [1] 5.8
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-5" style="background:white;">
+  
   <hgroup>
-    <h2>Model Output in R</h2>
+    <h2>Common Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>First we get the spread of the residuals</li>
-<li>The residual is the difference between actual and predicted y-value</li>
-<li>Next we get coefficient info
+<li>Quantiles divide observations into bins
 
 <ul>
-<li>Slope estimates, standard error, and p-values</li>
+<li>The median is a quantile (splits the data in two)</li>
+<li><code>R</code> function is <code>quantile()</code></li>
 </ul></li>
-<li>The final block of text includes several additional pieces of model information, mainly used to validate our model</li>
 </ul>
+
+<pre><code class="r">quantile(iris$Sepal.Length)
+</code></pre>
+
+<pre><code>##   0%  25%  50%  75% 100% 
+##  4.3  5.1  5.8  6.4  7.9
+</code></pre>
+
+<pre><code class="r"># Specify where the splits are
+quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
+</code></pre>
+
+<pre><code>##    0%   33%   66%  100% 
+## 4.300 5.400 6.234 7.900
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-6" style="background:white;">
+  
   <hgroup>
-    <h2>Coefficient Estimates</h2>
+    <h2>Common Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
-    <pre><code class="r">coefficients(pres.lm1)
-</code></pre>
-
-<pre><code>## (Intercept)   education 
-##  -10.731982    5.360878
-</code></pre>
+    <ul>
+<li><p>Variance is the average squared difference of a set of observations from the mean</p>
 
 <ul>
-<li>The coefficient estimates are the constants of the linear regression formula</li>
-<li>In this case, our model would look as follows:
-
-<ul>
-<li>\(\hat(Y) = -10.732 + 5.361(x)\)</li>
+<li>\(\frac{\sum (x_{i} - mean(x))^2}{n-1}\)</li>
+<li>Commonly represented as \(\sigma^2\)</li>
+<li><code>R</code> function is <code>var()</code></li>
 </ul></li>
-<li>The intercept value suggests that when education is <code>0</code>, our predicted value for prestige is <code>-10.732</code></li>
-<li>The education estimate suggests that for each additional point of education, prestige increases by <code>5.361</code></li>
+<li><p>Standard deviation is square root of the variance</p>
+
+<ul>
+<li>Commonly represented as \(\sigma\)</li>
+<li><code>R</code> function is <code>sd()</code></li>
+<li>Puts variance measure on the level of the data</li>
+</ul></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-7" style="background:white;">
+  
   <hgroup>
-    <h2>How Good is Our Model???</h2>
+    <h2>Common Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
-    <ul>
-<li>The R-squared value is a measure between <code>0</code> and <code>1</code> showing how much variance the model explains
+    <pre><code class="r">var(iris$Sepal.Length)
+</code></pre>
 
-<ul>
-<li>The closer the value is to <code>1</code>, the more the model explains</li>
-</ul></li>
-<li>Mathematically, it&#39;s <code>1</code> minus the ratio of the sum of squared errors and the total sum of squares
+<pre><code>## [1] 0.6856935
+</code></pre>
 
-<ul>
-<li>SST is the total error between the mean of y and its specific observations</li>
-<li>SSE is the unexplained error; the difference between the prediction and the observations</li>
-</ul></li>
-<li>The F-value explains whether the model fits the data better than random guessing
+<pre><code class="r">sd(iris$Sepal.Length)
+</code></pre>
 
-<ul>
-<li>Random guessing would just be predicting the mean value of y for all observations</li>
-</ul></li>
-</ul>
+<pre><code>## [1] 0.8280661
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-8" style="background:white;">
+  
   <hgroup>
-    <h2>Linear Regression Assumptions</h2>
+    <h2>Common Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>Normality of Residuals: use a QQ plot to determine normality of model residuals</li>
-<li>Constant Variance: variance of the residuals are the same for different values of x</li>
-<li>Linearity: Relationship between <code>x</code> and <code>y</code> is linear</li>
-<li>Independent observations: observations don&#39;t influence each other</li>
+<li><p>Covariance combines the variance of two variables, <code>x</code> and <code>y</code> and says whether they have a positive or negative relationship</p>
+
+<ul>
+<li>\(\frac{\sum (x_{i} - mean(x))(y_{i} - mean(y))}{n-1}\)</li>
+<li><code>R</code> function is <code>cov()</code></li>
+</ul></li>
+<li><p>Correlation divides the covariance of <code>x</code> and <code>y</code> by the standard deviations of <code>x</code> and <code>y</code></p>
+
+<ul>
+<li>\(\frac{cov(xy)}{sd(x)sd(y)}\)</li>
+<li>Puts the covariance on a scale from <code>-1</code> to <code>1</code></li>
+<li><code>R</code> function is <code>cor()</code></li>
+</ul></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-9" style="background:white;">
+  
   <hgroup>
-    <h2>Normality</h2>
+    <h2>Common Summary Statistics</h2>
   </hgroup>
+  
   <article data-timings="">
-    <ul>
-<li>We can use a QQ plot to determine if our residuals follow a normal distribution</li>
-<li>The points should follow along the straight QQ line
-
-<ul>
-<li>This line represents perfectly normal data; don&#39;t expect all of your residuals to follow it exactly</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">qqnorm(pres.lm1$residuals)
-qqline(pres.lm1$residuals)
+    <pre><code class="r">cov(iris$Sepal.Length, iris$Sepal.Width)
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"></p>
-
-<h2>Constant Variance and Linearity</h2>
-
-<ul>
-<li>We can check out constant variance and linearity by plotting residuals vs. fitted values</li>
-<li>If the points are spread out evenly around <code>0</code>, we can assume constant variance</li>
-<li>If the points show no real pattern or trend, sticking close to <code>0</code>, we can assume linearity</li>
-</ul>
-
-<pre><code class="r">scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
+<pre><code>## [1] -0.042434
 </code></pre>
 
-<p><img src="assets/fig/unnamed-chunk-5-1.png" alt="plot of chunk unnamed-chunk-5"></p>
+<pre><code class="r">cor(iris$Sepal.Length, iris$Sepal.Width)
+</code></pre>
+
+<pre><code>## [1] -0.1175698
+</code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-10" style="background:white;">
+  
   <hgroup>
-    <h2>What if Our Model Doesn&#39;t Meet Assumptions?</h2>
+    <h2>Visualizing Our Data</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>It doesn&#39;t necessarily mean we have a bad model, it just means that we could improve upon it</li>
-<li>Can improve through transforming variables, getting additional data, or even going with a non-linear model!</li>
+<li><p>The best method for us to investigate our data is visually</p></li>
+<li><p>We can easily identify patterns or notice issues with our data that we would miss otherwise</p></li>
+<li><p>It&#39;s important that we use plots correctly!</p></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-11" style="background:white;">
+  
   <hgroup>
-    <h2>Making Predictions</h2>
+    <h2>When to Use What Plot</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>One of the benefits of linear regression is that we can predict new data</li>
-<li>Use the <code>predict()</code> function to make these predictions
-
-<ul>
-<li>The first argument should be the name of the model</li>
-<li>Without additional arguments, this will just predict on the data used to train the model</li>
-<li>Specify the argument <code>newdata = x</code> where x is the new data to make additional predictions</li>
-</ul></li>
+<li><p>Scatterplots are great for showing the relationship between continuous variables</p></li>
+<li><p>Histograms and density plots help us visualize the distribution of a variable</p></li>
+<li><p>Boxplots can show the relationship between a continuous and categorical variable</p></li>
+<li><p>Barplots are good for giving count data of a categorical variable</p></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-12" style="background:white;">
+  
   <hgroup>
-    <h2>Linear Regression with Categorical Data</h2>
+    <h2>Common Plot No-no&#39;s</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>Categorical data is treated a little differently than numeric data</li>
-<li>Categorical data are treated as dummy variables
-
-<ul>
-<li>Acting as a numeric flag for the different categories</li>
-</ul></li>
+<li><p>Don&#39;t mess with the limits of your plot</p></li>
+<li><p>This can easily be manipulated to show relationships that aren&#39;t there</p></li>
 </ul>
+
+<p><img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" /></p>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-13" style="background:white;">
+  
   <hgroup>
-    <h2>Coefficient Output of a Categorical Predictor</h2>
+    <h2>Common Plot No-no&#39;s</h2>
   </hgroup>
+  
   <article data-timings="">
-    <pre><code class="r">pres.lm2 &lt;- lm(prestige ~ type, data = prestige)
-
-coefficients(pres.lm2)
-</code></pre>
-
-<pre><code>## (Intercept)    typeprof      typewc 
-##   35.527273   32.321114    6.716206
-</code></pre>
-
-<ul>
-<li>The first factor level is represented by the intercept
-
-<ul>
-<li>Baseline or reference level</li>
-</ul></li>
-<li>The coefficients of the other two factor levels would be added to the intercept if the observation is one of those levels; if it is the baseline level, nothing is added</li>
+    <ul>
+<li><p>Avoid pie charts</p></li>
+<li><p>Although very popular, hard to interpret exact differences between groups</p></li>
+<li><p>Much easier to visualize in a bar chart</p></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-14" style="background:white;">
+  
+  <hgroup>
+    <h2>Creating Multiple Plots at Once</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><p>We can use the <code>GGally</code> package to create several extensions off of <code>ggplot2</code></p></li>
+<li><p>One of these extensions is a plot matrix</p>
+
+<ul>
+<li>Creates a matrix of plots, each showing a relationship between different variables</li>
+<li>Function to use is <code>ggpairs</code></li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-15" style="background:white;">
+  
+  <hgroup>
+    <h2><code>ggpairs</code></h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <pre><code class="r">ggpairs(iris)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
 </slide>
 
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
     <ul>
-      <li>
+      
+    <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='What is Linear Regression?'>
+        data-slide=1 title='What is Exploratory Analysis?'>
          1
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='The Linear Regression Equation'>
+        data-slide=2 title='Why is Exploratory Analysis Important'>
          2
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Ordinary Least Squares'>
+        data-slide=3 title='Summary Statistics'>
          3
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Developing a Linear Model in R'>
+        data-slide=4 title='Common Summary Statistics'>
          4
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Model Output in R'>
+        data-slide=5 title='Common Summary Statistics'>
          5
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Coefficient Estimates'>
+        data-slide=6 title='Common Summary Statistics'>
          6
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='How Good is Our Model???'>
+        data-slide=7 title='Common Summary Statistics'>
          7
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Linear Regression Assumptions'>
+        data-slide=8 title='Common Summary Statistics'>
          8
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Normality'>
+        data-slide=9 title='Common Summary Statistics'>
          9
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
+        data-slide=10 title='Visualizing Our Data'>
          10
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Making Predictions'>
+        data-slide=11 title='When to Use What Plot'>
          11
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Linear Regression with Categorical Data'>
+        data-slide=12 title='Common Plot No-no&#39;s'>
          12
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Coefficient Output of a Categorical Predictor'>
+        data-slide=13 title='Common Plot No-no&#39;s'>
          13
       </a>
     </li>
-  </ul>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Creating Multiple Plots at Once'>
+         14
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='<code>ggpairs</code>'>
+         15
+      </a>
+    </li>
+    
+    </ul>
   </div>  <!--[if IE]>
     <script 
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
@@ -431,9 +536,11 @@ coefficients(pres.lm2)
   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   </script> -->
-  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+  
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
 </script>
-<!-- LOAD HIGHLIGHTER JS FILES -->
+
+  <!-- LOAD HIGHLIGHTER JS FILES -->
   <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->

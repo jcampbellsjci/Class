@@ -31,62 +31,73 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  
   <hgroup class="auto-fadein">
     <h1>Week 6: Linear Regression Pt. 1</h1>
-    <h2>08/14/2019</h2>
+    <h2>10/03/2019</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
+  
   <article></article>  
+  
 </slide>
     
 
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:white;">
+  
   <hgroup>
     <h2>What is Linear Regression?</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>Statistical model used to identify a relationship between a predictor, x, and a response, y.</li>
+<li>Statistical model used to identify a relationship between a predictor, \(x\), and a response, \(y\).</li>
 <li>Linear regression identifies a line of best fit between the predictor and the response.</li>
-<li>Not only can we identify relationships between x and y, we can also predict future relationships using the regression line. </li>
+<li>Not only can we identify relationships between \(x\) and \(y\), we can also predict future relationships using the regression line. </li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-2" style="background:white;">
+  
   <hgroup>
     <h2>The Linear Regression Equation</h2>
   </hgroup>
+  
   <article data-timings="">
-    <p>\(\hat{Y} = b_{0} + b_{1}x + i\)</p>
+    <p>\(\hat{y} = b_{0} + b_{1}x + i\)</p>
 
 <ul>
-<li>\(\hat{Y}\) is the predicted value of the dependent variable</li>
+<li>\(\hat{y}\) is the predicted value of the dependent variable</li>
 <li>\(b_{0}\) is the y-intercept term 
 
 <ul>
-<li>This is what \(\hat{Y}\) equals when \(x\) is 0</li>
+<li>This is what \(\hat{y}\) equals when \(x\) is 0</li>
 </ul></li>
-<li>x is the value of the independent variable</li>
+<li>\(x\) is the value of the independent variable</li>
 <li>\(b_{1}\) is the slope (referred to as the coefficient) of x
 
 <ul>
-<li>For every 1 unit increase in \(x\), \(\hat{Y}\) increases by \(b_{1}\)</li>
+<li>For every 1 unit increase in \(x\), \(\hat{y}\) increases by \(b_{1}\)</li>
 </ul></li>
 <li>There is also random error, \(i\), that encapsulates the randomness that the model can&#39;t catch</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-3" style="background:white;">
+  
   <hgroup>
     <h2>Ordinary Least Squares</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted y values
@@ -100,12 +111,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-4" style="background:white;">
+  
   <hgroup>
     <h2>Developing a Linear Model in R</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>In R, we can use <code>lm()</code> to develop a linear regression model</li>
@@ -118,12 +132,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-5" style="background:white;">
+  
   <hgroup>
     <h2>Model Output in R</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>First we get the spread of the residuals</li>
@@ -138,12 +155,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-6" style="background:white;">
+  
   <hgroup>
     <h2>Coefficient Estimates</h2>
   </hgroup>
+  
   <article data-timings="">
     <pre><code class="r">coefficients(pres.lm1)
 </code></pre>
@@ -157,7 +177,7 @@
 <li>In this case, our model would look as follows:
 
 <ul>
-<li>\(\hat(Y) = -10.732 + 5.361(x)\)</li>
+<li>\(\hat{y} = -10.732 + 5.361(x)\)</li>
 </ul></li>
 <li>The intercept value suggests that when education is <code>0</code>, our predicted value for prestige is <code>-10.732</code></li>
 <li>The education estimate suggests that for each additional point of education, prestige increases by <code>5.361</code></li>
@@ -165,12 +185,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-7" style="background:white;">
+  
   <hgroup>
     <h2>How Good is Our Model???</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>The R-squared value is a measure between <code>0</code> and <code>1</code> showing how much variance the model explains
@@ -193,12 +216,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-8" style="background:white;">
+  
   <hgroup>
     <h2>Linear Regression Assumptions</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Normality of Residuals: use a QQ plot to determine normality of model residuals</li>
@@ -209,12 +235,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-9" style="background:white;">
+  
   <hgroup>
     <h2>Normality</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We can use a QQ plot to determine if our residuals follow a normal distribution</li>
@@ -227,12 +256,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-10" style="background:white;">
+  
   <hgroup>
     <h2>Normality</h2>
   </hgroup>
+  
   <article data-timings="">
     <pre><code class="r">qqnorm(pres.lm1$residuals)
 qqline(pres.lm1$residuals)
@@ -242,12 +274,15 @@ qqline(pres.lm1$residuals)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-11" style="background:white;">
+  
   <hgroup>
     <h2>Constant Variance and Linearity</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We can check out constant variance and linearity by plotting residuals vs. fitted values</li>
@@ -257,12 +292,15 @@ qqline(pres.lm1$residuals)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-12" style="background:white;">
+  
   <hgroup>
     <h2>Constant Variance and Linearity</h2>
   </hgroup>
+  
   <article data-timings="">
     <pre><code class="r">scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
 </code></pre>
@@ -271,12 +309,15 @@ qqline(pres.lm1$residuals)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-13" style="background:white;">
+  
   <hgroup>
     <h2>What if Our Model Doesn&#39;t Meet Assumptions?</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>It doesn&#39;t necessarily mean we have a bad model, it just means that we could improve upon it</li>
@@ -285,12 +326,15 @@ qqline(pres.lm1$residuals)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-14" style="background:white;">
+  
   <hgroup>
     <h2>Making Predictions</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>One of the benefits of linear regression is that we can predict new data</li>
@@ -305,12 +349,15 @@ qqline(pres.lm1$residuals)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-15" style="background:white;">
+  
   <hgroup>
     <h2>Linear Regression with Categorical Data</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Categorical data is treated a little differently than numeric data</li>
@@ -323,12 +370,15 @@ qqline(pres.lm1$residuals)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-16" style="background:white;">
+  
   <hgroup>
     <h2>Coefficient Output of a Categorical Predictor</h2>
   </hgroup>
+  
   <article data-timings="">
     <pre><code class="r">pres.lm2 &lt;- lm(prestige ~ type, data = prestige)
 
@@ -350,109 +400,127 @@ coefficients(pres.lm2)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
     <ul>
-      <li>
+      
+    <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=1 title='What is Linear Regression?'>
          1
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=2 title='The Linear Regression Equation'>
          2
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=3 title='Ordinary Least Squares'>
          3
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=4 title='Developing a Linear Model in R'>
          4
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=5 title='Model Output in R'>
          5
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=6 title='Coefficient Estimates'>
          6
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=7 title='How Good is Our Model???'>
          7
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=8 title='Linear Regression Assumptions'>
          8
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=9 title='Normality'>
          9
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=10 title='Normality'>
          10
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=11 title='Constant Variance and Linearity'>
          11
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=12 title='Constant Variance and Linearity'>
          12
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=13 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
          13
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=14 title='Making Predictions'>
          14
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=15 title='Linear Regression with Categorical Data'>
          15
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=16 title='Coefficient Output of a Categorical Predictor'>
          16
       </a>
     </li>
-  </ul>
+    
+    </ul>
   </div>  <!--[if IE]>
     <script 
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
@@ -474,9 +542,11 @@ coefficients(pres.lm2)
   <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   </script> -->
-  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+  
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
 </script>
-<!-- LOAD HIGHLIGHTER JS FILES -->
+
+  <!-- LOAD HIGHLIGHTER JS FILES -->
   <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   <!-- DONE LOADING HIGHLIGHTER JS FILES -->

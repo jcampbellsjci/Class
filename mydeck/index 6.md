@@ -1,6 +1,6 @@
 ---
 title       : "Week 6: Linear Regression Pt. 1"
-subtitle    : '08/14/2019'
+subtitle    : '10/03/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -15,22 +15,22 @@ knit        : slidify::knit2slides
 
 ## What is Linear Regression?
 
-- Statistical model used to identify a relationship between a predictor, x, and a response, y.
+- Statistical model used to identify a relationship between a predictor, $x$, and a response, $y$.
 - Linear regression identifies a line of best fit between the predictor and the response.
-- Not only can we identify relationships between x and y, we can also predict future relationships using the regression line. 
+- Not only can we identify relationships between $x$ and $y$, we can also predict future relationships using the regression line. 
 
 ---
 
 ## The Linear Regression Equation
 
-$\hat{Y} = b_{0} + b_{1}x + i$
+$\hat{y} = b_{0} + b_{1}x + i$
 
-- $\hat{Y}$ is the predicted value of the dependent variable
+- $\hat{y}$ is the predicted value of the dependent variable
 - $b_{0}$ is the y-intercept term 
-  + This is what $\hat{Y}$ equals when $x$ is 0
-- x is the value of the independent variable
+  + This is what $\hat{y}$ equals when $x$ is 0
+- $x$ is the value of the independent variable
 - $b_{1}$ is the slope (referred to as the coefficient) of x
-  + For every 1 unit increase in $x$, $\hat{Y}$ increases by $b_{1}$
+  + For every 1 unit increase in $x$, $\hat{y}$ increases by $b_{1}$
 - There is also random error, $i$, that encapsulates the randomness that the model can't catch
 
 ---
@@ -81,7 +81,7 @@ coefficients(pres.lm1)
 
 - The coefficient estimates are the constants of the linear regression formula
 - In this case, our model would look as follows:
- + $\hat(Y) = -10.732 + 5.361(x)$
+ + $\hat{y} = -10.732 + 5.361(x)$
 - The intercept value suggests that when education is `0`, our predicted value for prestige is `-10.732`
 - The education estimate suggests that for each additional point of education, prestige increases by `5.361`
 

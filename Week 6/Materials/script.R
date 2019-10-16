@@ -15,7 +15,7 @@ library(broom)
 library(tidyverse)
 
 # The prestige dataset is stored in a csv file
-prestige <- read_csv(file = "~/Class/Week 5/prestige.csv")
+prestige <- read_csv(file = "~/Class/Week 6/Materials/prestige.csv")
   
   
 #### Checking out the data ####

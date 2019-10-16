@@ -5,21 +5,21 @@
 
 # Load up some packages
 
-library(tidyverse)
-library(car)
-install.packages("GGally")
-library(GGally)
 install.packages("mlbench")
+
+library(car)
+library(GGally)
 library(mlbench)
 library(MASS)
-
+library(tidyverse)
 
 # We're going to be loading up the crime dataset
-crime <- read_csv(file = "uscrime.csv")
+crime <- read_csv(file = "~/Class/Week 7/Materials/uscrime.csv")
 # Also going to load up the Ozone dataset
 data("Ozone")
 # One more dataset: a version of that famous mtcars dataset!
-mtcars <- read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data")
+mtcars <- 
+  read.table("http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data")
   # Editing column V4 to make it numeric
   mtcars$V4 <- as.numeric(as.character(ifelse(mtcars$V4=="?", "NA", mtcars$V4)))
 
@@ -55,7 +55,7 @@ vif(mod = crime.lm1)
 
 # Let's make a model using all of the variables given to us
   #In the formula interface, using a "." indicates all other variables
-crime.lm2<- lm(y ~ ., data = crime)
+crime.lm2<- lm(y ~ GDP + Ed + Po1 + Po2, data = crime)
 summary(crime.lm2)
 
 # We can use anova() to compare nested models 
@@ -67,9 +67,11 @@ plot(crime.lm2)
 par(mfrow = c(1,1))
 vif(crime.lm2)
 # po1 and po2 appear to have very strongly correlated
-plot(crime$Po1, crime$Po2)
+crime %>%
+  ggplot(aes(Po1, Po2)) +
+  geom_point()
 # We can remove one of these variables
-crime.lm3<- lm(y ~ . - Po2, data = crime)
+crime.lm3<- lm(y ~ GDP + Ed + Po1, data = crime)
 vif(crime.lm3)
 
 # Let's look at using our first model to predict a few new observations

@@ -1,6 +1,6 @@
 ---
-title       : "Week 6: Linear Regression Pt. 1"
-subtitle    : '08/13/2019'
+title       : "Week 5: The Importance of Exploratory Analysis"
+subtitle    : '09/26/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -13,170 +13,219 @@ knit        : slidify::knit2slides
 
 
 
-## What is Linear Regression?
+## What is Exploratory Analysis?
 
-- Statistical model used to identify a relationship between a predictor, x, and a response, y.
-- Linear regression identifies a line of best fit between the predictor and the response.
-- Not only can we identify relationships between x and y, we can also predict future relationships using the regression line. 
+- Exploratory analysis is an initial investigative approach to our data prior to more complex analysis
 
----
+- Helps us get a good understanding of any general patterns in our data
 
-## The Linear Regression Equation
-
-$\hat{Y} = b_{0} + b_{1}x + i$
-
-- $\hat{Y}$ is the predicted value of the dependent variable
-- $b_{0}$ is the y-intercept term 
-  + This is what $\hat{Y}$ equals when $x$ is 0
-- x is the value of the independent variable
-- $b_{1}$ is the slope (referred to as the coefficient) of x
-  + For every 1 unit increase in $x$, $\hat{Y}$ increases by $b_{1}$
-- There is also random error, $i$, that encapsulates the randomness that the model can't catch
+- Very visual-based
+  + Lots of plotting!
 
 ---
 
-## Ordinary Least Squares
+## Why is Exploratory Analysis Important
 
-- Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted y values
-  + Also known as residuals
-- A perfect model would have no difference between actual values and predictions
-- Influential outliers can have a large impact on the line of best fit
+- Machine learning models are great, but they do not have the eye that humans do
+  + An important variable to the model may just be the result of an error in our data that we would've captured with exploratory analysis
+  
+- By doing some initial investigation with our data, we can build better models down the road
 
----
-
-## Developing a Linear Model in R
-
-- In R, we can use `lm()` to develop a linear regression model
-- We use the `y ~ x` formula interface while specifying the data we are using
-- We need to call `summary()` to see model output
-
-
-```r
-pres.lm1 <- lm(prestige ~ education, data = prestige)
-```
+- Important to get a feel for our data
+  + You may not have a ton of knowledge about the topic you're analyzing, but it's important to build some understanding!
 
 ---
 
-## Model Output in R
+## Summary Statistics
 
-- First we get the spread of the residuals
-- The residual is the difference between actual and predicted y-value
-- Next we get coefficient info
-  + Slope estimates, standard error, and p-values
-- The final block of text includes several additional pieces of model information, mainly used to validate our model
+- Summary statistics give us a quick overview of different aspects of our data (how spread out it is, what's the typical value, etc.)
 
----
-
-## Coefficient Estimates
-
-
-```r
-coefficients(pres.lm1)
-```
-
-```
-## (Intercept)   education 
-##  -10.731982    5.360878
-```
-
-- The coefficient estimates are the constants of the linear regression formula
-- In this case, our model would look as follows:
- + $\hat(Y) = -10.732 + 5.361(x)$
-- The intercept value suggests that when education is `0`, our predicted value for prestige is `-10.732`
-- The education estimate suggests that for each additional point of education, prestige increases by `5.361`
+- Good for quick insight, but don't always tell the whole story
+  + Ex: `mean` of a skewed variable
 
 ---
 
-## How Good is Our Model???
+## Common Summary Statistics
 
-- The R-squared value is a measure between `0` and `1` showing how much variance the model explains
-  + The closer the value is to `1`, the more the model explains
-- Mathematically, it's `1` minus the ratio of the sum of squared errors and the total sum of squares
-  + SST is the total error between the mean of y and its specific observations
-  + SSE is the unexplained error; the difference between the prediction and the observations
-- The F-value explains whether the model fits the data better than random guessing
-  + Random guessing would just be predicting the mean value of y for all observations
+- The mean is the average of a vector of values
+  + `R` function is `mean()`
 
----
-
-## Linear Regression Assumptions
-
-- Normality of Residuals: use a QQ plot to determine normality of model residuals
-- Constant Variance: variance of the residuals are the same for different values of x
-- Linearity: Relationship between `x` and `y` is linear
-- Independent observations: observations don't influence each other
-
----
-
-## Normality
-
-- We can use a QQ plot to determine if our residuals follow a normal distribution
-- The points should follow along the straight QQ line
-  + This line represents perfectly normal data; don't expect all of your residuals to follow it exactly
+- The median is the middle value in a vector of values
+  + `R` function is `median()`
   
 
 ```r
-qqnorm(pres.lm1$residuals)
-qqline(pres.lm1$residuals)
+mean(iris$Sepal.Length)
 ```
 
-![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4-1.png)
+```
+## [1] 5.843333
+```
 
+```r
+median(iris$Sepal.Length)
+```
 
-## Constant Variance and Linearity
+```
+## [1] 5.8
+```
 
-- We can check out constant variance and linearity by plotting residuals vs. fitted values
-- If the points are spread out evenly around `0`, we can assume constant variance
-- If the points show no real pattern or trend, sticking close to `0`, we can assume linearity
+---
+
+## Common Summary Statistics
+
+- Quantiles divide observations into bins
+  + The median is a quantile (splits the data in two)
+  + `R` function is `quantile()`
 
 
 ```r
-scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
+quantile(iris$Sepal.Length)
 ```
 
-![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.png)
+```
+##   0%  25%  50%  75% 100% 
+##  4.3  5.1  5.8  6.4  7.9
+```
+
+```r
+# Specify where the splits are
+quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
+```
+
+```
+##    0%   33%   66%  100% 
+## 4.300 5.400 6.234 7.900
+```
 
 ---
 
-## What if Our Model Doesn't Meet Assumptions?
+## Common Summary Statistics
 
-- It doesn't necessarily mean we have a bad model, it just means that we could improve upon it
-- Can improve through transforming variables, getting additional data, or even going with a non-linear model!
-
----
-
-## Making Predictions
-
-- One of the benefits of linear regression is that we can predict new data
-- Use the `predict()` function to make these predictions
-  + The first argument should be the name of the model
-  + Without additional arguments, this will just predict on the data used to train the model
-  + Specify the argument `newdata = x` where x is the new data to make additional predictions
+- Variance is the average squared difference of a set of observations from the mean
+  + $\frac{\sum (x_{i} - mean(x))^2}{n-1}$
+  + Commonly represented as $\sigma^2$
+  + `R` function is `var()`
+  
+- Standard deviation is square root of the variance
+  + Commonly represented as $\sigma$
+  + `R` function is `sd()`
+  + Puts variance measure on the level of the data
 
 ---
 
-## Linear Regression with Categorical Data
-
-- Categorical data is treated a little differently than numeric data
-- Categorical data are treated as dummy variables
-  + Acting as a numeric flag for the different categories
-
----
-
-## Coefficient Output of a Categorical Predictor
+## Common Summary Statistics
 
 
 ```r
-pres.lm2 <- lm(prestige ~ type, data = prestige)
-
-coefficients(pres.lm2)
+var(iris$Sepal.Length)
 ```
 
 ```
-## (Intercept)    typeprof      typewc 
-##   35.527273   32.321114    6.716206
+## [1] 0.6856935
 ```
 
-- The first factor level is represented by the intercept
-  + Baseline or reference level
-- The coefficients of the other two factor levels would be added to the intercept if the observation is one of those levels; if it is the baseline level, nothing is added
+```r
+sd(iris$Sepal.Length)
+```
+
+```
+## [1] 0.8280661
+```
+
+---
+
+## Common Summary Statistics
+
+- Covariance combines the variance of two variables, `x` and `y` and says whether they have a positive or negative relationship
+  + $\frac{\sum (x_{i} - mean(x))(y_{i} - mean(y))}{n-1}$
+  + `R` function is `cov()`
+
+- Correlation divides the covariance of `x` and `y` by the standard deviations of `x` and `y`
+  + $\frac{cov(xy)}{sd(x)sd(y)}$
+  + Puts the covariance on a scale from `-1` to `1`
+  + `R` function is `cor()`
+
+---
+
+## Common Summary Statistics
+
+
+```r
+cov(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+```
+## [1] -0.042434
+```
+
+```r
+cor(iris$Sepal.Length, iris$Sepal.Width)
+```
+
+```
+## [1] -0.1175698
+```
+
+---
+
+## Visualizing Our Data
+
+- The best method for us to investigate our data is visually
+
+- We can easily identify patterns or notice issues with our data that we would miss otherwise
+
+- It's important that we use plots correctly!
+
+---
+
+## When to Use What Plot
+
+- Scatterplots are great for showing the relationship between continuous variables
+
+- Histograms and density plots help us visualize the distribution of a variable
+
+- Boxplots can show the relationship between a continuous and categorical variable
+
+- Barplots are good for giving count data of a categorical variable
+
+---
+
+## Common Plot No-no's
+
+- Don't mess with the limits of your plot
+
+- This can easily be manipulated to show relationships that aren't there
+
+<img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
+
+---
+
+## Common Plot No-no's
+
+- Avoid pie charts
+
+- Although very popular, hard to interpret exact differences between groups
+
+- Much easier to visualize in a bar chart
+
+---
+
+## Creating Multiple Plots at Once
+
+- We can use the `GGally` package to create several extensions off of `ggplot2`
+
+- One of these extensions is a plot matrix
+  + Creates a matrix of plots, each showing a relationship between different variables
+  + Function to use is `ggpairs`
+
+---
+
+## `ggpairs`
+
+
+```r
+ggpairs(iris)
+```
+
+<img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />

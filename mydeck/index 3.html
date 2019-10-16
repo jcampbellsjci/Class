@@ -31,20 +31,25 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  
   <hgroup class="auto-fadein">
     <h1>Week 3: Introduction to the Tidyverse</h1>
-    <h2>08/10/2019</h2>
+    <h2>09/12/2019</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
+  
   <article></article>  
+  
 </slide>
     
 
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:white;">
+  
   <hgroup>
     <h2>What is the Tidyverse?</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><p>The tidyverse is a set of packages developed for data science and manipulation</p>
@@ -60,12 +65,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-2" style="background:white;">
+  
   <hgroup>
     <h2>Download the Packages</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><p>The tidyverse consists of several different packages</p></li>
@@ -78,28 +86,34 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-3" style="background:white;">
+  
   <hgroup>
     <h2>Reshaping Data</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><p>Data generally comes in wide and long format</p></li>
 <li><p>Wide format makes every value a column</p></li>
-<li><p>Long format puts multiple values in a single column, creating another column that provides a key to the value column </p></li>
+<li><p>Long format puts multiple values in a single column, creating another column that acts as a key</p></li>
 <li><p>Consider the goal of your analysis when choosing which format</p></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-4" style="background:white;">
+  
   <hgroup>
     <h2>Reshaping with <code>tidyr</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><p><code>tidyr</code> allows us to easily go from long to wide or vice-versa</p></li>
@@ -112,12 +126,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-5" style="background:white;">
+  
   <hgroup>
     <h2>Going from Wide to Long</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We&#39;ll use <code>gather()</code> to go from wide to long</li>
@@ -146,12 +163,15 @@ long.tb
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-6" style="background:white;">
+  
   <hgroup>
     <h2>Going from Long to Wide</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We&#39;ll use <code>spread()</code> to go from long to wide</li>
@@ -171,12 +191,32 @@ long.tb
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-7" style="background:white;">
+  
+  <hgroup>
+    <h2>Tibbles</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><p>Tibbles are an updated version of data frames</p></li>
+<li><p>Biggest reason I like them: they print out a preview of your data frame</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  
   <hgroup>
     <h2>Data Manipulation with <code>dplyr</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><p><code>dplyr</code> has several functions for manipulating data frames</p></li>
@@ -190,18 +230,21 @@ long.tb
 
 <pre><code class="r"># Format would look like this
 
-data_frame_x %&gt;%
+tibble_x %&gt;%
   function_x()
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-8" style="background:white;">
+<slide class="" id="slide-9" style="background:white;">
+  
   <hgroup>
     <h2>Some Common <code>dplyr</code> Functions</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><code>select()</code>: pick certain variables</li>
@@ -213,12 +256,15 @@ data_frame_x %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-9" style="background:white;">
+<slide class="" id="slide-10" style="background:white;">
+  
   <hgroup>
     <h2><code>select</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>With <code>select</code>, we just specify the variables we want to choose
@@ -247,12 +293,15 @@ data_frame_x %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-10" style="background:white;">
+<slide class="" id="slide-11" style="background:white;">
+  
   <hgroup>
     <h2><code>filter</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>With <code>filter</code>, we subset the tibble on some condition
@@ -282,12 +331,15 @@ data_frame_x %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-11" style="background:white;">
+<slide class="" id="slide-12" style="background:white;">
+  
   <hgroup>
     <h2><code>arrange</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>With <code>arrange</code>, we order the tibble by some column
@@ -317,12 +369,15 @@ data_frame_x %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-12" style="background:white;">
+<slide class="" id="slide-13" style="background:white;">
+  
   <hgroup>
     <h2><code>mutate</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><code>mutate</code> allows us to create new columns
@@ -338,39 +393,29 @@ data_frame_x %&gt;%
   mutate(sqrt_height = sqrt(height))
 
 new.starwars %&gt;%
-  select(height, sqrt_height)
+  select(height, sqrt_height) %&gt;%
+  head(3)
 </code></pre>
 
-<pre><code>## # A tibble: 87 x 2
-##    height sqrt_height
-##     &lt;int&gt;       &lt;dbl&gt;
-##  1    172       13.1 
-##  2    167       12.9 
-##  3     96        9.80
-##  4    202       14.2 
-##  5    150       12.2 
-##  6    178       13.3 
-##  7    165       12.8 
-##  8     97        9.85
-##  9    183       13.5 
-## 10    182       13.5 
-## # ... with 77 more rows
-</code></pre>
-
-<pre><code class="r">  head(3)
-</code></pre>
-
-<pre><code>## [1] 3
+<pre><code>## # A tibble: 3 x 2
+##   height sqrt_height
+##    &lt;int&gt;       &lt;dbl&gt;
+## 1    172       13.1 
+## 2    167       12.9 
+## 3     96        9.80
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-13" style="background:white;">
+<slide class="" id="slide-14" style="background:white;">
+  
   <hgroup>
     <h2><code>rename</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><code>rename</code> allows us to change the name of a column
@@ -400,12 +445,15 @@ new.starwars %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-14" style="background:white;">
+<slide class="" id="slide-15" style="background:white;">
+  
   <hgroup>
     <h2><code>summarize</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>With <code>summarize</code>, we can perform certain summary statistics, like finding the average, or getting a count</li>
@@ -424,12 +472,15 @@ new.starwars %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-15" style="background:white;">
+<slide class="" id="slide-16" style="background:white;">
+  
   <hgroup>
     <h2><code>group_by</code></h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><code>group_by</code> allows us to perform different operations by groups
@@ -452,21 +503,24 @@ new.starwars %&gt;%
 <pre><code>## # A tibble: 5 x 2
 ##   gender        avg.height
 ##   &lt;chr&gt;              &lt;dbl&gt;
-## 1 &lt;NA&gt;                120 
-## 2 female              165.
-## 3 hermaphrodite       175 
-## 4 male                179.
-## 5 none                200
+## 1 female              165.
+## 2 hermaphrodite       175 
+## 3 male                179.
+## 4 none                200 
+## 5 &lt;NA&gt;                120
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-16" style="background:white;">
+<slide class="" id="slide-17" style="background:white;">
+  
   <hgroup>
     <h2>Chaining Functions</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>With the <code>%&gt;%</code> operator, we can easily chain several functions together</li>
@@ -498,109 +552,134 @@ new.starwars %&gt;%
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
     <ul>
-      <li>
+      
+    <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=1 title='What is the Tidyverse?'>
          1
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=2 title='Download the Packages'>
          2
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=3 title='Reshaping Data'>
          3
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=4 title='Reshaping with <code>tidyr</code>'>
          4
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=5 title='Going from Wide to Long'>
          5
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=6 title='Going from Long to Wide'>
          6
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Data Manipulation with <code>dplyr</code>'>
+        data-slide=7 title='Tibbles'>
          7
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Some Common <code>dplyr</code> Functions'>
+        data-slide=8 title='Data Manipulation with <code>dplyr</code>'>
          8
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='<code>select</code>'>
+        data-slide=9 title='Some Common <code>dplyr</code> Functions'>
          9
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='<code>filter</code>'>
+        data-slide=10 title='<code>select</code>'>
          10
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='<code>arrange</code>'>
+        data-slide=11 title='<code>filter</code>'>
          11
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='<code>mutate</code>'>
+        data-slide=12 title='<code>arrange</code>'>
          12
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='<code>rename</code>'>
+        data-slide=13 title='<code>mutate</code>'>
          13
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='<code>summarize</code>'>
+        data-slide=14 title='<code>rename</code>'>
          14
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='<code>group_by</code>'>
+        data-slide=15 title='<code>summarize</code>'>
          15
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Chaining Functions'>
+        data-slide=16 title='<code>group_by</code>'>
          16
       </a>
     </li>
-  </ul>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Chaining Functions'>
+         17
+      </a>
+    </li>
+    
+    </ul>
   </div>  <!--[if IE]>
     <script 
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  

@@ -1,6 +1,6 @@
 ---
 title       : "Week 3: Introduction to the Tidyverse"
-subtitle    : '08/10/2019'
+subtitle    : '09/12/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -44,7 +44,7 @@ knit        : slidify::knit2slides
 
 - Wide format makes every value a column
 
-- Long format puts multiple values in a single column, creating another column that provides a key to the value column 
+- Long format puts multiple values in a single column, creating another column that acts as a key
 
 - Consider the goal of your analysis when choosing which format
 
@@ -108,6 +108,14 @@ spread(data = long.tb, key = Year, value = Cases)
 
 ---
 
+## Tibbles
+
+- Tibbles are an updated version of data frames
+
+- Biggest reason I like them: they print out a preview of your data frame
+
+---
+
 ## Data Manipulation with `dplyr`
 
 - `dplyr` has several functions for manipulating data frames
@@ -120,7 +128,7 @@ spread(data = long.tb, key = Year, value = Cases)
 ```r
 # Format would look like this
 
-data_frame_x %>%
+tibble_x %>%
   function_x()
 ```
 
@@ -233,32 +241,17 @@ new.starwars<-
   mutate(sqrt_height = sqrt(height))
 
 new.starwars %>%
-  select(height, sqrt_height)
-```
-
-```
-## # A tibble: 87 x 2
-##    height sqrt_height
-##     <int>       <dbl>
-##  1    172       13.1 
-##  2    167       12.9 
-##  3     96        9.80
-##  4    202       14.2 
-##  5    150       12.2 
-##  6    178       13.3 
-##  7    165       12.8 
-##  8     97        9.85
-##  9    183       13.5 
-## 10    182       13.5 
-## # ... with 77 more rows
-```
-
-```r
+  select(height, sqrt_height) %>%
   head(3)
 ```
 
 ```
-## [1] 3
+## # A tibble: 3 x 2
+##   height sqrt_height
+##    <int>       <dbl>
+## 1    172       13.1 
+## 2    167       12.9 
+## 3     96        9.80
 ```
 
 ---
@@ -332,11 +325,11 @@ initial.starwars %>%
 ## # A tibble: 5 x 2
 ##   gender        avg.height
 ##   <chr>              <dbl>
-## 1 <NA>                120 
-## 2 female              165.
-## 3 hermaphrodite       175 
-## 4 male                179.
-## 5 none                200
+## 1 female              165.
+## 2 hermaphrodite       175 
+## 3 male                179.
+## 4 none                200 
+## 5 <NA>                120
 ```
 
 ---

@@ -34,7 +34,7 @@
   
   <hgroup class="auto-fadein">
     <h1>Week 8: Logistic Regression</h1>
-    <h2>10/13/2019</h2>
+    <h2>10/17/2019</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -46,10 +46,12 @@
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:white;">
   
+  <hgroup>
+    <h1>Moving On From Linear Problems</h1>
+  </hgroup>
+  
   <article data-timings="">
-    <p>#Moving On From Linear Problems</p>
-
-<ul>
+    <ul>
 <li>Up to now, we&#39;ve only looked at modeling continuous response variables
 
 <ul>
@@ -70,10 +72,12 @@
 
 <slide class="" id="slide-2" style="background:white;">
   
+  <hgroup>
+    <h1>Issues With Modeling This Problem Linearly</h1>
+  </hgroup>
+  
   <article data-timings="">
-    <p>#Issues With Modeling This Problem Linearly</p>
-
-<ul>
+    <ul>
 <li>Let&#39;s say we were trying to model a yes/no problem</li>
 <li>We can treat all yes as <code>1</code> and no as <code>0</code> and predict the probability of either a <code>1</code> or <code>0</code></li>
 <li>A simple linear line isn&#39;t really flexible to this scenario</li>
@@ -87,12 +91,12 @@
 
 <slide class="" id="slide-3" style="background:white;">
   
+  <hgroup>
+    <h1>Issues With Modeling This Problem Linearly</h1>
+  </hgroup>
+  
   <article data-timings="">
-    <p>#Issues With Modeling This Problem Linearly</p>
-
-<ul>
-<li><em>Insert plot</em></li>
-</ul>
+    <p><img src="assets/fig/unnamed-chunk-2-1.png" title="plot of chunk unnamed-chunk-2" alt="plot of chunk unnamed-chunk-2" style="display: block; margin: auto;" /></p>
 
   </article>
   <!-- Presenter Notes -->
@@ -101,36 +105,23 @@
 
 <slide class="" id="slide-4" style="background:white;">
   
+  <hgroup>
+    <h1>Logistic Regression</h1>
+  </hgroup>
+  
   <article data-timings="">
-    <p>#Logistic Regression</p>
-
-<ul>
+    <ul>
 <li>We can deal with binary classification using the logistic function
 
 <ul>
-<li>Can take any input and return a value between 0 and 1</li>
-<li><em>Function</em></li>
+<li>Can take any input and return a value between 0 and 1
+\[P=\frac{e^{(B_0 + B_x)}}{1 + e^{(B_0 + B_x)}}\]</li>
 </ul></li>
 <li>By using some simple math, we can edit the logistic function to get something similar to the linear regression equation
 
 <ul>
-<li>Instead of predicting y, we are predicting the log odds of y</li>
-<li><em>Function</em></li>
-</ul></li>
-</ul>
-
-<hr>
-
-<p>#Odds and Probability</p>
-
-<ul>
-<li>We aren&#39;t predicting probability in logistic regression, we are predicting the log of the odds ratio</li>
-<li>Probability can be easily changed to odds and vice versa</li>
-<li>The odds ratio is simply the odds of event A happening in the numerator and the odds of it not happening in the denominator</li>
-<li>For example, if a football team had an 80% chance of winning, their odds of winning would be .8 / 1 - .8 or 4 / 1
-
-<ul>
-<li>The team has 4 to 1 odds of winning; if the game was played 5 times, the team would win 4 times</li>
+<li>Instead of predicting y, we are predicting the log odds of y
+\[log(\frac{P}{1-P})=B_0 + B_x\]</li>
 </ul></li>
 </ul>
 
@@ -141,14 +132,20 @@
 
 <slide class="" id="slide-5" style="background:white;">
   
+  <hgroup>
+    <h1>Odds and Probability</h1>
+  </hgroup>
+  
   <article data-timings="">
-    <p>#Logistic Regression in R</p>
+    <ul>
+<li>We aren&#39;t predicting probability in logistic regression, we are predicting the log of the odds ratio</li>
+<li>Probability can be easily changed to odds and vice versa</li>
+<li>The odds ratio is simply the odds of event A happening in the numerator and the odds of it not happening in the denominator</li>
+<li>For example, if a football team had an <code>80%</code> chance of winning, their odds of winning would be <code>.8 / 1 - .8</code> or <code>4 / 1</code>
 
 <ul>
-<li>We will use <code>glm()</code> or generalized linear model to fit logistic regression models</li>
-<li><code>glm</code> can fit several non-linear functions</li>
-<li>Specify the argument <code>family = binomial</code> to perform logistic regression</li>
-<li><code>summary()</code> can be used similarly to how we use it for <code>lm()</code> models</li>
+<li>The team has <code>4</code> to <code>1</code> odds of winning; if the game was played <code>5</code> times, the team would win <code>4</code> times</li>
+</ul></li>
 </ul>
 
   </article>
@@ -158,10 +155,31 @@
 
 <slide class="" id="slide-6" style="background:white;">
   
+  <hgroup>
+    <h1>Logistic Regression in R</h1>
+  </hgroup>
+  
   <article data-timings="">
-    <p>#Logistic Regression Output</p>
+    <ul>
+<li>We will use <code>glm()</code> or generalized linear model to fit logistic regression models</li>
+<li><code>glm</code> can fit several non-linear functions</li>
+<li>Specify the argument <code>family = &quot;binomial&quot;</code> to perform logistic regression</li>
+<li><code>summary()</code> can be used similarly to how we use it for <code>lm()</code> models</li>
+</ul>
 
-<ul>
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  
+  <hgroup>
+    <h1>Logistic Regression Output</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
 <li>Like in our <code>lm</code> output, we get coefficient estimates and p-values.</li>
 <li>Coefficient estimates are the increase in the log odds of <code>y</code> for a one unit increase in <code>x</code></li>
 <li>Deviance is a measure of model fit
@@ -172,7 +190,7 @@
 <li>Residual deviance is the model&#39;s deviance, while null deviance is the deviance with only an intercept
 
 <ul>
-<li>Similar to F-test in <code>lm</code></li>
+<li>Similar to F-test in <code>lm</code> output</li>
 </ul></li>
 </ul>
 
@@ -181,12 +199,48 @@
   
 </slide>
 
-<slide class="" id="slide-7" style="background:white;">
+<slide class="" id="slide-8" style="background:white;">
+  
+  <hgroup>
+    <h1>Interpreting Logistic Regression Coefficients</h1>
+  </hgroup>
   
   <article data-timings="">
-    <p>#Logistic Regression Assumptions</p>
+    <ul>
+<li>Remember that we are predicting the log odds of event <code>y</code> occurring
 
 <ul>
+<li>A one unit increase in <code>x</code>, leads to an increase in the log odds of event <code>y</code> occurring by its coefficient estimate</li>
+</ul></li>
+<li>We can take the exponential of our coefficient estimates to convert them to odds</li>
+</ul>
+
+<pre><code class="r">exp(coef(tumor.glm))
+</code></pre>
+
+<pre><code>##  (Intercept)           V1           V3           V4           V5 
+## 0.0000411763 1.7067054139 1.3745942848 1.3908643372 1.1008866850 
+##           V6           V7           V8           V9 
+## 1.4667887059 1.5628015794 1.2368248052 1.7058506868
+</code></pre>
+
+<ul>
+<li>For example, a one-unit increase in <code>V1</code> would up the odds of the tumor being malignant by about <code>70%</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  
+  <hgroup>
+    <h1>Logistic Regression Assumptions</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
 <li>Response is binary (two classes)</li>
 <li>Independent observations</li>
 <li>No multicollinearity issues</li>
@@ -202,12 +256,14 @@
   
 </slide>
 
-<slide class="" id="slide-8" style="background:white;">
+<slide class="" id="slide-10" style="background:white;">
+  
+  <hgroup>
+    <h1>The Role of Polynomials</h1>
+  </hgroup>
   
   <article data-timings="">
-    <p>#The Role of Polynomials</p>
-
-<ul>
+    <ul>
 <li>We don&#39;t expect variables to have a linear relation with the response; we do expect variables to have a linear relation with the log odds</li>
 <li>The log odds of a model can be plotted against an independent variable</li>
 <li>Relationships that don&#39;t appear linear might be improved with the use of polynomials</li>
@@ -218,39 +274,18 @@
   
 </slide>
 
-<slide class="" id="slide-9" style="background:white;">
+<slide class="" id="slide-11" style="background:white;">
+  
+  <hgroup>
+    <h1>Measuring Accuracy</h1>
+  </hgroup>
   
   <article data-timings="">
-    <p>#Measuring Accuracy</p>
-
-<ul>
+    <ul>
 <li>We can make class probability predictions using <code>predict()</code> and specifying <code>type = &quot;response&quot;</code></li>
 <li>Without specifying type, we get log odds predictions</li>
 <li>We can round the predicted probabilities to the nearest whole number and measure how accurate our model is</li>
 <li>Straightforward method of determining how good our model is</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-10" style="background:white;">
-  
-  <article data-timings="">
-    <p>#Going Beyond Accuracy</p>
-
-<ul>
-<li>We might want to see accuracy by predicted class</li>
-<li>Unbalanced classes can return a high accuracy, but only predict one class well</li>
-<li>Look at a confusion matrix to get a better sense of true positives and true negatives (correctly predicted yes class and correctly predicted no class)
-
-<ul>
-<li>Sensitivity: Accuracy rate of positive class</li>
-<li><code>TP / (TP + FN)</code></li>
-<li>Specificity: Accuracy rate of negative class</li>
-<li><code>TN / (TN + FP)</code></li>
-</ul></li>
 </ul>
 
   </article>
@@ -265,71 +300,78 @@
       
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='NA'>
+        data-slide=1 title='Moving On From Linear Problems'>
          1
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='NA'>
+        data-slide=2 title='Issues With Modeling This Problem Linearly'>
          2
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='NA'>
+        data-slide=3 title='Issues With Modeling This Problem Linearly'>
          3
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='NA'>
+        data-slide=4 title='Logistic Regression'>
          4
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='NA'>
+        data-slide=5 title='Odds and Probability'>
          5
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='NA'>
+        data-slide=6 title='Logistic Regression in R'>
          6
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='NA'>
+        data-slide=7 title='Logistic Regression Output'>
          7
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='NA'>
+        data-slide=8 title='Interpreting Logistic Regression Coefficients'>
          8
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='NA'>
+        data-slide=9 title='Logistic Regression Assumptions'>
          9
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='NA'>
+        data-slide=10 title='The Role of Polynomials'>
          10
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Measuring Accuracy'>
+         11
       </a>
     </li>
     

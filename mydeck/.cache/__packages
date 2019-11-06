@@ -14,3 +14,7 @@ GGally
 mlbench
 MASS
 broom
+pROC
+lattice
+caret
+Metrics

@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 10: Model Validation</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week 10: Model Validation">
+  <meta name="author" content="Jake Campbell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Week 10: Model Validation</h1>
+    <h2>10/31/2019</h2>
+    <p>Jake Campbell<br/></p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:white;">
+  
+  <hgroup>
+    <h1>The Importance of Cross-validation</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Building a model is great, but what is important are the predictions</li>
+<li>Gauging model performance on predictions on data the model was trained on is a no-no
+
+<ul>
+<li>Your model has already seen this data; predictions are likely to be overly-optimistic</li>
+</ul></li>
+<li>A real test of model performance is looking at how well the model predicts data it hasn&#39;t seen</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  
+  <hgroup>
+    <h1>Training/Testing Approach</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>A simple method of cross-validation is to hold out some data from the model training process</li>
+<li>This will act as a test set</li>
+<li>Generally speaking, you would want the majority of observations to be in your training set (70-80%)</li>
+<li><code>createDataPartition</code> can be used to create a stratified random sample of indices to use as a training set</li>
+</ul>
+
+<pre><code class="r">data.split &lt;- createDataPartition(Sonar$Class, p = .75, list = F)
+# Index Sonar by data.split to get a training and testing set
+training &lt;- Sonar[data.split, ]
+testing &lt;- Sonar[-data.split, ]
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:white;">
+  
+  <hgroup>
+    <h1>Issues with the Training/Testing Approach</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Depending on which rows are randomly chosen in our dataset, we can have varied results
+
+<ul>
+<li>Maybe the model was trained on the easy to predict observations</li>
+</ul></li>
+<li>We are leaving out data we could be training the model on</li>
+<li>Can be easily influenced by researcher bias
+
+<ul>
+<li>If we have just one testing set, we can continue to adjust model parameters to try and make our test set look ideal</li>
+<li>If we don&#39;t like the results we get for our test set, we can just resample post-hoc until we like our test set results</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:white;">
+  
+  <hgroup>
+    <h1>Other Cross-validation Methods</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Leave One Out
+
+<ul>
+<li>A model is built on all observations except one; this one observation is used as the test set</li>
+<li>This process is repeated for each row and the error is averaged across all observations</li>
+</ul></li>
+<li>Bootstrap
+
+<ul>
+<li>The dataset is continuously sampled with replacement creating several training sets</li>
+<li>Test sets are the unused observations from each sample</li>
+</ul></li>
+<li>K-fold Cross Validation
+
+<ul>
+<li>The dataset is split into k-folds with a model being trained on each combination of folds, leaving one fold out to act as a testing set each time</li>
+<li>Results are averaged across each of the test sets</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-5" style="background:white;">
+  
+  <hgroup>
+    <h1><code>caret</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Classification And REgression Training</li>
+<li>Allows us to perform other validation methods using several different types of models</li>
+<li>Full list of models available and what package they are from available on caret&#39;s documentation
+
+<ul>
+<li><a href="https://topepo.github.io/caret/available-models.html">https://topepo.github.io/caret/available-models.html</a></li>
+</ul></li>
+<li>Note that the model created using caret is a caret object and not a specific model&#39;s object</li>
+<li>Also has several preprocessing functions
+
+<ul>
+<li>Splitting, scaling, centering, etc.</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  
+  <hgroup>
+    <h1>Creating Models with <code>caret</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Model syntax is the same as other models, but there are additional arguments to be made</li>
+<li>Input model formula into caret&#39;s <code>train()</code> function</li>
+<li>Specify <code>method</code> argument to specify what type of model you want caret to use</li>
+<li>Specify <code>trControl</code> using the <code>trainControl()</code> function
+
+<ul>
+<li>We can input the cross validation method within <code>trainControl</code> function</li>
+</ul></li>
+<li>Specify a grid of tuning parameters using the <code>tuneGrid</code> argument
+
+<ul>
+<li>Must be input as a dataframe where each parameter is a column</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  
+  <hgroup>
+    <h1>Common Cross-validation Methods with <code>caret</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We need to specify the cross validation method within the <code>trainControl()</code> function
+
+<ul>
+<li>Specify within <code>method</code> argument</li>
+</ul></li>
+<li>K-Fold CV: <code>method = &quot;repeatedcv&quot;</code>
+
+<ul>
+<li>Specify number of folds and number of repeats</li>
+</ul></li>
+<li>Leave One Out: <code>method = &quot;LOOCV&quot;</code></li>
+<li>Bootstrap: <code>method = &quot;boot&quot;</code>
+
+<ul>
+<li>Specify number of resamples</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  
+  <hgroup>
+    <h1><code>caret</code> Output</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>The final model created by caret is a model using all data observations</li>
+<li>By specifying <code>savePredictions = T</code> in the <code>trainControl</code> function, we save results from each cv fold
+
+<ul>
+<li>We can use this to identify an expected distribution of what error metric to expect</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  
+  <hgroup>
+    <h1><code>caret</code> Output</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <pre><code class="r">ggplot(data = sonar.glm.cv$resample, aes(x = Accuracy)) +
+  geom_density(alpha = .2, fill=&quot;red&quot;)
+</code></pre>
+
+<p><img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-10" style="background:white;">
+  
+  <hgroup>
+    <h1><code>caret</code> and <code>confusionMatrix</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><code>caret</code> has a <code>confusionMatrix</code> function
+
+<ul>
+<li>Creates a confusion matrix as well as gives several different accuracy measurements</li>
+<li>Specify <code>data</code> as your predictions and <code>reference</code> as the actual values</li>
+<li>Set the positive class with the <code>positive</code> argument</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-11" style="background:white;">
+  
+  <hgroup>
+    <h1><code>caret</code> and <code>confusionMatrix</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <pre><code class="r">confusionMatrix(data = class.predictions, reference = testing$Class,
+                positive = &quot;R&quot;)
+</code></pre>
+
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction  M  R
+##          M 19  5
+##          R  8 19
+##                                           
+##                Accuracy : 0.7451          
+##                  95% CI : (0.6037, 0.8567)
+##     No Information Rate : 0.5294          
+##     P-Value [Acc &gt; NIR] : 0.001311        
+##                                           
+##                   Kappa : 0.492           
+##                                           
+##  Mcnemar&#39;s Test P-Value : 0.579100        
+##                                           
+##             Sensitivity : 0.7917          
+##             Specificity : 0.7037          
+##          Pos Pred Value : 0.7037          
+##          Neg Pred Value : 0.7917          
+##              Prevalence : 0.4706          
+##          Detection Rate : 0.3725          
+##    Detection Prevalence : 0.5294          
+##       Balanced Accuracy : 0.7477          
+##                                           
+##        &#39;Positive&#39; Class : R               
+## 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-12" style="background:white;">
+  
+  <hgroup>
+    <h1><code>caret</code> for Future Use</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>In addition to being a tool for cross validation, <code>caret</code> has importance in model selection</li>
+<li>Not really pertinent to this class, because models we go over have no additional tuning parameters</li>
+<li>Several models can be built based off of different tuning parameters
+
+<ul>
+<li>Ex: Boosted trees can be built with a different number of tree based models; caret can build models at different intervals for number of trees (<code>100</code>, <code>500</code>, <code>1000</code>, etc.) and the models can be compared based on different metrics</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='The Importance of Cross-validation'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Training/Testing Approach'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Issues with the Training/Testing Approach'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='Other Cross-validation Methods'>
+         4
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='<code>caret</code>'>
+         5
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Creating Models with <code>caret</code>'>
+         6
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='Common Cross-validation Methods with <code>caret</code>'>
+         7
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='<code>caret</code> Output'>
+         8
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='<code>caret</code> Output'>
+         9
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='<code>caret</code> and <code>confusionMatrix</code>'>
+         10
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='<code>caret</code> and <code>confusionMatrix</code>'>
+         11
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='<code>caret</code> for Future Use'>
+         12
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

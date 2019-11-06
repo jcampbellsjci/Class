@@ -1,0 +1,24 @@
+---
+title: "Peer Evaluation"
+output: pdf_document
+---
+
+In addition to the final project itself, you will each be graded by your peers for the amount of effort and work you put into the project. To do this you will submit a peer evaluation sheet.
+
+What I'm expecting is a sheet with each of your group members' names. Next to each group member, you will put a number that will be their peer evaluation grade. The peer evaluation grades for each of your teammates will add up to `100`. *YOU ARE NOT GRADING YOURSELF*. So if you are in a group of 5 (including yourself), you would be submitting a peer evaluation sheet with four names and a score next to those four names, adding up to `100`. For example:
+
+```{r, echo=F, warning=F, message=F, error=F}
+library(tidyverse)
+
+tibble(teammate = c("A", "B", "C", "D"), grade = c(25, 25, 25, 25))
+```
+
+If you are in a group of four (including yourself), you would submit three names and three grades (we can make these add up to `99` to make our lives easier).
+
+So, how does this impact your group grade? Let's say your group (a group of `5`) got an `85` for your final project. You all submit your peer grades. Group member A got an average peer grade of `27` because they put in some extra work. Group member A would get `2` extra points, and their final project grade would be an `87`.
+
+The same effect happens the other way. If group member B was slacking a little and got an average peer grade of `23`, their final project grade would be an `83` instead of an `85`.
+
+The max this can swing your grade is by `5` points in either direction (so in the previous example, at worst, a group member could get an `80` and at best a group member could get a `90`). If you felt that everyone contributed the same amount of effort, you would give every team member a `25` if you are in a group of `5`, or a `33` if you are in a group of `4`.
+
+Your peer evaluation grades are due before the last class on December 5th. If you do not submit one, I'll just default your peer evaluation grades to be the same for all group members.

@@ -28,7 +28,7 @@ prestige <- read_csv(file = "~/Class/Week 6/Materials/prestige.csv")
 
 ## The Linear Regression Equation
 
-$\hat{y} = b_{0} + b_{1}x + i$
+$\hat{y} = b_{0} + b_{1}x$
 
 - $\hat{y}$ is the predicted value of the dependent variable
 - $b_{0}$ is the y-intercept term 

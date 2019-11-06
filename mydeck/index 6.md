@@ -1,6 +1,6 @@
 ---
 title       : "Week 6: Linear Regression Pt. 1"
-subtitle    : '10/03/2019'
+subtitle    : '11/06/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -23,7 +23,7 @@ knit        : slidify::knit2slides
 
 ## The Linear Regression Equation
 
-$\hat{y} = b_{0} + b_{1}x + i$
+$\hat{y} = b_{0} + b_{1}x$
 
 - $\hat{y}$ is the predicted value of the dependent variable
 - $b_{0}$ is the y-intercept term 

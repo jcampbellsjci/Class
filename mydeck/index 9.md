@@ -1,6 +1,6 @@
 ---
 title       : "Week 9: Model Performance and Feature Engineering"
-subtitle    : '10/24/2019'
+subtitle    : '11/06/2019'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -116,7 +116,7 @@ specificity(reference = actual_biopsy_class, data = predicted_biopsy_class,
 
 - ROC (Receiver Operating Characteristic) is a curve that plots the sensitivity and 1 - specificity at different predictive threshholds
   + By threshhold, we mean how to split our predictive probabilities into classes
-  + Raising the threshhold increases our sensitivity and vice versa
+  + Raising the threshhold increases our specificity and vice versa
 - AUC (Area Under the Curve) is the area under the ROC curve
   + The closer AUC is to `1`, the better the classifier
 

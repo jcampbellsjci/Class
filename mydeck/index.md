@@ -1,6 +1,6 @@
 ---
 title       : "Week 1: Welcome to R Statistical Programming"
-subtitle    : '07/10/2019'
+subtitle    : '01/14/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -16,6 +16,7 @@ knit        : slidify::knit2slides
 - It's open source
   + Why pay for licenses for other tools?
 - There is lots of good documentation
+  + Over 20 years worth!
 - Extremely large and helpful community
   + Stack overflow is your friend
 
@@ -24,7 +25,8 @@ knit        : slidify::knit2slides
 ## Rstudio
 
 - R is the language, but it can be pretty ugly to use
-- Rstudio is a GUI for R that will make your life easier
+  + Similar to working in the CLI
+- Rstudio is a IDE for R that will make your life easier
   + You can live without it, but why would you?
 
 ---
@@ -49,6 +51,7 @@ knit        : slidify::knit2slides
 </div>
 
 - Here we can load scripts directly into R
+  + A script is a text file with code in it
   + Doesn't necessarily need to be R scripts
 - We can push code to the console using that run button
   + Always easier to have that as a keyboard shortcut
@@ -64,7 +67,7 @@ knit        : slidify::knit2slides
 - This is where we can see what is stored in our environment
   + Could be data, functions, models, etc.
 - Essentially where what we save is stored
-- Also includes a history tab for past code as well as a Git staging area
+- Also includes a history tab for past code as well as a git staging area
 
 ---
 
@@ -126,7 +129,7 @@ knit        : slidify::knit2slides
 ```r
 test_output <- 1 + 1
 ```
-  + Might be more intuitive to use `=`, but that will cause confusion later on
+  + Might be more intuitive to use `=`, but that will cause confusion with function arguments (more on that later)
 
 ---
 
@@ -142,7 +145,7 @@ test_output
 ```
 ## [1] 2
 ```
--We can also perform functions on this object
+-We can also perform operations on this object
 
 ```r
 test_output + 3
@@ -159,6 +162,18 @@ test_output + 3
 - We should be descriptive, but not overly-complicated with our object names
   + `foo` isn't descriptive and wouldn't mean anything to us
   + `test_output_from_model_1_set_b_where_i_added_a_variable` is way too complicated for a name
-- Just be straightforward and succint
+- Just be straightforward and succinct
   + `model_gbm` is probably holding a `gbm` model in it
     + Quick and to the point
+
+---
+
+## Functions
+
+- Most of the time, we're going to be working with functions
+  + Functions are predefined operations that perform some action
+- Functions usually have arguments
+  + Arguments are what we input into a function
+  + The function takes this argument and provides output
+- General function layout is `function(argument = x)`
+  + We use `=` to assign input to an argument

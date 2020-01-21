@@ -1,6 +1,6 @@
 ---
 title       : "Week 2: Data Objects"
-subtitle    : '09/05/2019'
+subtitle    : '01/21/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -9,6 +9,20 @@ hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 knit        : slidify::knit2slides
+---
+
+## Packages
+
+- R has a huge library of packages that expand on base R functions
+- Some packages are installed with your installation of R
+  + We can load these with the `library()` function
+
+```r
+library(MASS)
+```
+- Most packages we'll use need to be installed first using `install.packages()`
+- We only need to install a package once, but we need to load it up every new R session
+
 ---
 
 ## Data Types
@@ -66,28 +80,39 @@ class(FALSE)
 
 ---
 
+## Major Data Types
+
+- Not a specific data type, but `NA` represents missing values in R
+- We can't perform operations on it directly because it is not known
+
+```r
+1 + 2 + NA
+```
+
+```
+## [1] NA
+```
+
+
+---
+
 ## Factors
 
 - Factors are for categorical data rather than just any string data
 - Categorical data should have a limited amount of possible options
   + There are only so many months in a year, but an infinite number of names
+- Factors have a set text input, but also underlying levels specifying possible input and their order
 
 ```r
-test_factor <- factor(c("second", "first"), levels = c("first", "second"))
-test_factor
+month_levels <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+month_factor <- factor(c("Dec", "Aug", "Oct"), levels = month_levels)
+month_factor
 ```
 
 ```
-## [1] second first 
-## Levels: first second
-```
-
-```r
-as.numeric(test_factor)
-```
-
-```
-## [1] 2 1
+## [1] Dec Aug Oct
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 ```
 
 ---
@@ -97,6 +122,7 @@ as.numeric(test_factor)
 - Remember that factors are DIFFERENT than characters
 - If we want to perform text manipulation, we need our data to be in character format
 - A lot of models in R require data to be in factor form rather than character
+  + A lot of the time, character data gets turned into factors automatically by the modeling function
 
 ---
 
@@ -132,13 +158,13 @@ class(test_number)
 - Calling `as.numeric` on a factor will give you the level order rather than the expected labels
 
 ```r
-test_factor <- factor(1:3, levels = c(2, 3, 1))
+test_factor <- factor(c(100, 200, 300), levels = c(200, 300, 100))
 test_factor
 ```
 
 ```
-## [1] 1 2 3
-## Levels: 2 3 1
+## [1] 100 200 300
+## Levels: 200 300 100
 ```
 
 ```r
@@ -217,7 +243,7 @@ test_matrix
 
 ```r
 test_list <- list(name = c("Jake", "Hannah", "Jim"), 
-                  age = c(25, 26, 33))
+                  age = c(26, 26, 33))
 test_list
 ```
 
@@ -226,7 +252,7 @@ test_list
 ## [1] "Jake"   "Hannah" "Jim"   
 ## 
 ## $age
-## [1] 25 26 33
+## [1] 26 26 33
 ```
 
 ---
@@ -239,13 +265,13 @@ test_list
 
 ```r
 test_df <- data.frame(name = c("Jake", "Hannah", "Jim"), 
-                      age = c(25, 26, 33))
+                      age = c(26, 26, 33))
 test_df
 ```
 
 ```
 ##     name age
-## 1   Jake  25
+## 1   Jake  26
 ## 2 Hannah  26
 ## 3    Jim  33
 ```
@@ -254,7 +280,7 @@ test_df
 
 ## Indexing Objects
 
-- What if we want the 3rd observation from a vector, or the 5th column of a dataframe?
+- What if we want the 3rd observation from a vector, or the 5th column of a data frame?
   + We can index these in multiple ways
 - Brackets allow us to specify element, row, or column of a data object
 
@@ -312,10 +338,10 @@ test_df$age
 
 - We can write our own functions to use later on in R
 - We first specify the `function()` function
-  + Its arguments are the names of the arguments we’ll include in our function
+  + Its arguments are the names of the arguments we'll include in our function
 - Next, we create curly braces `{}`
   + Everything inside our curly braces is the body of the function
-  + What is saved in the curly braces isn’t saved in the global environment
+  + What is saved in the curly braces isn't saved in the global environment
 
 ```r
 test_function <- function(input) {
@@ -328,17 +354,3 @@ test_function(1)
 ```
 ## [1] 2
 ```
-
----
-
-## Packages
-
-- R has a huge library of packages that expand on base R functions
-- Some packages are installed with your installation of R
-  + We can load these with the `library()` function
-
-```r
-library(MASS)
-```
-- Most packages we'll use need to be installed first using `install.packages()`
-- We only need to install a package once, but we need to load it up every new R session

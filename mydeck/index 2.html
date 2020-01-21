@@ -31,20 +31,54 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  
   <hgroup class="auto-fadein">
     <h1>Week 2: Data Objects</h1>
-    <h2>09/05/2019</h2>
+    <h2>01/21/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
+  
   <article></article>  
+  
 </slide>
     
 
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:white;">
+  
+  <hgroup>
+    <h2>Packages</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>R has a huge library of packages that expand on base R functions</li>
+<li>Some packages are installed with your installation of R
+
+<ul>
+<li>We can load these with the <code>library()</code> function</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">library(MASS)
+</code></pre>
+
+<ul>
+<li>Most packages we&#39;ll use need to be installed first using <code>install.packages()</code></li>
+<li>We only need to install a package once, but we need to load it up every new R session</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  
   <hgroup>
     <h2>Data Types</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Data can take on many different types of values
@@ -57,12 +91,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-2" style="background:white;">
+<slide class="" id="slide-3" style="background:white;">
+  
   <hgroup>
     <h2>Major Data Types</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Numeric: number values</li>
@@ -86,12 +123,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-3" style="background:white;">
+<slide class="" id="slide-4" style="background:white;">
+  
   <hgroup>
     <h2>Major Data Types</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Factor: categorical data</li>
@@ -119,12 +159,38 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-4" style="background:white;">
+<slide class="" id="slide-5" style="background:white;">
+  
+  <hgroup>
+    <h2>Major Data Types</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Not a specific data type, but <code>NA</code> represents missing values in R</li>
+<li>We can&#39;t perform operations on it directly because it is not known</li>
+</ul>
+
+<pre><code class="r">1 + 2 + NA
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  
   <hgroup>
     <h2>Factors</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Factors are for categorical data rather than just any string data</li>
@@ -133,45 +199,52 @@
 <ul>
 <li>There are only so many months in a year, but an infinite number of names</li>
 </ul></li>
+<li>Factors have a set text input, but also underlying levels specifying possible input and their order</li>
 </ul>
 
-<pre><code class="r">test_factor &lt;- factor(c(&quot;second&quot;, &quot;first&quot;), levels = c(&quot;first&quot;, &quot;second&quot;))
-test_factor
+<pre><code class="r">month_levels &lt;- c(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, 
+                  &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;)
+month_factor &lt;- factor(c(&quot;Dec&quot;, &quot;Aug&quot;, &quot;Oct&quot;), levels = month_levels)
+month_factor
 </code></pre>
 
-<pre><code>## [1] second first 
-## Levels: first second
-</code></pre>
-
-<pre><code class="r">as.numeric(test_factor)
-</code></pre>
-
-<pre><code>## [1] 2 1
+<pre><code>## [1] Dec Aug Oct
+## Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-5" style="background:white;">
+<slide class="" id="slide-7" style="background:white;">
+  
   <hgroup>
     <h2>Factors</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Remember that factors are DIFFERENT than characters</li>
 <li>If we want to perform text manipulation, we need our data to be in character format</li>
-<li>A lot of models in R require data to be in factor form rather than character</li>
+<li>A lot of models in R require data to be in factor form rather than character
+
+<ul>
+<li>A lot of the time, character data gets turned into factors automatically by the modeling function</li>
+</ul></li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-6" style="background:white;">
+<slide class="" id="slide-8" style="background:white;">
+  
   <hgroup>
     <h2>Changing Between Data Types</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>To change between data types, we specify the data type we want to change to, prefaced by <code>as.</code></li>
@@ -195,24 +268,27 @@ class(test_number)
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-7" style="background:white;">
+<slide class="" id="slide-9" style="background:white;">
+  
   <hgroup>
     <h2>Changing Between Data Types</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>The only hiccup you might experience is going from factor to numeric</li>
 <li>Calling <code>as.numeric</code> on a factor will give you the level order rather than the expected labels</li>
 </ul>
 
-<pre><code class="r">test_factor &lt;- factor(1:3, levels = c(2, 3, 1))
+<pre><code class="r">test_factor &lt;- factor(c(100, 200, 300), levels = c(200, 300, 100))
 test_factor
 </code></pre>
 
-<pre><code>## [1] 1 2 3
-## Levels: 2 3 1
+<pre><code>## [1] 100 200 300
+## Levels: 200 300 100
 </code></pre>
 
 <pre><code class="r">as.numeric(test_factor)
@@ -223,12 +299,15 @@ test_factor
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-8" style="background:white;">
+<slide class="" id="slide-10" style="background:white;">
+  
   <hgroup>
     <h2>Changing Between Data Types</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We would instead need to wrap the factor in <code>as.character</code> first before <code>as.numeric</code></li>
@@ -242,12 +321,15 @@ test_factor
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-9" style="background:white;">
+<slide class="" id="slide-11" style="background:white;">
+  
   <hgroup>
     <h2>Data Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>So we know data types, but what do we store the data in???</li>
@@ -260,12 +342,15 @@ test_factor
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-10" style="background:white;">
+<slide class="" id="slide-12" style="background:white;">
+  
   <hgroup>
     <h2>Vectors</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Vectors are just a simple combination of data of the same type
@@ -284,12 +369,15 @@ test_vector
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-11" style="background:white;">
+<slide class="" id="slide-13" style="background:white;">
+  
   <hgroup>
     <h2>Matrices</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Matrices can hold two dimensions of data of the same type
@@ -313,12 +401,15 @@ test_matrix
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-12" style="background:white;">
+<slide class="" id="slide-14" style="background:white;">
+  
   <hgroup>
     <h2>Lists</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Lists can contain data of different types</li>
@@ -326,7 +417,7 @@ test_matrix
 </ul>
 
 <pre><code class="r">test_list &lt;- list(name = c(&quot;Jake&quot;, &quot;Hannah&quot;, &quot;Jim&quot;), 
-                  age = c(25, 26, 33))
+                  age = c(26, 26, 33))
 test_list
 </code></pre>
 
@@ -334,17 +425,20 @@ test_list
 ## [1] &quot;Jake&quot;   &quot;Hannah&quot; &quot;Jim&quot;   
 ## 
 ## $age
-## [1] 25 26 33
+## [1] 26 26 33
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-13" style="background:white;">
+<slide class="" id="slide-15" style="background:white;">
+  
   <hgroup>
     <h2>Data Frames</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Data frames are going to be the type of object we work with most</li>
@@ -353,27 +447,30 @@ test_list
 </ul>
 
 <pre><code class="r">test_df &lt;- data.frame(name = c(&quot;Jake&quot;, &quot;Hannah&quot;, &quot;Jim&quot;), 
-                      age = c(25, 26, 33))
+                      age = c(26, 26, 33))
 test_df
 </code></pre>
 
 <pre><code>##     name age
-## 1   Jake  25
+## 1   Jake  26
 ## 2 Hannah  26
 ## 3    Jim  33
 </code></pre>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-14" style="background:white;">
+<slide class="" id="slide-16" style="background:white;">
+  
   <hgroup>
     <h2>Indexing Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>What if we want the 3rd observation from a vector, or the 5th column of a dataframe?
+<li>What if we want the 3rd observation from a vector, or the 5th column of a data frame?
 
 <ul>
 <li>We can index these in multiple ways</li>
@@ -389,12 +486,15 @@ test_df
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-15" style="background:white;">
+<slide class="" id="slide-17" style="background:white;">
+  
   <hgroup>
     <h2>Indexing Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Indexing the data frame requires a comma because it has two dimensions 
@@ -421,12 +521,15 @@ test_df
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-16" style="background:white;">
+<slide class="" id="slide-18" style="background:white;">
+  
   <hgroup>
     <h2>Indexing Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>Certain objects can also be indexed by the $ followed by the column name we want to select</li>
@@ -440,25 +543,28 @@ test_df
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
-<slide class="" id="slide-17" style="background:white;">
+<slide class="" id="slide-19" style="background:white;">
+  
   <hgroup>
     <h2>Function Syntax</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We can write our own functions to use later on in R</li>
 <li>We first specify the <code>function()</code> function
 
 <ul>
-<li>Its arguments are the names of the arguments we’ll include in our function</li>
+<li>Its arguments are the names of the arguments we&#39;ll include in our function</li>
 </ul></li>
 <li>Next, we create curly braces <code>{}</code>
 
 <ul>
 <li>Everything inside our curly braces is the body of the function</li>
-<li>What is saved in the curly braces isn’t saved in the global environment</li>
+<li>What is saved in the curly braces isn&#39;t saved in the global environment</li>
 </ul></li>
 </ul>
 
@@ -474,147 +580,148 @@ test_function(1)
 
   </article>
   <!-- Presenter Notes -->
-</slide>
-
-<slide class="" id="slide-18" style="background:white;">
-  <hgroup>
-    <h2>Packages</h2>
-  </hgroup>
-  <article data-timings="">
-    <ul>
-<li>R has a huge library of packages that expand on base R functions</li>
-<li>Some packages are installed with your installation of R
-
-<ul>
-<li>We can load these with the <code>library()</code> function</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">library(MASS)
-</code></pre>
-
-<ul>
-<li>Most packages we&#39;ll use need to be installed first using <code>install.packages()</code></li>
-<li>We only need to install a package once, but we need to load it up every new R session</li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
+  
 </slide>
 
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
     <ul>
-      <li>
+      
+    <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=1 title='Data Types'>
+        data-slide=1 title='Packages'>
          1
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Major Data Types'>
+        data-slide=2 title='Data Types'>
          2
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=3 title='Major Data Types'>
          3
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Factors'>
+        data-slide=4 title='Major Data Types'>
          4
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Factors'>
+        data-slide=5 title='Major Data Types'>
          5
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Changing Between Data Types'>
+        data-slide=6 title='Factors'>
          6
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Changing Between Data Types'>
+        data-slide=7 title='Factors'>
          7
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=8 title='Changing Between Data Types'>
          8
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Data Objects'>
+        data-slide=9 title='Changing Between Data Types'>
          9
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='Vectors'>
+        data-slide=10 title='Changing Between Data Types'>
          10
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Matrices'>
+        data-slide=11 title='Data Objects'>
          11
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Lists'>
+        data-slide=12 title='Vectors'>
          12
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Data Frames'>
+        data-slide=13 title='Matrices'>
          13
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Indexing Objects'>
+        data-slide=14 title='Lists'>
          14
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Indexing Objects'>
+        data-slide=15 title='Data Frames'>
          15
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=16 title='Indexing Objects'>
          16
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Function Syntax'>
+        data-slide=17 title='Indexing Objects'>
          17
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=18 title='Packages'>
+        data-slide=18 title='Indexing Objects'>
          18
       </a>
     </li>
-  </ul>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Function Syntax'>
+         19
+      </a>
+    </li>
+    
+    </ul>
   </div>  <!--[if IE]>
     <script 
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  

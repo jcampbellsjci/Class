@@ -4,6 +4,16 @@
 ###########################################
 
 
+#### Packages ####
+
+# We can load up packages using library()
+library(MASS)
+# We install packages with install.packages()
+install.packages("tidyverse")
+# We need to install a package once, but load it up every new session
+library(tidyverse)
+
+
 #### Data Types ####
 
 # Use class() to identify data type
@@ -14,11 +24,14 @@ class(FALSE)
 
 # Factors can be a bit confusing
 # They have labels and levels
-test_factor <- factor(c("second", "first", "first", "second"), 
-                      levels = c("first", "second"))
-test_factor
+month_levels <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+month_factor <- factor(c("Dec", "Aug", "Oct"), levels = month_levels)
+month_factor
 # The levels provide a specific order
-sort(test_factor)
+sort(month_factor)
+# We can resort and edit factors using the forcats package
+fct_relevel(month_factor, c("Feb", "Mar"))
 
 # We can change between data types using the as.x functions
 # Changing from numeric to character
@@ -28,8 +41,9 @@ class(test_character)
 test_number <- as.numeric(test_character)
 class(test_number)
 # Going from factor directly to numeric bases the change on the levels
-test_factor <- factor(1:3, levels = c(2, 3, 1))
+test_factor <- factor(c(100, 200, 300), levels = c(200, 300, 100))
 test_factor
+sort(test_factor)
 as.numeric(test_factor)
 # If we want to base it on the labels, we have to use as.character first
 as.numeric(as.character(test_factor))
@@ -76,13 +90,3 @@ test_function <- function(input) {
 }
 
 test_function(input = 1)
-
-
-#### Packages ####
-
-# We can load up packages using library()
-library(MASS)
-# We install packages with install.packages()
-install.packages("tidyverse")
-# We need to install a package once, but load it up every new session
-library(tidyverse)

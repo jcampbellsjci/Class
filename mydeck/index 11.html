@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 11: Regularized Regression</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week 11: Regularized Regression">
+  <meta name="author" content="Jake Campbell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Week 11: Regularized Regression</h1>
+    <h2>11/07/2019</h2>
+    <p>Jake Campbell<br/></p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:white;">
+  
+  <hgroup>
+    <h1>Bias vs. Variance</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>In statistical modeling, we have to think about a trade-off between bias and variance
+
+<ul>
+<li>Low Variance: consistent results, but not as accurate on average</li>
+<li>Low Bias: Accurate on average, but inconsistent</li>
+</ul></li>
+<li>Adding more variables decreases the bias, but can lead to higher variance</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  
+  <hgroup>
+    <h1>Parsimony</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>In general, larger models are going to perform better than smaller ones (at least with the data on hand!)
+
+<ul>
+<li>We have more info to make predictions with</li>
+</ul></li>
+<li>Of course, the improvement brought about by larger models may not justify a loss of model understanding
+
+<ul>
+<li>Does jumping <code>1%</code> in adj. R squared justify adding <code>5</code> new variables?</li>
+</ul></li>
+<li>The idea of a parsimonious model is that it explains the model well, with the minimum number of predictors
+
+<ul>
+<li>Sounds great! But is this a concept we should put all of our faith into?</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:white;">
+  
+  <hgroup>
+    <h1>Data Dredging</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Data dredging is an abuse of data mining to confirm some sort of bias
+
+<ul>
+<li>Might be done on purpose or not</li>
+<li>We are casting our net with the sole purpose to find some significant variable</li>
+</ul></li>
+<li>Researchers that go in with no hypothesis and don&#39;t do pre-analysis are very likely to be fishing in their data</li>
+<li>You can go in blind, but by using pre-analysis steps (graphing, inspecting data, looking at correlations, etc.), you can begin to generate initial hypothesis</li>
+<li>If our sole goal is to get a parsimonious model, we aren&#39;t being good researchers
+
+<ul>
+<li>A general issue with some forms of stepwise regression</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:white;">
+  
+  <hgroup>
+    <h1>What Should We Do?</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><p>We&#39;d like a good, relatively parsimonious model, but don&#39;t want to succumb to poor research tactics</p></li>
+<li><p>What if we take a larger model, and introduce bias into it to lower the variance and get more consistent results?</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-5" style="background:white;">
+  
+  <hgroup>
+    <h1>Ridge Regression</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Like in regular OLS regression, aiming to minimize the sum of squared residuals, <em>BUT</em> with a constraint on the coefficient</li>
+<li>This constraint is the multiple of a value \(\lambda\) and the sum of our squared coefficients</li>
+<li>Known as L2 regularization</li>
+<li>We are trying to minimize the error, but also minimize the size of our coefficients
+\[\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j}^{m}\beta^2j\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  
+  <hgroup>
+    <h1>Feature Selection: What is it?</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>When we talk about features of a model, we are talking about the predictors</li>
+<li>So far, we have looked at features independently and gauged their relationship with the response ourselves
+
+<ul>
+<li>Do <code>x</code> and <code>y</code> have some sort of relationship graphically?</li>
+<li>Is <code>x</code> significant while taking other variables into account?</li>
+<li>Does it even matter if <code>x</code> is significant?</li>
+</ul></li>
+<li>This can become difficult when we&#39;re dealing with thousands or millions of variables</li>
+<li>As much as we want to be in control of model development, sometimes it&#39;s impossible</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  
+  <hgroup>
+    <h1>LASSO Regression</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Least Absolute Shrinkage and Selection Operator</li>
+<li>Like in regular OLS regression, aiming to minimize the sum of squared residuals, BUT with a constraint on the coefficient
+
+<ul>
+<li>This constraint is the multiple of a value \(\lambda\) and the sum of the absolute value of the coefficients</li>
+</ul></li>
+<li>Known as L1 regularization</li>
+<li>Final coefficients can be minimized to <code>0</code>, making LASSO a feature selection tool
+\[\sum_{i=1}^{n}(y_i - \hat{y}_i)^2 + \lambda\sum_{j}^{m}\mid \beta j\mid\]</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  
+  <hgroup>
+    <h1>Ridge and LASSO in R</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Can use the <code>glmnet</code> package to perform both lasso and ridge regression</li>
+<li><code>cv.glmnet</code> performs cross-validated regularized regression
+
+<ul>
+<li>Identifies the \(\lambda\) that has the lowest average error across several held out test sets</li>
+</ul></li>
+<li>Set alpha to <code>0</code> for ridge regression, <code>1</code> for LASSO regression</li>
+<li>We can identify the \(\lambda\) that minimizes the error as well as the largest \(\lambda\) one standard error away
+
+<ul>
+<li>More shrinkage takes effect, but it isn&#39;t that different in terms of performance than the model with the minimum lambda</li>
+</ul></li>
+<li>Specify the argument <code>family = &quot;binomial&quot;</code> to perform regularized logistic regression</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  
+  <hgroup>
+    <h1>Additional Notes</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>The same assumptions apply as in linear regression, but you&#39;ll need to plot the results manually</li>
+<li>In terms of predictions, we have to specify <code>newx</code>, which is the matrix we&#39;ll be making predictions on</li>
+<li><code>s</code> is the value of lambda for the model that is used to make the predictions</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Bias vs. Variance'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Parsimony'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Data Dredging'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='What Should We Do?'>
+         4
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='Ridge Regression'>
+         5
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='Feature Selection: What is it?'>
+         6
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='LASSO Regression'>
+         7
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='Ridge and LASSO in R'>
+         8
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='Additional Notes'>
+         9
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

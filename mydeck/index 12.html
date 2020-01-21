@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Week 12: Looping</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Week 12: Looping">
+  <meta name="author" content="Jake Campbell">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  
+  <hgroup class="auto-fadein">
+    <h1>Week 12: Looping</h1>
+    <h2>11/14/2019</h2>
+    <p>Jake Campbell<br/></p>
+  </hgroup>
+  
+  <article></article>  
+  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:white;">
+  
+  <hgroup>
+    <h1>Applying Functions to Multiple Columns</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Most functions are difficult to apply to multiple columns at once
+
+<ul>
+<li>For example, we can’t calculate <code>mean()</code> on multiple columns at once</li>
+</ul></li>
+<li>We need to find a way to loop over our dataset, applying our function to each column on each loop
+
+<ul>
+<li>Not limited to looping over columns; we can loop over anything</li>
+</ul></li>
+<li>Several ways to do this R
+
+<ul>
+<li>Some better than others</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-2" style="background:white;">
+  
+  <hgroup>
+    <h1>The <code>for</code> Loop</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>The <code>for</code> loop is written similar in style to how we made our own functions</li>
+<li>First specify your <code>for()</code> argument
+
+<ul>
+<li>What you are looping over</li>
+</ul></li>
+<li><code>i</code> is a placeholder for the multiple values</li>
+<li>Then within <code>{}</code>, specify the function you’re applying to each element, <code>i</code></li>
+<li>If we want to save the output somewhere, we should allocate space in an empty object (a list or vector for example)</li>
+</ul>
+
+<pre><code class="r">for(i in 1:5){
+  print(mean(mtcars[, i], na.rm=T))
+}
+</code></pre>
+
+<pre><code>## [1] 20.09062
+## [1] 6.1875
+## [1] 230.7219
+## [1] 146.6875
+## [1] 3.596563
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-3" style="background:white;">
+  
+  <hgroup>
+    <h1>The Apply Family of Functions</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>This looping process encapsulates the call into a single function</li>
+<li>Could be slightly faster than traditional looping due to vectorization
+
+<ul>
+<li>Speed upgrade is usually overstated</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-4" style="background:white;">
+  
+  <hgroup>
+    <h1><code>apply()</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><code>apply()</code> takes three arguments
+
+<ul>
+<li>The object you are looping over</li>
+<li>The dimension you are looping over (<code>1</code> for rows, <code>2</code> for columns)</li>
+<li>The function you are applying</li>
+</ul></li>
+<li>If you&#39;re function has multiple arguments, we can specify <code>function(x)</code> to create a placeholder, similar to <code>i</code></li>
+</ul>
+
+<pre><code class="r">apply(mtcars[, c(1:5)], 2, function(x) mean(x, na.rm = T))
+</code></pre>
+
+<pre><code>##        mpg        cyl       disp         hp       drat 
+##  20.090625   6.187500 230.721875 146.687500   3.596563
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-5" style="background:white;">
+  
+  <hgroup>
+    <h1><code>lapply()</code> and <code>sapply()</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>These functions can be applied to list objects</li>
+<li><code>lapply()</code> returns a list object, while <code>sapply()</code> returns a simpified object
+
+<ul>
+<li>The simplified object could be a vector, matrix, or dataframe</li>
+</ul></li>
+<li>Don&#39;t need to specify a dimension we are looping over</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-6" style="background:white;">
+  
+  <hgroup>
+    <h1><code>dplyr</code> and Looping</h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We can use several <code>dplyr</code> functions in conjunction with <code>_all</code> or <code>_at</code> to loop over different columns
+
+<ul>
+<li><code>_all</code> would apply the function to every column</li>
+<li><code>_at</code> would apply the function to specific columns</li>
+</ul></li>
+<li>We can specify the function we want to perform with the <code>.funs</code> argument
+
+<ul>
+<li>We set this argument to be a list of functions, which we specify with <code>~</code></li>
+</ul></li>
+</ul>
+
+<pre><code class="r">mtcars %&gt;%
+  mutate_at(.vars = vars(mpg:drat), .funs = list(~ as.character(.))) %&gt;%
+  str()
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-7" style="background:white;">
+  
+  <hgroup>
+    <h1><code>purrr</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><code>purrr</code> is a tidyverse package focused on iteration</li>
+<li>Very similar to the apply family of functions</li>
+<li>Centered around the <code>map()</code> function</li>
+<li>As a part of the tidyverse, they work well with the <code>%&gt;%</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-8" style="background:white;">
+  
+  <hgroup>
+    <h1><code>purrr</code></h1>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Different forms of <code>map()</code> return different output
+
+<ul>
+<li><code>map()</code> returns a list</li>
+<li><code>map_dbl()</code> and <code>map_chr()</code> return numeric and character vectors</li>
+<li><code>map_dfr()</code> returns a tibble</li>
+</ul></li>
+<li>If we need to add additional arguments to the function we are iterating, we can use <code>~</code> and use <code>.</code> as a placeholder for what we are looping over</li>
+</ul>
+
+<pre><code class="r">mtcars %&gt;%
+  map_dfr(~ mean(., na.rm = T))
+</code></pre>
+
+<pre><code>## # A tibble: 1 x 11
+##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear  carb
+##   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  20.1  6.19  231.  147.  3.60  3.22  17.8 0.438 0.406  3.69  2.81
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Applying Functions to Multiple Columns'>
+         1
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='The <code>for</code> Loop'>
+         2
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='The Apply Family of Functions'>
+         3
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='<code>apply()</code>'>
+         4
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='<code>lapply()</code> and <code>sapply()</code>'>
+         5
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='<code>dplyr</code> and Looping'>
+         6
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='<code>purrr</code>'>
+         7
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='<code>purrr</code>'>
+         8
+      </a>
+    </li>
+    
+    </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  
+<script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>

@@ -31,20 +31,25 @@
     
     <!-- LOGO SLIDE -->
         <slide class="title-slide segue nobackground">
+  
   <hgroup class="auto-fadein">
     <h1>Week 1: Welcome to R Statistical Programming</h1>
-    <h2>07/10/2019</h2>
+    <h2>01/14/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
+  
   <article></article>  
+  
 </slide>
     
 
     <!-- SLIDES -->
     <slide class="" id="slide-1" style="background:white;">
+  
   <hgroup>
     <h2>Why R?</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>It&#39;s open source
@@ -52,7 +57,11 @@
 <ul>
 <li>Why pay for licenses for other tools?</li>
 </ul></li>
-<li>There is lots of good documentation</li>
+<li>There is lots of good documentation
+
+<ul>
+<li>Over 20 years worth!</li>
+</ul></li>
 <li>Extremely large and helpful community
 
 <ul>
@@ -62,16 +71,23 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-2" style="background:white;">
+  
   <hgroup>
     <h2>Rstudio</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
-<li>R is the language, but it can be pretty ugly to use</li>
-<li>Rstudio is a GUI for R that will make your life easier
+<li>R is the language, but it can be pretty ugly to use
+
+<ul>
+<li>Similar to working in the CLI</li>
+</ul></li>
+<li>Rstudio is a IDE for R that will make your life easier
 
 <ul>
 <li>You can live without it, but why would you?</li>
@@ -80,12 +96,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-3" style="background:white;">
+  
   <hgroup>
     <h2>Rstudio: The Console</h2>
   </hgroup>
+  
   <article data-timings="">
     <div style="position: absolute; left: 350px; top: 400px; z-index:100">
     <img height=200 src="https://github.com/jcampbellsjci/Class/blob/master/Week%201/Images/console.png?raw=true" alt="">
@@ -103,12 +122,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-4" style="background:white;">
+  
   <hgroup>
     <h2>Rstudio: The Text Editor</h2>
   </hgroup>
+  
   <article data-timings="">
     <div style="position: absolute; left: 350px; top: 400px; z-index:100">
     <img height=200 src="https://github.com/jcampbellsjci/Class/blob/master/Week%201/Images/text editor.png?raw=true" alt="">
@@ -118,6 +140,7 @@
 <li>Here we can load scripts directly into R
 
 <ul>
+<li>A script is a text file with code in it</li>
 <li>Doesn&#39;t necessarily need to be R scripts</li>
 </ul></li>
 <li>We can push code to the console using that run button
@@ -129,12 +152,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-5" style="background:white;">
+  
   <hgroup>
     <h2>Rstudio: The Environment</h2>
   </hgroup>
+  
   <article data-timings="">
     <div style="position: absolute; left: 350px; top: 400px; z-index:100">
     <img height=200 src="https://github.com/jcampbellsjci/Class/blob/master/Week%201/Images/environment.png?raw=true" alt="">
@@ -147,17 +173,20 @@
 <li>Could be data, functions, models, etc.</li>
 </ul></li>
 <li>Essentially where what we save is stored</li>
-<li>Also includes a history tab for past code as well as a Git staging area</li>
+<li>Also includes a history tab for past code as well as a git staging area</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-6" style="background:white;">
+  
   <hgroup>
     <h2>Rstudio: The Viewer Pane</h2>
   </hgroup>
+  
   <article data-timings="">
     <div style="position: absolute; left: 350px; top: 400px; z-index:100">
     <img height=200 src="https://github.com/jcampbellsjci/Class/blob/master/Week%201/Images/viewer.png?raw=true" alt="">
@@ -175,12 +204,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-7" style="background:white;">
+  
   <hgroup>
     <h2>Bare Bones R</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>R can be used as a calculator</li>
@@ -206,12 +238,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-8" style="background:white;">
+  
   <hgroup>
     <h2>Assigning to Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We can store different aspects of our work in objects
@@ -224,12 +259,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-9" style="background:white;">
+  
   <hgroup>
     <h2>Assigning to Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We can use the assignment operator <code>&lt;-</code> to store objects</li>
@@ -239,17 +277,20 @@
 </code></pre>
 
 <ul>
-<li>Might be more intuitive to use <code>=</code>, but that will cause confusion later on</li>
+<li>Might be more intuitive to use <code>=</code>, but that will cause confusion with function arguments (more on that later)</li>
 </ul>
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-10" style="background:white;">
+  
   <hgroup>
     <h2>Assigning to Objects</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li><code>test_output</code> is now stored in our environment</li>
@@ -262,7 +303,7 @@
 <pre><code>## [1] 2
 </code></pre>
 
-<p>-We can also perform functions on this object</p>
+<p>-We can also perform operations on this object</p>
 
 <pre><code class="r">test_output + 3
 </code></pre>
@@ -272,12 +313,15 @@
 
   </article>
   <!-- Presenter Notes -->
+  
 </slide>
 
 <slide class="" id="slide-11" style="background:white;">
+  
   <hgroup>
     <h2>Object Names</h2>
   </hgroup>
+  
   <article data-timings="">
     <ul>
 <li>We should be descriptive, but not overly-complicated with our object names
@@ -286,7 +330,7 @@
 <li><code>foo</code> isn&#39;t descriptive and wouldn&#39;t mean anything to us</li>
 <li><code>test_output_from_model_1_set_b_where_i_added_a_variable</code> is way too complicated for a name</li>
 </ul></li>
-<li>Just be straightforward and succint
+<li>Just be straightforward and succinct
 
 <ul>
 <li><code>model_gbm</code> is probably holding a <code>gbm</code> model in it</li>
@@ -296,79 +340,130 @@
 
   </article>
   <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-12" style="background:white;">
+  
+  <hgroup>
+    <h2>Functions</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Most of the time, we&#39;re going to be working with functions
+
+<ul>
+<li>Functions are predefined operations that perform some action</li>
+</ul></li>
+<li>Functions usually have arguments
+
+<ul>
+<li>Arguments are what we input into a function</li>
+<li>The function takes this argument and provides output</li>
+</ul></li>
+<li>General function layout is <code>function(argument = x)</code>
+
+<ul>
+<li>We use <code>=</code> to assign input to an argument</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
 </slide>
 
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
     <ul>
-      <li>
+      
+    <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=1 title='Why R?'>
          1
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=2 title='Rstudio'>
          2
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=3 title='Rstudio: The Console'>
          3
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=4 title='Rstudio: The Text Editor'>
          4
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=5 title='Rstudio: The Environment'>
          5
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=6 title='Rstudio: The Viewer Pane'>
          6
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=7 title='Bare Bones R'>
          7
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=8 title='Assigning to Objects'>
          8
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=9 title='Assigning to Objects'>
          9
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=10 title='Assigning to Objects'>
          10
       </a>
     </li>
+    
     <li>
       <a href="#" target="_self" rel='tooltip' 
         data-slide=11 title='Object Names'>
          11
       </a>
     </li>
-  </ul>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='Functions'>
+         12
+      </a>
+    </li>
+    
+    </ul>
   </div>  <!--[if IE]>
     <script 
       src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  

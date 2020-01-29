@@ -24,11 +24,9 @@ initial.starwars<- starwars[, 1:10]
 
 ## What is the Tidyverse?
 
-- The tidyverse is a set of packages developed for data science and manipulation
-    + They share a common philosophy and grammar
-    + Intended to make code more understandable
-    
-- R is a bit antiquated
+- The tidyverse is a set of packages developed to make the data science process easier
+  + They share a common philosophy and grammar
+  + Intended to make code more understandable
 
 - Several different people contributing code can lead to confusion and overlapping ideas
 
@@ -41,69 +39,14 @@ initial.starwars<- starwars[, 1:10]
 - The tidyverse consists of several different packages
 
 - We can download them all at once, though
-
- + Just call `install.packages("tidyverse")`
-
----
-
-## Reshaping Data
-
-- Data generally comes in wide and long format
-
-- Wide format makes every value a column
-
-- Long format puts multiple values in a single column, creating another column that acts as a key
-
-- Consider the goal of your analysis when choosing which format
-
----
-
-## Reshaping with `tidyr`
-
-- `tidyr` allows us to easily go from long to wide or vice-versa
-
-- The main functions we'll use are `gather()` and `spread()`
-  + These change datasets into long and wide formats, respectively
-
----
-
-## Going from Wide to Long
-
-- We'll use `gather()` to go from wide to long
-- We need to first specify what columns we are gathering
-  + The names of the columns will become our key, their values become our value
-  + We need to also specify the new `key` and `value` column names
-  
-```{r}
-long.tb <- gather(Year1, Year2, data = initial.tb, key = Year, value = Cases)
-long.tb
-```
-
----
-
-## Going from Long to Wide
-
-- We'll use `spread()` to go from long to wide
-- We need to first specify where the data is coming from, followed by the key and value columns
-  
-```{r}
-spread(data = long.tb, key = Year, value = Cases)
-```
-
-
----
-
-## Tibbles
-
-- Tibbles are an updated version of data frames
-
-- Biggest reason I like them: they print out a preview of your data frame
+  + Just call `install.packages("tidyverse")`
 
 ---
 
 ## Data Manipulation with `dplyr`
 
 - `dplyr` has several functions for manipulating data frames
+  + Note that they output tibbles rather than data frames
 
 - We can chain functions together using `%>%`
   + Also known as the pipe operator
@@ -113,7 +56,9 @@ spread(data = long.tb, key = Year, value = Cases)
 # Format would look like this
 
 tibble_x %>%
-  function_x()
+  function_x() %>%
+  function_y() %>%
+  function_z()
 ```
 
 
@@ -124,8 +69,8 @@ tibble_x %>%
 - `select()`: pick certain variables
 - `filter()`: filter your data on a given condition
 - `arrange()`: order your data
-- `mutate()`: create a new column
 - `rename()`: rename your columns
+- `mutate()`: create a new column
 
 ---
 
@@ -133,13 +78,18 @@ tibble_x %>%
 
 - With `select`, we just specify the variables we want to choose
   + We can instead specify what columns we don't want by putting a `-` before the column
-  
-```{r, echo=-1}
-select <- dplyr::select
 
+```{r, eval=F}
 initial.starwars %>%
   # Select height and birth year of all characters
   select(height, birth_year) %>%
+  head()
+```
+  
+```{r, echo=F}
+initial.starwars %>%
+  # Select height and birth year of all characters
+  dplyr::select(height, birth_year) %>%
   head()
 ```
 
@@ -148,7 +98,7 @@ initial.starwars %>%
 ## `filter`
 
 - With `filter`, we subset the tibble on some condition
-  + Remember that `==` means equal to and `!=` means not equal to
+  + `==` means equal to and `!=` means not equal to
   
 ```{r}
 initial.starwars %>%
@@ -162,32 +112,13 @@ initial.starwars %>%
 ## `arrange`
 
 - With `arrange`, we order the tibble by some column
-  + By default, order is ascending; to get descending order, we must use `desc()`
+  + By default, order is ascending; to get descending order, we use `desc()`
   
 ```{r}
 initial.starwars %>%
   # Arrange by descending height
   arrange(desc(height)) %>%
   head()
-```
-
----
-
-## `mutate`
-
-- `mutate` allows us to create new columns
-  + Remember to save your output if you want to keep it!
-  
-```{r, echo=-1}
-select <- dplyr::select
-new.starwars<-
-  initial.starwars %>%
-  # Creating a new column that is the square root of height
-  mutate(sqrt_height = sqrt(height))
-
-new.starwars %>%
-  select(height, sqrt_height) %>%
-  head(3)
 ```
 
 ---
@@ -202,6 +133,33 @@ initial.starwars %>%
   # Rename name to full_name
   rename(full_name = name) %>%
   head()
+```
+
+---
+
+## `mutate`
+
+- `mutate` allows us to create new columns
+  + Remember to save your output if you want to keep it!
+  
+```{r, eval=F}
+new.starwars <- initial.starwars %>%
+  # Creating a new column that is the square root of height
+  mutate(sqrt_height = sqrt(height))
+
+new.starwars %>%
+  select(height, sqrt_height) %>%
+  head(3)
+```
+
+```{r, echo=F}
+new.starwars <- initial.starwars %>%
+  # Creating a new column that is the square root of height
+  mutate(sqrt_height = sqrt(height))
+
+new.starwars %>%
+  dplyr::select(height, sqrt_height) %>%
+  head(3)
 ```
 
 ---
@@ -240,9 +198,7 @@ initial.starwars %>%
 
 - With the `%>%` operator, we can easily chain several functions together
 
-```{r, echo=-1}
-select <- dplyr::select
-
+```{r, eval=F}
 initial.starwars %>%
   # Filter characters taller than 200 cm
   filter(height > 200) %>%
@@ -250,4 +206,71 @@ initial.starwars %>%
   select(mass) %>%
   # Order mass in descending order
   arrange(desc(mass))
+```
+
+```{r, echo=F}
+initial.starwars %>%
+  # Filter characters taller than 200 cm
+  filter(height > 200) %>%
+  # Select the mass column
+  dplyr::select(mass) %>%
+  # Order mass in descending order
+  arrange(desc(mass))
+```
+
+---
+
+## Joining Data
+
+- We can use several functions that work similarly to `SQL` joins
+- `inner_join`: return all rows from `x` where there are matching values in `y`
+- `left_join`: return all rows from `x`
+- `right_join`: return all rows from `y`
+- `full_join`: return all rows from `x` and `y`
+
+---
+
+## Reshaping Data
+
+- Data generally comes in wide and long format
+
+- Wide format makes every variable a column
+
+- Long format puts multiple variables in one column (key) and their values in a second column
+
+- Consider the goal of your analysis when choosing which format
+
+---
+
+## Reshaping with `tidyr`
+
+- `tidyr` allows us to easily go from long to wide or vice-versa
+
+- The main functions we'll use are `gather()` and `spread()`
+  + These change data sets into long and wide formats, respectively
+
+---
+
+## Going from Wide to Long
+
+- We'll use `gather()` to go from wide to long
+- We need to first specify what columns we are gathering
+  + The names of the columns will become our key, their values become our value
+  + We need to also specify the new `key` and `value` column names
+  
+```{r}
+long.tb <- gather(Year1, Year2, data = initial.tb,
+                  key = Year, value = Cases)
+long.tb
+```
+
+---
+
+## Going from Long to Wide
+
+- We'll use `spread()` to go from long to wide
+- We need to first specify where the data is coming from, followed by the key and value columns
+  
+```{r}
+spread(data = long.tb, key = Year, value = Cases)
 ```

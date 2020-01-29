@@ -34,7 +34,7 @@
   
   <hgroup class="auto-fadein">
     <h1>Week 3: Introduction to the Tidyverse</h1>
-    <h2>09/12/2019</h2>
+    <h2>01/28/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -52,13 +52,12 @@
   
   <article data-timings="">
     <ul>
-<li><p>The tidyverse is a set of packages developed for data science and manipulation</p>
+<li><p>The tidyverse is a set of packages developed to make the data science process easier</p>
 
 <ul>
 <li>They share a common philosophy and grammar</li>
 <li>Intended to make code more understandable</li>
 </ul></li>
-<li><p>R is a bit antiquated</p></li>
 <li><p>Several different people contributing code can lead to confusion and overlapping ideas</p></li>
 <li><p>Tidyverse packages have different purposes, but read easily into each other</p></li>
 </ul>
@@ -92,134 +91,16 @@
 <slide class="" id="slide-3" style="background:white;">
   
   <hgroup>
-    <h2>Reshaping Data</h2>
-  </hgroup>
-  
-  <article data-timings="">
-    <ul>
-<li><p>Data generally comes in wide and long format</p></li>
-<li><p>Wide format makes every value a column</p></li>
-<li><p>Long format puts multiple values in a single column, creating another column that acts as a key</p></li>
-<li><p>Consider the goal of your analysis when choosing which format</p></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-4" style="background:white;">
-  
-  <hgroup>
-    <h2>Reshaping with <code>tidyr</code></h2>
-  </hgroup>
-  
-  <article data-timings="">
-    <ul>
-<li><p><code>tidyr</code> allows us to easily go from long to wide or vice-versa</p></li>
-<li><p>The main functions we&#39;ll use are <code>gather()</code> and <code>spread()</code></p>
-
-<ul>
-<li>These change datasets into long and wide formats, respectively</li>
-</ul></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-5" style="background:white;">
-  
-  <hgroup>
-    <h2>Going from Wide to Long</h2>
-  </hgroup>
-  
-  <article data-timings="">
-    <ul>
-<li>We&#39;ll use <code>gather()</code> to go from wide to long</li>
-<li>We need to first specify what columns we are gathering
-
-<ul>
-<li>The names of the columns will become our key, their values become our value</li>
-<li>We need to also specify the new <code>key</code> and <code>value</code> column names</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">long.tb &lt;- gather(Year1, Year2, data = initial.tb, key = Year, value = Cases)
-long.tb
-</code></pre>
-
-<pre><code>## # A tibble: 6 x 3
-##   country     Year   Cases
-##   &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
-## 1 Afghanistan Year1    745
-## 2 Brazil      Year1  37737
-## 3 China       Year1 212258
-## 4 Afghanistan Year2   2666
-## 5 Brazil      Year2  80488
-## 6 China       Year2 213766
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-6" style="background:white;">
-  
-  <hgroup>
-    <h2>Going from Long to Wide</h2>
-  </hgroup>
-  
-  <article data-timings="">
-    <ul>
-<li>We&#39;ll use <code>spread()</code> to go from long to wide</li>
-<li>We need to first specify where the data is coming from, followed by the key and value columns</li>
-</ul>
-
-<pre><code class="r">spread(data = long.tb, key = Year, value = Cases)
-</code></pre>
-
-<pre><code>## # A tibble: 3 x 3
-##   country      Year1  Year2
-##   &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
-## 1 Afghanistan    745   2666
-## 2 Brazil       37737  80488
-## 3 China       212258 213766
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-7" style="background:white;">
-  
-  <hgroup>
-    <h2>Tibbles</h2>
-  </hgroup>
-  
-  <article data-timings="">
-    <ul>
-<li><p>Tibbles are an updated version of data frames</p></li>
-<li><p>Biggest reason I like them: they print out a preview of your data frame</p></li>
-</ul>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-8" style="background:white;">
-  
-  <hgroup>
     <h2>Data Manipulation with <code>dplyr</code></h2>
   </hgroup>
   
   <article data-timings="">
     <ul>
-<li><p><code>dplyr</code> has several functions for manipulating data frames</p></li>
+<li><p><code>dplyr</code> has several functions for manipulating data frames</p>
+
+<ul>
+<li>Note that they output tibbles rather than data frames</li>
+</ul></li>
 <li><p>We can chain functions together using <code>%&gt;%</code></p>
 
 <ul>
@@ -231,7 +112,9 @@ long.tb
 <pre><code class="r"># Format would look like this
 
 tibble_x %&gt;%
-  function_x()
+  function_x() %&gt;%
+  function_y() %&gt;%
+  function_z()
 </code></pre>
 
   </article>
@@ -239,7 +122,7 @@ tibble_x %&gt;%
   
 </slide>
 
-<slide class="" id="slide-9" style="background:white;">
+<slide class="" id="slide-4" style="background:white;">
   
   <hgroup>
     <h2>Some Common <code>dplyr</code> Functions</h2>
@@ -250,8 +133,8 @@ tibble_x %&gt;%
 <li><code>select()</code>: pick certain variables</li>
 <li><code>filter()</code>: filter your data on a given condition</li>
 <li><code>arrange()</code>: order your data</li>
-<li><code>mutate()</code>: create a new column</li>
 <li><code>rename()</code>: rename your columns</li>
+<li><code>mutate()</code>: create a new column</li>
 </ul>
 
   </article>
@@ -259,7 +142,7 @@ tibble_x %&gt;%
   
 </slide>
 
-<slide class="" id="slide-10" style="background:white;">
+<slide class="" id="slide-5" style="background:white;">
   
   <hgroup>
     <h2><code>select</code></h2>
@@ -296,7 +179,7 @@ tibble_x %&gt;%
   
 </slide>
 
-<slide class="" id="slide-11" style="background:white;">
+<slide class="" id="slide-6" style="background:white;">
   
   <hgroup>
     <h2><code>filter</code></h2>
@@ -307,7 +190,7 @@ tibble_x %&gt;%
 <li>With <code>filter</code>, we subset the tibble on some condition
 
 <ul>
-<li>Remember that <code>==</code> means equal to and <code>!=</code> means not equal to</li>
+<li><code>==</code> means equal to and <code>!=</code> means not equal to</li>
 </ul></li>
 </ul>
 
@@ -334,7 +217,7 @@ tibble_x %&gt;%
   
 </slide>
 
-<slide class="" id="slide-12" style="background:white;">
+<slide class="" id="slide-7" style="background:white;">
   
   <hgroup>
     <h2><code>arrange</code></h2>
@@ -345,7 +228,7 @@ tibble_x %&gt;%
 <li>With <code>arrange</code>, we order the tibble by some column
 
 <ul>
-<li>By default, order is ascending; to get descending order, we must use <code>desc()</code></li>
+<li>By default, order is ascending; to get descending order, we use <code>desc()</code></li>
 </ul></li>
 </ul>
 
@@ -372,45 +255,7 @@ tibble_x %&gt;%
   
 </slide>
 
-<slide class="" id="slide-13" style="background:white;">
-  
-  <hgroup>
-    <h2><code>mutate</code></h2>
-  </hgroup>
-  
-  <article data-timings="">
-    <ul>
-<li><code>mutate</code> allows us to create new columns
-
-<ul>
-<li>Remember to save your output if you want to keep it!</li>
-</ul></li>
-</ul>
-
-<pre><code class="r">new.starwars&lt;-
-  initial.starwars %&gt;%
-  # Creating a new column that is the square root of height
-  mutate(sqrt_height = sqrt(height))
-
-new.starwars %&gt;%
-  select(height, sqrt_height) %&gt;%
-  head(3)
-</code></pre>
-
-<pre><code>## # A tibble: 3 x 2
-##   height sqrt_height
-##    &lt;int&gt;       &lt;dbl&gt;
-## 1    172       13.1 
-## 2    167       12.9 
-## 3     96        9.80
-</code></pre>
-
-  </article>
-  <!-- Presenter Notes -->
-  
-</slide>
-
-<slide class="" id="slide-14" style="background:white;">
+<slide class="" id="slide-8" style="background:white;">
   
   <hgroup>
     <h2><code>rename</code></h2>
@@ -448,7 +293,44 @@ new.starwars %&gt;%
   
 </slide>
 
-<slide class="" id="slide-15" style="background:white;">
+<slide class="" id="slide-9" style="background:white;">
+  
+  <hgroup>
+    <h2><code>mutate</code></h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><code>mutate</code> allows us to create new columns
+
+<ul>
+<li>Remember to save your output if you want to keep it!</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">new.starwars &lt;- initial.starwars %&gt;%
+  # Creating a new column that is the square root of height
+  mutate(sqrt_height = sqrt(height))
+
+new.starwars %&gt;%
+  select(height, sqrt_height) %&gt;%
+  head(3)
+</code></pre>
+
+<pre><code>## # A tibble: 3 x 2
+##   height sqrt_height
+##    &lt;int&gt;       &lt;dbl&gt;
+## 1    172       13.1 
+## 2    167       12.9 
+## 3     96        9.80
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-10" style="background:white;">
   
   <hgroup>
     <h2><code>summarize</code></h2>
@@ -475,7 +357,7 @@ new.starwars %&gt;%
   
 </slide>
 
-<slide class="" id="slide-16" style="background:white;">
+<slide class="" id="slide-11" style="background:white;">
   
   <hgroup>
     <h2><code>group_by</code></h2>
@@ -515,7 +397,7 @@ new.starwars %&gt;%
   
 </slide>
 
-<slide class="" id="slide-17" style="background:white;">
+<slide class="" id="slide-12" style="background:white;">
   
   <hgroup>
     <h2>Chaining Functions</h2>
@@ -555,6 +437,132 @@ new.starwars %&gt;%
   
 </slide>
 
+<slide class="" id="slide-13" style="background:white;">
+  
+  <hgroup>
+    <h2>Joining Data</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We can use several functions that work similarly to <code>SQL</code> joins</li>
+<li><code>inner_join</code>: return all rows from <code>x</code> where there are matching values in <code>y</code></li>
+<li><code>left_join</code>: return all rows from <code>x</code></li>
+<li><code>right_join</code>: return all rows from <code>y</code></li>
+<li><code>full_join</code>: return all rows from <code>x</code> and <code>y</code></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-14" style="background:white;">
+  
+  <hgroup>
+    <h2>Reshaping Data</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><p>Data generally comes in wide and long format</p></li>
+<li><p>Wide format makes every variable a column</p></li>
+<li><p>Long format puts multiple variables in one column (key) and their values in a second column</p></li>
+<li><p>Consider the goal of your analysis when choosing which format</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-15" style="background:white;">
+  
+  <hgroup>
+    <h2>Reshaping with <code>tidyr</code></h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li><p><code>tidyr</code> allows us to easily go from long to wide or vice-versa</p></li>
+<li><p>The main functions we&#39;ll use are <code>gather()</code> and <code>spread()</code></p>
+
+<ul>
+<li>These change data sets into long and wide formats, respectively</li>
+</ul></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-16" style="background:white;">
+  
+  <hgroup>
+    <h2>Going from Wide to Long</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We&#39;ll use <code>gather()</code> to go from wide to long</li>
+<li>We need to first specify what columns we are gathering
+
+<ul>
+<li>The names of the columns will become our key, their values become our value</li>
+<li>We need to also specify the new <code>key</code> and <code>value</code> column names</li>
+</ul></li>
+</ul>
+
+<pre><code class="r">long.tb &lt;- gather(Year1, Year2, data = initial.tb,
+                  key = Year, value = Cases)
+long.tb
+</code></pre>
+
+<pre><code>## # A tibble: 6 x 3
+##   country     Year   Cases
+##   &lt;chr&gt;       &lt;chr&gt;  &lt;int&gt;
+## 1 Afghanistan Year1    745
+## 2 Brazil      Year1  37737
+## 3 China       Year1 212258
+## 4 Afghanistan Year2   2666
+## 5 Brazil      Year2  80488
+## 6 China       Year2 213766
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-17" style="background:white;">
+  
+  <hgroup>
+    <h2>Going from Long to Wide</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>We&#39;ll use <code>spread()</code> to go from long to wide</li>
+<li>We need to first specify where the data is coming from, followed by the key and value columns</li>
+</ul>
+
+<pre><code class="r">spread(data = long.tb, key = Year, value = Cases)
+</code></pre>
+
+<pre><code>## # A tibble: 3 x 3
+##   country      Year1  Year2
+##   &lt;chr&gt;        &lt;int&gt;  &lt;int&gt;
+## 1 Afghanistan    745   2666
+## 2 Brazil       37737  80488
+## 3 China       212258 213766
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
     <slide class="backdrop"></slide>
   </slides>
   <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
@@ -576,105 +584,105 @@ new.starwars %&gt;%
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=3 title='Reshaping Data'>
+        data-slide=3 title='Data Manipulation with <code>dplyr</code>'>
          3
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=4 title='Reshaping with <code>tidyr</code>'>
+        data-slide=4 title='Some Common <code>dplyr</code> Functions'>
          4
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=5 title='Going from Wide to Long'>
+        data-slide=5 title='<code>select</code>'>
          5
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=6 title='Going from Long to Wide'>
+        data-slide=6 title='<code>filter</code>'>
          6
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=7 title='Tibbles'>
+        data-slide=7 title='<code>arrange</code>'>
          7
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Data Manipulation with <code>dplyr</code>'>
+        data-slide=8 title='<code>rename</code>'>
          8
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Some Common <code>dplyr</code> Functions'>
+        data-slide=9 title='<code>mutate</code>'>
          9
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=10 title='<code>select</code>'>
+        data-slide=10 title='<code>summarize</code>'>
          10
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='<code>filter</code>'>
+        data-slide=11 title='<code>group_by</code>'>
          11
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='<code>arrange</code>'>
+        data-slide=12 title='Chaining Functions'>
          12
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='<code>mutate</code>'>
+        data-slide=13 title='Joining Data'>
          13
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='<code>rename</code>'>
+        data-slide=14 title='Reshaping Data'>
          14
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='<code>summarize</code>'>
+        data-slide=15 title='Reshaping with <code>tidyr</code>'>
          15
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='<code>group_by</code>'>
+        data-slide=16 title='Going from Wide to Long'>
          16
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=17 title='Chaining Functions'>
+        data-slide=17 title='Going from Long to Wide'>
          17
       </a>
     </li>

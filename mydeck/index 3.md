@@ -1,6 +1,6 @@
 ---
 title       : "Week 3: Introduction to the Tidyverse"
-subtitle    : '09/12/2019'
+subtitle    : '01/28/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -16,11 +16,9 @@ knit        : slidify::knit2slides
 
 ## What is the Tidyverse?
 
-- The tidyverse is a set of packages developed for data science and manipulation
-    + They share a common philosophy and grammar
-    + Intended to make code more understandable
-    
-- R is a bit antiquated
+- The tidyverse is a set of packages developed to make the data science process easier
+  + They share a common philosophy and grammar
+  + Intended to make code more understandable
 
 - Several different people contributing code can lead to confusion and overlapping ideas
 
@@ -33,92 +31,14 @@ knit        : slidify::knit2slides
 - The tidyverse consists of several different packages
 
 - We can download them all at once, though
-
- + Just call `install.packages("tidyverse")`
-
----
-
-## Reshaping Data
-
-- Data generally comes in wide and long format
-
-- Wide format makes every value a column
-
-- Long format puts multiple values in a single column, creating another column that acts as a key
-
-- Consider the goal of your analysis when choosing which format
-
----
-
-## Reshaping with `tidyr`
-
-- `tidyr` allows us to easily go from long to wide or vice-versa
-
-- The main functions we'll use are `gather()` and `spread()`
-  + These change datasets into long and wide formats, respectively
-
----
-
-## Going from Wide to Long
-
-- We'll use `gather()` to go from wide to long
-- We need to first specify what columns we are gathering
-  + The names of the columns will become our key, their values become our value
-  + We need to also specify the new `key` and `value` column names
-  
-
-```r
-long.tb <- gather(Year1, Year2, data = initial.tb, key = Year, value = Cases)
-long.tb
-```
-
-```
-## # A tibble: 6 x 3
-##   country     Year   Cases
-##   <chr>       <chr>  <int>
-## 1 Afghanistan Year1    745
-## 2 Brazil      Year1  37737
-## 3 China       Year1 212258
-## 4 Afghanistan Year2   2666
-## 5 Brazil      Year2  80488
-## 6 China       Year2 213766
-```
-
----
-
-## Going from Long to Wide
-
-- We'll use `spread()` to go from long to wide
-- We need to first specify where the data is coming from, followed by the key and value columns
-  
-
-```r
-spread(data = long.tb, key = Year, value = Cases)
-```
-
-```
-## # A tibble: 3 x 3
-##   country      Year1  Year2
-##   <chr>        <int>  <int>
-## 1 Afghanistan    745   2666
-## 2 Brazil       37737  80488
-## 3 China       212258 213766
-```
-
-
----
-
-## Tibbles
-
-- Tibbles are an updated version of data frames
-
-- Biggest reason I like them: they print out a preview of your data frame
+  + Just call `install.packages("tidyverse")`
 
 ---
 
 ## Data Manipulation with `dplyr`
 
 - `dplyr` has several functions for manipulating data frames
+  + Note that they output tibbles rather than data frames
 
 - We can chain functions together using `%>%`
   + Also known as the pipe operator
@@ -129,7 +49,9 @@ spread(data = long.tb, key = Year, value = Cases)
 # Format would look like this
 
 tibble_x %>%
-  function_x()
+  function_x() %>%
+  function_y() %>%
+  function_z()
 ```
 
 
@@ -140,8 +62,8 @@ tibble_x %>%
 - `select()`: pick certain variables
 - `filter()`: filter your data on a given condition
 - `arrange()`: order your data
-- `mutate()`: create a new column
 - `rename()`: rename your columns
+- `mutate()`: create a new column
 
 ---
 
@@ -149,7 +71,7 @@ tibble_x %>%
 
 - With `select`, we just specify the variables we want to choose
   + We can instead specify what columns we don't want by putting a `-` before the column
-  
+
 
 ```r
 initial.starwars %>%
@@ -157,6 +79,7 @@ initial.starwars %>%
   select(height, birth_year) %>%
   head()
 ```
+  
 
 ```
 ## # A tibble: 6 x 2
@@ -175,7 +98,7 @@ initial.starwars %>%
 ## `filter`
 
 - With `filter`, we subset the tibble on some condition
-  + Remember that `==` means equal to and `!=` means not equal to
+  + `==` means equal to and `!=` means not equal to
   
 
 ```r
@@ -203,7 +126,7 @@ initial.starwars %>%
 ## `arrange`
 
 - With `arrange`, we order the tibble by some column
-  + By default, order is ascending; to get descending order, we must use `desc()`
+  + By default, order is ascending; to get descending order, we use `desc()`
   
 
 ```r
@@ -224,34 +147,6 @@ initial.starwars %>%
 ## 5 Roos~    224    82 none       grey       orange            NA male  
 ## 6 Grie~    216   159 none       brown, wh~ green, y~         NA male  
 ## # ... with 2 more variables: homeworld <chr>, species <chr>
-```
-
----
-
-## `mutate`
-
-- `mutate` allows us to create new columns
-  + Remember to save your output if you want to keep it!
-  
-
-```r
-new.starwars<-
-  initial.starwars %>%
-  # Creating a new column that is the square root of height
-  mutate(sqrt_height = sqrt(height))
-
-new.starwars %>%
-  select(height, sqrt_height) %>%
-  head(3)
-```
-
-```
-## # A tibble: 3 x 2
-##   height sqrt_height
-##    <int>       <dbl>
-## 1    172       13.1 
-## 2    167       12.9 
-## 3     96        9.80
 ```
 
 ---
@@ -280,6 +175,34 @@ initial.starwars %>%
 ## 5 Leia Org~    150    49 brown      light      brown           19   female
 ## 6 Owen Lars    178   120 brown, gr~ light      blue            52   male  
 ## # ... with 2 more variables: homeworld <chr>, species <chr>
+```
+
+---
+
+## `mutate`
+
+- `mutate` allows us to create new columns
+  + Remember to save your output if you want to keep it!
+  
+
+```r
+new.starwars <- initial.starwars %>%
+  # Creating a new column that is the square root of height
+  mutate(sqrt_height = sqrt(height))
+
+new.starwars %>%
+  select(height, sqrt_height) %>%
+  head(3)
+```
+
+
+```
+## # A tibble: 3 x 2
+##   height sqrt_height
+##    <int>       <dbl>
+## 1    172       13.1 
+## 2    167       12.9 
+## 3     96        9.80
 ```
 
 ---
@@ -349,6 +272,7 @@ initial.starwars %>%
   arrange(desc(mass))
 ```
 
+
 ```
 ## # A tibble: 10 x 1
 ##     mass
@@ -363,4 +287,84 @@ initial.starwars %>%
 ##  8    NA
 ##  9    NA
 ## 10    NA
+```
+
+---
+
+## Joining Data
+
+- We can use several functions that work similarly to `SQL` joins
+- `inner_join`: return all rows from `x` where there are matching values in `y`
+- `left_join`: return all rows from `x`
+- `right_join`: return all rows from `y`
+- `full_join`: return all rows from `x` and `y`
+
+---
+
+## Reshaping Data
+
+- Data generally comes in wide and long format
+
+- Wide format makes every variable a column
+
+- Long format puts multiple variables in one column (key) and their values in a second column
+
+- Consider the goal of your analysis when choosing which format
+
+---
+
+## Reshaping with `tidyr`
+
+- `tidyr` allows us to easily go from long to wide or vice-versa
+
+- The main functions we'll use are `gather()` and `spread()`
+  + These change data sets into long and wide formats, respectively
+
+---
+
+## Going from Wide to Long
+
+- We'll use `gather()` to go from wide to long
+- We need to first specify what columns we are gathering
+  + The names of the columns will become our key, their values become our value
+  + We need to also specify the new `key` and `value` column names
+  
+
+```r
+long.tb <- gather(Year1, Year2, data = initial.tb,
+                  key = Year, value = Cases)
+long.tb
+```
+
+```
+## # A tibble: 6 x 3
+##   country     Year   Cases
+##   <chr>       <chr>  <int>
+## 1 Afghanistan Year1    745
+## 2 Brazil      Year1  37737
+## 3 China       Year1 212258
+## 4 Afghanistan Year2   2666
+## 5 Brazil      Year2  80488
+## 6 China       Year2 213766
+```
+
+---
+
+## Going from Long to Wide
+
+- We'll use `spread()` to go from long to wide
+- We need to first specify where the data is coming from, followed by the key and value columns
+  
+
+```r
+spread(data = long.tb, key = Year, value = Cases)
+```
+
+```
+## # A tibble: 3 x 3
+##   country      Year1  Year2
+##   <chr>        <int>  <int>
+## 1 Afghanistan    745   2666
+## 2 Brazil       37737  80488
+## 3 China       212258 213766
 ```

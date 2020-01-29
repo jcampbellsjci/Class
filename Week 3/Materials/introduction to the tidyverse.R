@@ -9,33 +9,11 @@ install.packages("tidyverse")
 # Bring up the package with library()
 library(tidyverse)
 
-# We'll be using a dataset documenting the number of TB cases documented by WHO 
-# in several countries in 1999 and 2000
-initial.tb<- 
-  table4a %>%
-  rename(Year1=`1999`, Year2=`2000`)
 # We'll also be using the starwars dataset
-initial.starwars<- starwars[, 1:10]
-
-
-#### tidyr ####
-
-# tidyr has a couple of functions developed to reshape data
-# initial.tb is in wide-format; each time variable is a column
-# We can convert from wide to long by gathering our data
-long.tb <- gather(Year1, Year2, data = initial.tb, key = Year, value = Cases)
-
-# We can convert from long to wide by spreading our data
-wide.tb<- spread(data = long.tb, key = Year, value = Cases)
+initial.starwars <- starwars[, 1:10]
 
 
 #### dplyr ####
-
-# While tidyr was focused on data reshaping, dplyr is more about data 
-# manipulation
-# It makes heavy use of the pipe operator (%>%)
-  # This pipe operator is used extensively across all tidyverse packages
-  # It combines multiple lines of code into one code chunk
 
 # We can select (or index) specific columns using select
 initial.starwars %>%
@@ -55,16 +33,15 @@ initial.starwars %>%
 initial.starwars %>%
   arrange(desc(height))
 
-# We create new columns using mutate
-new.starwars<-
-  initial.starwars %>%
-  # Creating a new column that is the square root of height
-  mutate(sqrt_height = sqrt(height))
-
 # We can rename columns using rename
 initial.starwars %>%
   # Rename name to full_name
   rename(full_name = name)
+
+# We create new columns using mutate
+new.starwars <- initial.starwars %>%
+  # Creating a new column that is the square root of height
+  mutate(sqrt_height = sqrt(height))
 
 # We can summarize info using summarize
 initial.starwars %>%
@@ -72,8 +49,6 @@ initial.starwars %>%
   summarize(avg.height = mean(height, na.rm=T))
 
 # We can use the pipe operator to chain multiple functions together
-# What if we want to select the mass of all characters taller than 200 cm in 
-# desc order?
 initial.starwars %>%
   # Filter characters taller than 200 cm
   filter(height > 200) %>%
@@ -91,3 +66,36 @@ initial.starwars %>%
   # Remember to ungroup if you want to perform non-grouped functions after 
   # grouping
   ungroup()
+
+# We can use join functions similar to how we would in SQL
+join_tbl <- new.starwars %>%
+  select(name, sqrt_height) %>%
+  .[1:5, ] %>%
+  bind_rows(tibble(name = c("fake_1", "fake_2"),
+                   sqrt_height = c(22, .96)))
+# Inner join will show data only in both tables
+sw_ij <- initial.starwars %>%
+  inner_join(join_tbl, by = "name")
+# Full join will show all data in both tables
+sw_fj <- initial.starwars %>%
+  full_join(join_tbl, by = "name")
+# Left and right joins show all data in one table
+sw_lj <- initial.starwars %>%
+  left_join(join_tbl, by = "name")
+sw_rj <- initial.starwars %>%
+  right_join(join_tbl, by = "name")
+
+
+#### tidyr ####
+
+# We'll be using a dataset documenting the number of TB cases documented by WHO 
+# in several countries in 1999 and 2000
+initial.tb <- table4a %>%
+  rename(Year1=`1999`, Year2=`2000`)
+
+# We can convert from wide to long by gathering our data
+long.tb <- gather(Year1, Year2, data = initial.tb,
+                  key = Year, value = Cases)
+
+# We can convert from long to wide by spreading our data
+wide.tb<- spread(data = long.tb, key = Year, value = Cases)

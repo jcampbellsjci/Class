@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Week 4: The Grammar of Graphics</title>
+  <title>Week 4: Visualizing Our Data</title>
   <meta charset="utf-8">
-  <meta name="description" content="Week 4: The Grammar of Graphics">
+  <meta name="description" content="Week 4: Visualizing Our Data">
   <meta name="author" content="Jake Campbell">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,8 +33,8 @@
         <slide class="title-slide segue nobackground">
   
   <hgroup class="auto-fadein">
-    <h1>Week 4: The Grammar of Graphics</h1>
-    <h2>09/19/2019</h2>
+    <h1>Week 4: Visualizing Our Data</h1>
+    <h2>02/04/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -129,15 +129,16 @@
 </ul>
 
 <pre><code class="r"># Map gender to color
-ggplot(aex(x = height, y = weight, col = gender))
+ggplot(aes(x = height, y = weight, color = gender))
 </code></pre>
 
 <ul>
-<li>If we just want to map a single characteristic, we should do it outside of the <code>aes()</code> call</li>
+<li>If we just want to map a single characteristic, we should do it outside of the <code>aes()</code> call and in the geom object</li>
 </ul>
 
 <pre><code class="r"># Map the color blue to color
-ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
+ggplot(aes(x = height, y = weight)) +
+  geom_point(color = &quot;blue&quot;)
 </code></pre>
 
   </article>
@@ -155,7 +156,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
     <ul>
 <li>How we choose to visually represent our data</li>
 <li>Anything from a scatter plot to a text label</li>
-<li>Geoms can have their own attributes or aesthetics
+<li>We can label plot attributes within a geom object
 
 <ul>
 <li>i.e. color, transparency, size, etc.</li>
@@ -176,7 +177,8 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
   
   <article data-timings="">
     <ul>
-<li>We use <code>geom_point()</code> to specify a scatterplot</li>
+<li>We use <code>geom_point()</code> to specify a scatter plot</li>
+<li>Good for plotting a continuous variable against a continuous variable</li>
 </ul>
 
 <pre><code class="r">ggplot(data = diamonds, aes(x = carat, y = price)) +
@@ -211,6 +213,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
   <article data-timings="">
     <ul>
 <li>We use <code>geom_histogram()</code> to create a histogram</li>
+<li>Good for plotting the distribution of a variable</li>
 </ul>
 
 <pre><code class="r">ggplot(data = diamonds, aes(x = price)) +
@@ -245,6 +248,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
   <article data-timings="">
     <ul>
 <li>We use <code>geom_density()</code> to create a density plot</li>
+<li>Smoother representation of a distribution than a histogram</li>
 </ul>
 
 <pre><code class="r">ggplot(data = diamonds, aes(x = price)) +
@@ -273,12 +277,12 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <slide class="" id="slide-12" style="background:white;">
   
   <hgroup>
-    <h2>Barplots</h2>
+    <h2>Bar Plots</h2>
   </hgroup>
   
   <article data-timings="">
     <ul>
-<li>We use <code>geom_bar()</code> to create a barplot</li>
+<li>We use <code>geom_bar()</code> to create a bar plot</li>
 <li>Could use the <code>position</code> argument to change bar placements
 
 <ul>
@@ -286,6 +290,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <li><code>&quot;stack&quot;</code> creates a stacked bar chart for groups</li>
 <li><code>&quot;fill&quot;</code> stacks the groups using ratios instead of counts</li>
 </ul></li>
+<li>Good for plotting the count of levels of a categorical variable</li>
 </ul>
 
 <pre><code class="r">ggplot(data = diamonds, aes(x = cut)) +
@@ -300,7 +305,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <slide class="" id="slide-13" style="background:white;">
   
   <hgroup>
-    <h2>Barplots</h2>
+    <h2>Bar Plots</h2>
   </hgroup>
   
   <article data-timings="">
@@ -314,12 +319,13 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <slide class="" id="slide-14" style="background:white;">
   
   <hgroup>
-    <h2>Boxplots</h2>
+    <h2>Box Plots</h2>
   </hgroup>
   
   <article data-timings="">
     <ul>
-<li>We can plot boxplots with <code>geom_boxplot()</code></li>
+<li>We can plot box plots with <code>geom_boxplot()</code></li>
+<li>Good for plotting a continuous variable against a categorical variable</li>
 </ul>
 
 <pre><code class="r">ggplot(data = diamonds, aes(x = cut, y = price)) +
@@ -334,7 +340,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <slide class="" id="slide-15" style="background:white;">
   
   <hgroup>
-    <h2>Boxplots</h2>
+    <h2>Box Plots</h2>
   </hgroup>
   
   <article data-timings="">
@@ -359,11 +365,7 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <li>ex: the relationship between pain measure and time after surgery by gender</li>
 </ul></li>
 <li>Faceting allows us to do this</li>
-<li><code>facet_wrap()</code> takes a look at our data by group
-
-<ul>
-<li><code>facet_grid()</code> allows us to do this with multiple dimensions</li>
-</ul></li>
+<li><code>facet_wrap()</code> takes a look at our data by group</li>
 </ul>
 
   </article>
@@ -384,7 +386,10 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
 <ul>
 <li><code>scale_x_discrete()</code>: allows us to edit scale info on categorical data</li>
 <li><code>scale_x_continuous()</code>: allows us to edit scale info on numeric data</li>
-<li><code>scale_color_.</code>: can be used to edit scale info for data that has been mapped to color</li>
+</ul></li>
+<li><code>scale_color_.</code>: can be used to edit scale info for data that has been mapped to color
+
+<ul>
 <li>Note, you can specify discrete, continuous, or manual</li>
 <li>Also commonly applied to fill with <code>scale_fill_continuous</code> or <code>scale_fill_manual</code></li>
 </ul></li>
@@ -504,28 +509,28 @@ ggplot(aes(x = height, y = weight), col = &quot;blue&quot;)
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=12 title='Barplots'>
+        data-slide=12 title='Bar Plots'>
          12
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='Barplots'>
+        data-slide=13 title='Bar Plots'>
          13
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Boxplots'>
+        data-slide=14 title='Box Plots'>
          14
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Boxplots'>
+        data-slide=15 title='Box Plots'>
          15
       </a>
     </li>

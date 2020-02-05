@@ -17,7 +17,7 @@ data("diamonds")
   # large dataset
 set.seed(1234)
 diamonds <- diamonds %>%
-  sample_n(size = 5000, replace = F)
+  sample_n(size = 1000, replace = F)
 
 
 #### ggplot2 Coding ####
@@ -25,18 +25,15 @@ diamonds <- diamonds %>%
 # Let's start by creating a scatterplot comparing price and carat
   # We start by calling the ggplot command
   # "+" is used to string code into larger chuncks
-  ggplot(data = diamonds, aes(x = carat, y = price)) +
+ggplot(data = diamonds, aes(x = carat, y = price)) +
   # Now we'll specify the designated geom; think of this as the type of plot 
   # you want
   geom_point()
 
 # We can add additional aesthetics, such as shape or color
-  ggplot(data = diamonds, aes(x = carat, y = price, 
-                              shape = cut, color = clarity)) + 
-  geom_point() +
-  labs(x = "Diamond Carat", y = "Diamond Price ($)", 
-       title = "Diamond Price vs. Diamond Carat",
-       color = "ABC")
+ggplot(data = diamonds, aes(x = carat, y = price, 
+                            shape = cut, color = clarity)) + 
+  geom_point()
 
 
 #### Common Plotting ####
@@ -44,9 +41,10 @@ diamonds <- diamonds %>%
 # Histogram
 ggplot(data = diamonds, aes(x = price)) +
   geom_histogram()
-# We can specify the number of bins with a histogram
+
+# Density plot
 ggplot(data = diamonds, aes(x = price)) +
-  geom_histogram(bins = 1)
+  geom_density()
 
 # Barplots
 ggplot(data = diamonds, aes(x = cut)) +
@@ -61,10 +59,6 @@ ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
 # Plot fill levels next to instead of on top of each other
 ggplot(data = diamonds, aes(x = cut, fill = clarity)) +
   geom_bar(position = "dodge")
-
-# Density plot
-ggplot(data = diamonds, aes(x = price)) +
-  geom_density()
 
 # Boxplots
 ggplot(data = diamonds, aes(x = cut, y = price)) +
@@ -81,29 +75,16 @@ ggplot(data = diamonds, aes(x = carat, y = price)) +
   # First plot the points
   geom_point() +
   # Than plot the smooth line
-  geom_smooth(size = 2) +
-  labs(x = "Diamond Carat", y = "Diamond Price ($)", 
-       title = "Diamond Price vs. Diamond Carat")
+  geom_smooth(size = 2)
 
   
 #### Faceting ####
   
 # Let's take the carat/price scatter plot and facet it on cut
 ggplot(data = diamonds, aes(x = carat, y = price)) + 
-  geom_point() + 
-  facet_wrap(~ cut) + 
-  geom_smooth() + 
-  labs(x = "Diamond Carat", y = "Diamond Price ($)", 
-       title = "Diamond Price vs. Diamond Carat by Cut")
-
-# Here, we facet on every combo of color and cut
-ggplot(data = diamonds, aes(x = carat, y = price)) + 
-  geom_point() + 
-  facet_wrap(~ cut + color) + 
-  #facet_grid(cut ~ color)
-  geom_smooth() + 
-  labs(x = "Diamond Carat", y = "Diamond Price ($)", 
-       title = "Diamond Price vs. Diamond Carat by Cut")
+  geom_point() +
+  facet_wrap(~ cut) +
+  geom_smooth()
 
 
 #### Additional Functions ####
@@ -127,13 +108,19 @@ ggplot(data = diamonds, aes(x = cut, y = price)) +
 # Change legend info
 ggplot(data = diamonds, aes(x = carat, y = price, color = cut)) +
   geom_point() +
-  scale_color_discrete(labels = c("A", "B", "C", "D", "E")) +
-  labs(color = "Diamond Cuts")
+  scale_color_discrete(labels = c("A", "B", "C", "D", "E"))
 # Can also change color/fill values
 ggplot(data = diamonds, aes(x = clarity, fill=cut)) +
   geom_bar(position = "stack") +
   scale_fill_manual(values = c("blue", "green", "red",
                                "lightcoral", "skyblue"))
+
+# The labs function allows us to add titles and change labels
+ggplot(data = diamonds, aes(x = carat, y = price, color = cut)) +
+  geom_point() +
+  scale_color_discrete(labels = c("A", "B", "C", "D", "E")) +
+  labs(x = "Carat", y = "Price ($)", title = "Price by Carat",
+       color = "Cut")
 
 # Theme arguments allow us to change up visual characteristics
 # We can use it to adjust title positions and angles

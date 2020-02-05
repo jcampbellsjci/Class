@@ -1,6 +1,6 @@
 ---
-title       : "Week 4: The Grammar of Graphics"
-subtitle    : '09/19/2019'
+title       : "Week 4: Visualizing Our Data"
+subtitle    : '02/04/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -50,14 +50,15 @@ knit        : slidify::knit2slides
 
 ```r
 # Map gender to color
-ggplot(aex(x = height, y = weight, col = gender))
+ggplot(aes(x = height, y = weight, color = gender))
 ```
 
-- If we just want to map a single characteristic, we should do it outside of the `aes()` call
+- If we just want to map a single characteristic, we should do it outside of the `aes()` call and in the geom object
 
 ```r
 # Map the color blue to color
-ggplot(aes(x = height, y = weight), col = "blue")
+ggplot(aes(x = height, y = weight)) +
+  geom_point(color = "blue")
 ```
 
 ---
@@ -66,7 +67,7 @@ ggplot(aes(x = height, y = weight), col = "blue")
 
 - How we choose to visually represent our data
 - Anything from a scatter plot to a text label
-- Geoms can have their own attributes or aesthetics
+- We can label plot attributes within a geom object
   + i.e. color, transparency, size, etc.
 - Geoms can easily be layered on top of each other
 
@@ -74,7 +75,8 @@ ggplot(aes(x = height, y = weight), col = "blue")
 
 ## Scatter Plots
 
-- We use `geom_point()` to specify a scatterplot
+- We use `geom_point()` to specify a scatter plot
+- Good for plotting a continuous variable against a continuous variable
 
 
 ```r
@@ -93,6 +95,7 @@ ggplot(data = diamonds, aes(x = carat, y = price)) +
 ## Histograms
 
 - We use `geom_histogram()` to create a histogram
+- Good for plotting the distribution of a variable
 
 
 ```r
@@ -111,6 +114,7 @@ ggplot(data = diamonds, aes(x = price)) +
 ## Density Plots
 
 - We use `geom_density()` to create a density plot
+- Smoother representation of a distribution than a histogram
 
 
 ```r
@@ -126,13 +130,14 @@ ggplot(data = diamonds, aes(x = price)) +
 
 ---
 
-## Barplots
+## Bar Plots
 
-- We use `geom_bar()` to create a barplot
+- We use `geom_bar()` to create a bar plot
 - Could use the `position` argument to change bar placements
   + `"dodge"` creates side-by-side bars for groups
   + `"stack"` creates a stacked bar chart for groups
   + `"fill"` stacks the groups using ratios instead of counts
+- Good for plotting the count of levels of a categorical variable
 
 
 ```r
@@ -142,15 +147,16 @@ ggplot(data = diamonds, aes(x = cut)) +
 
 ---
 
-## Barplots
+## Bar Plots
 
 <img src="assets/fig/unnamed-chunk-11-1.png" title="plot of chunk unnamed-chunk-11" alt="plot of chunk unnamed-chunk-11" style="display: block; margin: auto;" />
 
 ---
 
-## Boxplots
+## Box Plots
 
-- We can plot boxplots with `geom_boxplot()`
+- We can plot box plots with `geom_boxplot()`
+- Good for plotting a continuous variable against a categorical variable
 
 
 ```r
@@ -160,7 +166,7 @@ ggplot(data = diamonds, aes(x = cut, y = price)) +
 
 ---
 
-## Boxplots
+## Box Plots
 
 <img src="assets/fig/unnamed-chunk-13-1.png" title="plot of chunk unnamed-chunk-13" alt="plot of chunk unnamed-chunk-13" style="display: block; margin: auto;" />
 
@@ -172,7 +178,6 @@ ggplot(data = diamonds, aes(x = cut, y = price)) +
   + ex: the relationship between pain measure and time after surgery by gender
 - Faceting allows us to do this
 - `facet_wrap()` takes a look at our data by group
-  + `facet_grid()` allows us to do this with multiple dimensions
 
 ---
 
@@ -181,9 +186,9 @@ ggplot(data = diamonds, aes(x = cut, y = price)) +
 - There are several scale functions that allow us to edit scales to either better represent our data, or customize our graph (notice functions I write here can be applied to the y axis by substituting x for y)
   + `scale_x_discrete()`: allows us to edit scale info on categorical data
   + `scale_x_continuous()`: allows us to edit scale info on numeric data
-  + `scale_color_.`: can be used to edit scale info for data that has been mapped to color
-    + Note, you can specify discrete, continuous, or manual
-    + Also commonly applied to fill with `scale_fill_continuous` or `scale_fill_manual`
+- `scale_color_.`: can be used to edit scale info for data that has been mapped to color
+  + Note, you can specify discrete, continuous, or manual
+  + Also commonly applied to fill with `scale_fill_continuous` or `scale_fill_manual`
 
 ---
 

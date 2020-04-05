@@ -21,3 +21,5 @@ Metrics
 Matrix
 foreach
 glmnet
+knitr
+yardstick

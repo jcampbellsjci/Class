@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Week 5: The Importance of Exploratory Analysis</title>
+  <title>Week 5: Exploratory Analysis</title>
   <meta charset="utf-8">
-  <meta name="description" content="Week 5: The Importance of Exploratory Analysis">
+  <meta name="description" content="Week 5: Exploratory Analysis">
   <meta name="author" content="Jake Campbell">
   <meta name="generator" content="slidify" />
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,8 +33,8 @@
         <slide class="title-slide segue nobackground">
   
   <hgroup class="auto-fadein">
-    <h1>Week 5: The Importance of Exploratory Analysis</h1>
-    <h2>09/26/2019</h2>
+    <h1>Week 5: Exploratory Analysis</h1>
+    <h2>02/11/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -69,12 +69,12 @@
 <slide class="" id="slide-2" style="background:white;">
   
   <hgroup>
-    <h2>Why is Exploratory Analysis Important</h2>
+    <h2>Why&#39;s Exploratory Analysis Important?</h2>
   </hgroup>
   
   <article data-timings="">
     <ul>
-<li><p>Machine learning models are great, but they do not have the eye that humans do</p>
+<li><p>Machine learning models are great, but they can&#39;t capture everything the human eye can</p>
 
 <ul>
 <li>An important variable to the model may just be the result of an error in our data that we would&#39;ve captured with exploratory analysis</li>
@@ -222,16 +222,16 @@ quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
   </hgroup>
   
   <article data-timings="">
-    <pre><code class="r">var(iris$Sepal.Length)
+    <pre><code class="r">var(iris$Petal.Length)
 </code></pre>
 
-<pre><code>## [1] 0.6856935
+<pre><code>## [1] 3.116278
 </code></pre>
 
-<pre><code class="r">sd(iris$Sepal.Length)
+<pre><code class="r">sd(iris$Petal.Length)
 </code></pre>
 
-<pre><code>## [1] 0.8280661
+<pre><code>## [1] 1.765298
 </code></pre>
 
   </article>
@@ -247,7 +247,7 @@ quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
   
   <article data-timings="">
     <ul>
-<li><p>Covariance combines the variance of two variables, <code>x</code> and <code>y</code> and says whether they have a positive or negative relationship</p>
+<li><p>Covariance combines the spread of two variables, <code>x</code> and <code>y</code> and says whether they have a positive or negative relationship</p>
 
 <ul>
 <li>\(\frac{\sum (x_{i} - mean(x))(y_{i} - mean(y))}{n-1}\)</li>
@@ -418,7 +418,7 @@ quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=2 title='Why is Exploratory Analysis Important'>
+        data-slide=2 title='Why&#39;s Exploratory Analysis Important?'>
          2
       </a>
     </li>

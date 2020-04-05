@@ -34,7 +34,7 @@
   
   <hgroup class="auto-fadein">
     <h1>Week 6: Linear Regression Pt. 1</h1>
-    <h2>11/06/2019</h2>
+    <h2>02/25/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -69,7 +69,7 @@
   </hgroup>
   
   <article data-timings="">
-    <p>\(\hat{y} = b_{0} + b_{1}x\)</p>
+    <p>\[\hat{y} = b_{0} + b_{1}x\]</p>
 
 <ul>
 <li>\(\hat{y}\) is the predicted value of the dependent variable</li>
@@ -79,12 +79,11 @@
 <li>This is what \(\hat{y}\) equals when \(x\) is 0</li>
 </ul></li>
 <li>\(x\) is the value of the independent variable</li>
-<li>\(b_{1}\) is the slope (referred to as the coefficient) of x
+<li>\(b_{1}\) is the slope (referred to as the coefficient) of \(x\)
 
 <ul>
 <li>For every 1 unit increase in \(x\), \(\hat{y}\) increases by \(b_{1}\)</li>
 </ul></li>
-<li>There is also random error, \(i\), that encapsulates the randomness that the model can&#39;t catch</li>
 </ul>
 
   </article>
@@ -100,7 +99,7 @@
   
   <article data-timings="">
     <ul>
-<li>Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted y values
+<li>Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted \(y\) values
 
 <ul>
 <li>Also known as residuals</li>
@@ -144,7 +143,7 @@
   <article data-timings="">
     <ul>
 <li>First we get the spread of the residuals</li>
-<li>The residual is the difference between actual and predicted y-value</li>
+<li>The residual is the difference between actual and predicted \(y\)-value</li>
 <li>Next we get coefficient info
 
 <ul>
@@ -181,6 +180,7 @@
 </ul></li>
 <li>The intercept value suggests that when education is <code>0</code>, our predicted value for prestige is <code>-10.732</code></li>
 <li>The education estimate suggests that for each additional point of education, prestige increases by <code>5.361</code></li>
+<li>We can get 95% confidence intervals by calling <code>confint</code></li>
 </ul>
 
   </article>
@@ -204,13 +204,13 @@
 <li>Mathematically, it&#39;s <code>1</code> minus the ratio of the sum of squared errors and the total sum of squares
 
 <ul>
-<li>SST is the total error between the mean of y and its specific observations</li>
+<li>SST is the total error between the mean of \(y\) and its specific observations</li>
 <li>SSE is the unexplained error; the difference between the prediction and the observations</li>
 </ul></li>
-<li>The F-value explains whether the model fits the data better than random guessing
+<li>The F-statistic explains whether the model fits the data better than random guessing
 
 <ul>
-<li>Random guessing would just be predicting the mean value of y for all observations</li>
+<li>Random guessing would just be predicting the mean value of \(y\) for all observations</li>
 </ul></li>
 </ul>
 
@@ -222,13 +222,36 @@
 <slide class="" id="slide-8" style="background:white;">
   
   <hgroup>
+    <h2>Cleaning Up Output</h2>
+  </hgroup>
+  
+  <article data-timings="">
+    <ul>
+<li>Several functions in the <code>broom</code> package allow us to look at model output in a tidy way</li>
+<li><code>tidy</code> puts coefficient output in a tibble</li>
+<li><code>glance</code> puts goodness of fit measurements in a tibble</li>
+<li><code>augment</code> adds fitted values, residuals, etc. to our original tibble</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+  
+</slide>
+
+<slide class="" id="slide-9" style="background:white;">
+  
+  <hgroup>
     <h2>Linear Regression Assumptions</h2>
   </hgroup>
   
   <article data-timings="">
     <ul>
 <li>Normality of Residuals: use a QQ plot to determine normality of model residuals</li>
-<li>Constant Variance: variance of the residuals are the same for different values of x</li>
+<li>Constant Variance: variance of the residuals are the same for different values of x
+
+<ul>
+<li>Essentially assuming that our error is the same across the magnitude of our predictions</li>
+</ul></li>
 <li>Linearity: Relationship between <code>x</code> and <code>y</code> is linear</li>
 <li>Independent observations: observations don&#39;t influence each other</li>
 </ul>
@@ -238,7 +261,7 @@
   
 </slide>
 
-<slide class="" id="slide-9" style="background:white;">
+<slide class="" id="slide-10" style="background:white;">
   
   <hgroup>
     <h2>Normality</h2>
@@ -259,25 +282,21 @@
   
 </slide>
 
-<slide class="" id="slide-10" style="background:white;">
+<slide class="" id="slide-11" style="background:white;">
   
   <hgroup>
     <h2>Normality</h2>
   </hgroup>
   
   <article data-timings="">
-    <pre><code class="r">qqnorm(pres.lm1$residuals)
-qqline(pres.lm1$residuals)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" /></p>
+    <p><img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" /></p>
 
   </article>
   <!-- Presenter Notes -->
   
 </slide>
 
-<slide class="" id="slide-11" style="background:white;">
+<slide class="" id="slide-12" style="background:white;">
   
   <hgroup>
     <h2>Constant Variance and Linearity</h2>
@@ -295,24 +314,21 @@ qqline(pres.lm1$residuals)
   
 </slide>
 
-<slide class="" id="slide-12" style="background:white;">
+<slide class="" id="slide-13" style="background:white;">
   
   <hgroup>
     <h2>Constant Variance and Linearity</h2>
   </hgroup>
   
   <article data-timings="">
-    <pre><code class="r">scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
-</code></pre>
-
-<p><img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" /></p>
+    <p><img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" /></p>
 
   </article>
   <!-- Presenter Notes -->
   
 </slide>
 
-<slide class="" id="slide-13" style="background:white;">
+<slide class="" id="slide-14" style="background:white;">
   
   <hgroup>
     <h2>What if Our Model Doesn&#39;t Meet Assumptions?</h2>
@@ -329,7 +345,7 @@ qqline(pres.lm1$residuals)
   
 </slide>
 
-<slide class="" id="slide-14" style="background:white;">
+<slide class="" id="slide-15" style="background:white;">
   
   <hgroup>
     <h2>Making Predictions</h2>
@@ -352,7 +368,7 @@ qqline(pres.lm1$residuals)
   
 </slide>
 
-<slide class="" id="slide-15" style="background:white;">
+<slide class="" id="slide-16" style="background:white;">
   
   <hgroup>
     <h2>Linear Regression with Categorical Data</h2>
@@ -361,7 +377,7 @@ qqline(pres.lm1$residuals)
   <article data-timings="">
     <ul>
 <li>Categorical data is treated a little differently than numeric data</li>
-<li>Categorical data are treated as dummy variables
+<li>Categorical data is transformed into dummy variables
 
 <ul>
 <li>Acting as a numeric flag for the different categories</li>
@@ -373,7 +389,7 @@ qqline(pres.lm1$residuals)
   
 </slide>
 
-<slide class="" id="slide-16" style="background:white;">
+<slide class="" id="slide-17" style="background:white;">
   
   <hgroup>
     <h2>Coefficient Output of a Categorical Predictor</h2>
@@ -459,14 +475,14 @@ coefficients(pres.lm2)
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=8 title='Linear Regression Assumptions'>
+        data-slide=8 title='Cleaning Up Output'>
          8
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=9 title='Normality'>
+        data-slide=9 title='Linear Regression Assumptions'>
          9
       </a>
     </li>
@@ -480,7 +496,7 @@ coefficients(pres.lm2)
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=11 title='Constant Variance and Linearity'>
+        data-slide=11 title='Normality'>
          11
       </a>
     </li>
@@ -494,29 +510,36 @@ coefficients(pres.lm2)
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=13 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
+        data-slide=13 title='Constant Variance and Linearity'>
          13
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=14 title='Making Predictions'>
+        data-slide=14 title='What if Our Model Doesn&#39;t Meet Assumptions?'>
          14
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=15 title='Linear Regression with Categorical Data'>
+        data-slide=15 title='Making Predictions'>
          15
       </a>
     </li>
     
     <li>
       <a href="#" target="_self" rel='tooltip' 
-        data-slide=16 title='Coefficient Output of a Categorical Predictor'>
+        data-slide=16 title='Linear Regression with Categorical Data'>
          16
+      </a>
+    </li>
+    
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='Coefficient Output of a Categorical Predictor'>
+         17
       </a>
     </li>
     

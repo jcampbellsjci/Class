@@ -1,6 +1,6 @@
 ---
 title       : "Week 8: Logistic Regression"
-subtitle    : '10/17/2019'
+subtitle    : '03/12/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -18,7 +18,7 @@ knit        : slidify::knit2slides
 - Up to now, we've only looked at modeling continuous response variables
   + Miles per gallon, rate of crime, etc.
 - There are several problems where we need to model a categorical response
-  + Does a team win a game?; Does a student accept an offer of admission?
+  + Does a team win a game, does a student accept an offer of admission?
 - These problems involving categorical response variables are classification problems
 
 ---
@@ -26,8 +26,8 @@ knit        : slidify::knit2slides
 # Issues With Modeling This Problem Linearly
 
 - Let's say we were trying to model a yes/no problem
-- We can treat all yes as `1` and no as `0` and predict the probability of either a `1` or `0`
-- A simple linear line isn't really flexible to this scenario
+- We can treat all yes responses as `1` and no responses as `0` and predict the probability of either a `1` or `0`
+- A simple linear model isn't really flexible to this scenario
 - Predictions can go above and beyond `0` or `100%` probability
 
 ---
@@ -40,7 +40,7 @@ knit        : slidify::knit2slides
 
 # Logistic Regression
 
-- We can deal with binary classification using the logistic function
+- We can attack binary classification problems using the logistic function
   + Can take any input and return a value between 0 and 1
   $$P=\frac{e^{(B_0 + B_x)}}{1 + e^{(B_0 + B_x)}}$$
 - By using some simple math, we can edit the logistic function to get something similar to the linear regression equation
@@ -51,18 +51,18 @@ knit        : slidify::knit2slides
 
 # Odds and Probability
 
-- We aren't predicting probability in logistic regression, we are predicting the log of the odds ratio
-- Probability can be easily changed to odds and vice versa
-- The odds ratio is simply the odds of event A happening in the numerator and the odds of it not happening in the denominator
-- For example, if a football team had an `80%` chance of winning, their odds of winning would be `.8 / 1 - .8` or `4 / 1`
+- We aren't directly predicting probability in logistic regression; we are predicting the log of the odds ratio
+- Probability can be easily changed to odds and vice-versa
+- The odds ratio is simply the odds of event `A` happening in the numerator and the odds of it not happening in the denominator
+- For example, if a football team had an `80%` chance of winning, their odds of winning would be `.8 / (1 - .8)` or `4 / 1`
   + The team has `4` to `1` odds of winning; if the game was played `5` times, the team would win `4` times
 
 ---
 
 # Logistic Regression in R
 
-- We will use `glm()` or generalized linear model to fit logistic regression models
-- `glm` can fit several non-linear functions
+- We will use `glm()` (generalized linear model) to fit logistic regression models
+- `glm` can fit several linear and non-linear models
 - Specify the argument `family = "binomial"` to perform logistic regression
 - `summary()` can be used similarly to how we use it for `lm()` models
 
@@ -75,7 +75,7 @@ knit        : slidify::knit2slides
 - Deviance is a measure of model fit
   + The lower the better
 - Residual deviance is the model's deviance, while null deviance is the deviance with only an intercept
-  + Similar to F-test in `lm` output
+  + Similar to an overall F-test in `lm` output
 
 
 ---
@@ -91,10 +91,10 @@ exp(coef(tumor.glm))
 ```
 
 ```
-##  (Intercept)           V1           V3           V4           V5 
-## 0.0000411763 1.7067054139 1.3745942848 1.3908643372 1.1008866850 
-##           V6           V7           V8           V9 
-## 1.4667887059 1.5628015794 1.2368248052 1.7058506868
+##  (Intercept)           V1           V3           V4           V5           V6 
+## 0.0000411763 1.7067054139 1.3745942848 1.3908643372 1.1008866850 1.4667887059 
+##           V7           V8           V9 
+## 1.5628015794 1.2368248052 1.7058506868
 ```
 - For example, a one-unit increase in `V1` would up the odds of the tumor being malignant by about `70%`
 
@@ -104,9 +104,9 @@ exp(coef(tumor.glm))
 
 - Response is binary (two classes)
 - Independent observations
-- No multicollinearity issues
+- No multi-collinearity issues
 - Large sample sizes
-  + Logistic regression fit by maximum likelihood which requires larger sample sizes
+  + Logistic regression is fit by maximum likelihood which requires larger sample sizes
 
 ---
 
@@ -121,6 +121,6 @@ exp(coef(tumor.glm))
 # Measuring Accuracy
 
 - We can make class probability predictions using `predict()` and specifying `type = "response"`
-- Without specifying type, we get log odds predictions
+  + Without specifying type, we get log odds predictions
 - We can round the predicted probabilities to the nearest whole number and measure how accurate our model is
 - Straightforward method of determining how good our model is

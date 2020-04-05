@@ -27,7 +27,7 @@ library(tidyverse)
 
 # The Importance of Cross-validation
 
-- Building a model is great, but what is important are the predictions
+- Building a model is great, but what we really care about are the predictions
 - Gauging model performance on predictions on data the model was trained on is a no-no
   + Your model has already seen this data; predictions are likely to be overly-optimistic
 - A real test of model performance is looking at how well the model predicts data it hasn't seen
@@ -41,10 +41,10 @@ library(tidyverse)
 - Generally speaking, you would want the majority of observations to be in your training set (70-80%)
 - `createDataPartition` can be used to create a stratified random sample of indices to use as a training set
 ```{r}
-data.split <- createDataPartition(Sonar$Class, p = .75, list = F)
+data_split <- createDataPartition(Sonar$Class, p = .75, list = F)
 # Index Sonar by data.split to get a training and testing set
-training <- Sonar[data.split, ]
-testing <- Sonar[-data.split, ]
+training <- Sonar[data_split, ]
+testing <- Sonar[-data_split, ]
 ```
 
 ---
@@ -101,7 +101,7 @@ testing <- Sonar[-data.split, ]
 # Common Cross-validation Methods with `caret`
 
 - We need to specify the cross validation method within the `trainControl()` function
-  + Specify within `method` argument
+  + Specify with `method` argument
 - K-Fold CV: `method = "repeatedcv"`
   + Specify number of folds and number of repeats
 - Leave One Out: `method = "LOOCV"`
@@ -121,8 +121,7 @@ testing <- Sonar[-data.split, ]
 # `caret` Output
 
 ```{r, echo=F, warning=F}
-set.seed(1234)
-sonar.glm.cv <- train(Class ~ ., data = training,
+sonar_glm_cv <- train(Class ~ ., data = training,
                       method = "glm", family = "binomial",
                       trControl = trainControl(method = "repeatedcv",
                                                repeats = 5, number = 3,
@@ -130,7 +129,7 @@ sonar.glm.cv <- train(Class ~ ., data = training,
 ```
 
 ```{r, fig.align='center'}
-ggplot(data = sonar.glm.cv$resample, aes(x = Accuracy)) +
+ggplot(data = sonar_glm_cv$resample, aes(x = Accuracy)) +
   geom_density(alpha = .2, fill="red")
 ```
 
@@ -149,12 +148,12 @@ ggplot(data = sonar.glm.cv$resample, aes(x = Accuracy)) +
 
 ```{r, echo=F}
 # Calling predict on the caret output brings back class predictions
-class.predictions <- predict(sonar.glm.cv, newdata = testing)
+class_predictions <- predict(sonar_glm_cv, newdata = testing)
 ```
 
 
 ```{r}
-confusionMatrix(data = class.predictions, reference = testing$Class,
+confusionMatrix(data = class_predictions, reference = testing$Class,
                 positive = "R")
 ```
 

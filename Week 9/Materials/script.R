@@ -7,11 +7,11 @@
 #### Loading Up ####
 
 install.packages("caret")
-install.packages("Metrics")
+install.packages("yardstick")
 install.packages("pROC")
 library(caret)
 library(pROC)
-library(Metrics)
+library(yardstick)
 library(MASS)
 library(tidyverse)
 
@@ -29,45 +29,48 @@ summary(biopsy_model)
 
 # For linear regression, we can look at resdiuals to determine
 # model performance
-actual_mpg <- mpg$hwy
-predicted_mpg <- predict(mpg_model)
+mpg_output <- augment(mpg_model)
 
 # MAE: mean absolute error
-mean(abs(mpg_model$residuals))
-mae(actual = actual_mpg, predicted = predicted_mpg)
+mean(abs(mpg_output$.resid))
+mpg_output %>%
+  mae(truth = hwy, estimate = .fitted)
 # MSE: mean square error
-mean(mpg_model$residuals^2)
-mse(actual = actual_mpg, predicted = predicted_mpg)
+mean(mpg_output$.resid^2)
 # RMSE: root-mean square error
 sqrt(mean(mpg_model$residuals^2))
-rmse(actual = actual_mpg, predicted = predicted_mpg)
+mpg_output %>%
+  rmse(truth = hwy, estimate = .fitted)
 
 # For classification, we can use both our class and probability predictions
-actual_biopsy_class <- factor(biopsy$class)
-predicted_biopsy_class <- factor(ifelse(
-  predict(biopsy_model, type = "response") >= .5, "malignant", "benign"))
-predicted_biopsy_probability <- predict(biopsy_model, type = "response")
+biopsy_output <- augment(biopsy_model, type.predict = "prob") %>%
+  mutate(.fitted_class = factor(ifelse(.fitted >= .5,
+                                       "malignant", "benign"))) %>%
+  select(class, V1, V5, V7, .fitted, .fitted_class)
 
 # Accuracy can be used to find the total percent accuracy
-mean(actual_biopsy_class == predicted_biopsy_class)
-accuracy(actual = actual_biopsy_class, predicted = predicted_biopsy_class)
+mean(biopsy_output$class == biopsy_output$.fitted_class)
+biopsy_output %>%
+  accuracy(truth = class, estimate = .fitted_class)
 # Accuracy might not tell the whole story
-cm_biopsy <- xtabs(~ predicted_biopsy_class + actual_biopsy_class)
+cm_biopsy <- xtabs(~ .fitted_class + class, data = biopsy_output)
 cm_biopsy
 
 # Sensitivity is the proportion of true positives over all actual positives
 cm_biopsy[2, 2] / (cm_biopsy[1, 2] + cm_biopsy[2, 2])
-sensitivity(reference = actual_biopsy_class, data = predicted_biopsy_class,
-            positive = "malignant")
+# By default, the first level is the positive class
+options(yardstick.event_first = FALSE)
+biopsy_output %>%
+  sens(truth = class, estimate = .fitted_class)
 # Specificity does the same with the negative class
 cm_biopsy[1, 1] / (cm_biopsy[2, 1] + cm_biopsy[1, 1])
-specificity(reference = actual_biopsy_class, data = predicted_biopsy_class,
-            negative = "benign")
+biopsy_output %>%
+  spec(truth = class, estimate = .fitted_class)
 
 # The ROC curve and its AUC value give us an idea of how classification
 # performs at different threshholds
-roc(response = actual_biopsy_class,
-    predictor = predicted_biopsy_probability, plot = T)
+roc(response = biopsy_output$class,
+    predictor = biopsy_output$.fitted, plot = T)
 
 
 #### Feature Engineering ####
@@ -93,6 +96,9 @@ mpg <- mpg %>%
   mutate(price = gsub(pattern = "[$]", replacement = "", price)) %>%
   mutate(price = as.numeric(price))
 
+# Date types can be created by as.Date
+# We specify format using the format argument
+as.Date("2020-03-24", format = "%Y-%m-%d")
 # We could pull out a specific aspect of a date type using format
 mpg <- mpg %>%
   mutate(month = format(x = production_date, "%m"),

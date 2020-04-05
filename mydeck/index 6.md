@@ -1,6 +1,6 @@
 ---
 title       : "Week 6: Linear Regression Pt. 1"
-subtitle    : '11/06/2019'
+subtitle    : '02/25/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -23,21 +23,20 @@ knit        : slidify::knit2slides
 
 ## The Linear Regression Equation
 
-$\hat{y} = b_{0} + b_{1}x$
+$$\hat{y} = b_{0} + b_{1}x$$
 
 - $\hat{y}$ is the predicted value of the dependent variable
 - $b_{0}$ is the y-intercept term 
   + This is what $\hat{y}$ equals when $x$ is 0
 - $x$ is the value of the independent variable
-- $b_{1}$ is the slope (referred to as the coefficient) of x
+- $b_{1}$ is the slope (referred to as the coefficient) of $x$
   + For every 1 unit increase in $x$, $\hat{y}$ increases by $b_{1}$
-- There is also random error, $i$, that encapsulates the randomness that the model can't catch
 
 ---
 
 ## Ordinary Least Squares
 
-- Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted y values
+- Goal is to identify coefficients that minimize the sum of squared differences between the actual and predicted $y$ values
   + Also known as residuals
 - A perfect model would have no difference between actual values and predictions
 - Influential outliers can have a large impact on the line of best fit
@@ -60,7 +59,7 @@ pres.lm1 <- lm(prestige ~ education, data = prestige)
 ## Model Output in R
 
 - First we get the spread of the residuals
-- The residual is the difference between actual and predicted y-value
+- The residual is the difference between actual and predicted $y$-value
 - Next we get coefficient info
   + Slope estimates, standard error, and p-values
 - The final block of text includes several additional pieces of model information, mainly used to validate our model
@@ -84,6 +83,7 @@ coefficients(pres.lm1)
  + $\hat{y} = -10.732 + 5.361(x)$
 - The intercept value suggests that when education is `0`, our predicted value for prestige is `-10.732`
 - The education estimate suggests that for each additional point of education, prestige increases by `5.361`
+- We can get 95% confidence intervals by calling `confint`
 
 ---
 
@@ -92,10 +92,22 @@ coefficients(pres.lm1)
 - The R-squared value is a measure between `0` and `1` showing how much variance the model explains
   + The closer the value is to `1`, the more the model explains
 - Mathematically, it's `1` minus the ratio of the sum of squared errors and the total sum of squares
-  + SST is the total error between the mean of y and its specific observations
+  + SST is the total error between the mean of $y$ and its specific observations
   + SSE is the unexplained error; the difference between the prediction and the observations
-- The F-value explains whether the model fits the data better than random guessing
-  + Random guessing would just be predicting the mean value of y for all observations
+- The F-statistic explains whether the model fits the data better than random guessing
+  + Random guessing would just be predicting the mean value of $y$ for all observations
+
+---
+
+## Cleaning Up Output
+
+
+
+
+- Several functions in the `broom` package allow us to look at model output in a tidy way
+- `tidy` puts coefficient output in a tibble
+- `glance` puts goodness of fit measurements in a tibble
+- `augment` adds fitted values, residuals, etc. to our original tibble
 
 ---
 
@@ -103,6 +115,7 @@ coefficients(pres.lm1)
 
 - Normality of Residuals: use a QQ plot to determine normality of model residuals
 - Constant Variance: variance of the residuals are the same for different values of x
+  + Essentially assuming that our error is the same across the magnitude of our predictions
 - Linearity: Relationship between `x` and `y` is linear
 - Independent observations: observations don't influence each other
 
@@ -118,13 +131,7 @@ coefficients(pres.lm1)
 
 ## Normality
 
-
-```r
-qqnorm(pres.lm1$residuals)
-qqline(pres.lm1$residuals)
-```
-
-<img src="assets/fig/unnamed-chunk-4-1.png" title="plot of chunk unnamed-chunk-4" alt="plot of chunk unnamed-chunk-4" style="display: block; margin: auto;" />
+<img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
 
 ---
 
@@ -138,12 +145,7 @@ qqline(pres.lm1$residuals)
 
 ## Constant Variance and Linearity
 
-
-```r
-scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
-```
-
-<img src="assets/fig/unnamed-chunk-5-1.png" title="plot of chunk unnamed-chunk-5" alt="plot of chunk unnamed-chunk-5" style="display: block; margin: auto;" />
+<img src="assets/fig/unnamed-chunk-6-1.png" title="plot of chunk unnamed-chunk-6" alt="plot of chunk unnamed-chunk-6" style="display: block; margin: auto;" />
 
 ---
 
@@ -167,7 +169,7 @@ scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
 ## Linear Regression with Categorical Data
 
 - Categorical data is treated a little differently than numeric data
-- Categorical data are treated as dummy variables
+- Categorical data is transformed into dummy variables
   + Acting as a numeric flag for the different categories
 
 ---

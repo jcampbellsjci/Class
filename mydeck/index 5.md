@@ -1,6 +1,6 @@
 ---
-title       : "Week 5: The Importance of Exploratory Analysis"
-subtitle    : '09/26/2019'
+title       : "Week 5: Exploratory Analysis"
+subtitle    : '02/11/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -24,9 +24,9 @@ knit        : slidify::knit2slides
 
 ---
 
-## Why is Exploratory Analysis Important
+## Why's Exploratory Analysis Important?
 
-- Machine learning models are great, but they do not have the eye that humans do
+- Machine learning models are great, but they can't capture everything the human eye can
   + An important variable to the model may just be the result of an error in our data that we would've captured with exploratory analysis
   
 - By doing some initial investigation with our data, we can build better models down the road
@@ -118,26 +118,26 @@ quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
 
 
 ```r
-var(iris$Sepal.Length)
+var(iris$Petal.Length)
 ```
 
 ```
-## [1] 0.6856935
+## [1] 3.116278
 ```
 
 ```r
-sd(iris$Sepal.Length)
+sd(iris$Petal.Length)
 ```
 
 ```
-## [1] 0.8280661
+## [1] 1.765298
 ```
 
 ---
 
 ## Common Summary Statistics
 
-- Covariance combines the variance of two variables, `x` and `y` and says whether they have a positive or negative relationship
+- Covariance combines the spread of two variables, `x` and `y` and says whether they have a positive or negative relationship
   + $\frac{\sum (x_{i} - mean(x))(y_{i} - mean(y))}{n-1}$
   + `R` function is `cov()`
 

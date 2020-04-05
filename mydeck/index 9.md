@@ -1,6 +1,6 @@
 ---
 title       : "Week 9: Model Performance and Feature Engineering"
-subtitle    : '11/06/2019'
+subtitle    : '03/24/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -36,11 +36,15 @@ knit        : slidify::knit2slides
   + Takes the average absolute value of your residuals
 
 ```r
-mae(actual = actual_mpg, predicted = predicted_mpg)
+mpg_output %>%
+  mae(truth = hwy, estimate = .fitted)
 ```
 
 ```
-## [1] 2.157337
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   <chr>   <chr>          <dbl>
+## 1 mae     standard        2.16
 ```
 
 ---
@@ -53,7 +57,7 @@ mae(actual = actual_mpg, predicted = predicted_mpg)
   + Takes the square root of the MSE
 
 ```r
-mse(actual = actual_mpg, predicted = predicted_mpg)
+mean(mpg_output$.resid^2)
 ```
 
 ```
@@ -61,11 +65,15 @@ mse(actual = actual_mpg, predicted = predicted_mpg)
 ```
 
 ```r
-rmse(actual = actual_mpg, predicted = predicted_mpg)
+mpg_output %>%
+  rmse(truth = hwy, estimate = .fitted)
 ```
 
 ```
-## [1] 2.935907
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   <chr>   <chr>          <dbl>
+## 1 rmse    standard        2.94
 ```
 
 ---
@@ -74,7 +82,7 @@ rmse(actual = actual_mpg, predicted = predicted_mpg)
 
 # Logistic Regression Metrics
 
-- Accuracy: $$\frac{All_correct_predictions}{All_possible_predictions}$$
+- Accuracy: $$\frac{All Correct Predictions}{All Possible Predictions}$$
 - True Positives and Negatives: predictions that were correct from the positive and negative class, respectively
 - False Positives and Negatives: predictions that were predicted in the wrong class(positive and negative respectively)
 
@@ -86,12 +94,16 @@ rmse(actual = actual_mpg, predicted = predicted_mpg)
   + Accuracy rate of the positive class
 
 ```r
-sensitivity(reference = actual_biopsy_class, data = predicted_biopsy_class,
-            positive = "malignant")
+options(yardstick.event_first = FALSE)
+biopsy_output %>%
+  sens(truth = class, estimate = .fitted_class)
 ```
 
 ```
-## [1] 0.9211618
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   <chr>   <chr>          <dbl>
+## 1 sens    binary         0.921
 ```
 
 ---
@@ -102,19 +114,23 @@ sensitivity(reference = actual_biopsy_class, data = predicted_biopsy_class,
   + Accuracy rate of the negative class
 
 ```r
-specificity(reference = actual_biopsy_class, data = predicted_biopsy_class,
-            negative = "benign")
+options(yardstick.event_first = FALSE)
+biopsy_output %>%
+  spec(truth = class, estimate = .fitted_class)
 ```
 
 ```
-## [1] 0.9650655
+## # A tibble: 1 x 3
+##   .metric .estimator .estimate
+##   <chr>   <chr>          <dbl>
+## 1 spec    binary         0.965
 ```
 
 ---
 
 # ROC and AUC
 
-- ROC (Receiver Operating Characteristic) is a curve that plots the sensitivity and 1 - specificity at different predictive threshholds
+- ROC (Receiver Operating Characteristic) is a curve that plots the sensitivity and specificity at different predictive threshholds
   + By threshhold, we mean how to split our predictive probabilities into classes
   + Raising the threshhold increases our specificity and vice versa
 - AUC (Area Under the Curve) is the area under the ROC curve
@@ -126,8 +142,8 @@ specificity(reference = actual_biopsy_class, data = predicted_biopsy_class,
 
 
 ```r
-roc(response = actual_biopsy_class,
-    predictor = predicted_biopsy_probability, plot = T)
+roc(response = biopsy_output$class,
+    predictor = biopsy_output$.fitted, plot = T)
 ```
 
 <img src="assets/fig/unnamed-chunk-7-1.png" title="plot of chunk unnamed-chunk-7" alt="plot of chunk unnamed-chunk-7" style="display: block; margin: auto;" />
@@ -135,9 +151,9 @@ roc(response = actual_biopsy_class,
 ```
 ## 
 ## Call:
-## roc.default(response = actual_biopsy_class, predictor = predicted_biopsy_probability,     plot = T)
+## roc.default(response = biopsy_output$class, predictor = biopsy_output$.fitted,     plot = T)
 ## 
-## Data: predicted_biopsy_probability in 458 controls (actual_biopsy_class benign) < 241 cases (actual_biopsy_class malignant).
+## Data: biopsy_output$.fitted in 458 controls (biopsy_output$class benign) < 241 cases (biopsy_output$class malignant).
 ## Area under the curve: 0.9853
 ```
 

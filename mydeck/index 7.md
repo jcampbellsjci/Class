@@ -1,6 +1,6 @@
 ---
 title       : "Week 7: Linear Regression Pt. 2"
-subtitle    : '10/10/2019'
+subtitle    : '03/03/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -15,29 +15,29 @@ knit        : slidify::knit2slides
 
 ## Expanding on Simple Linear Regression
 
-- A lot of the time you’ll have access to several variables you can use to develop a model
-- Adding additional variables can have a positive on a regression model to a degree
-- Adding too many can cause our model to overfit the data
+- A lot of the time you'll have access to several variables you can use to develop a model
+- Adding additional variables can have a positive impact on our regression model
+- Adding too many predictors can cause our model to overfit
 - There are additional assumptions and things to take into account when dealing with multiple independent variables
 
 ---
 
 ## Developing a Linear Model with Multiple Variables
 
-- Like in simple linear regression, we use `lm()` and R’s formula interface to develop a linear model
+- Like in simple linear regression, we use `lm()` and `R`'s formula interface to develop a linear model
 - To add additional independent variables to the formula interface, we use a `+` 
-- Think about variables that you are putting in the model… does their relationship with the response make sense?
- + Adding too many independent variables to our model can cause it to overfit our data, creating issues in predicting future values
+- Think about variables that you are putting in the model; does their relationship with the response make sense?
+ + Adding too many independent variables to our model can cause it to overfit to our data, creating issues in predicting future values
 
 ---
 
 ## What Does our Output Mean?
 
 - Our summary output is very similar to the output in simple linear regression
-- Coefficient estimates are the change in `y` with each additional unit of `x` WITH all other independent variables held constant
+- Coefficient estimates are the change in `y` with each additional unit of `x` WITH all other independent predictors held constant
 - R squared never decreases with each additional variable
   + Adding variables of little to no importance can inflate our R squared value
-  + Adjusted R squared takes into account the number of variables in the model and penalizes additional variables that don’t improve the model
+  + Adjusted R squared takes into account the number of variables in the model and penalizes additional variables that don't improve model performance
 
 ---
 
@@ -46,7 +46,7 @@ knit        : slidify::knit2slides
 - The assumptions from simple linear regression apply to multiple regression
 - In addition, we have to think about multi-collinearity
   + This is when our independent variables are highly correlated amongst each other
-  + Doesn’t necessarily cause issues with predictions or adjusted R squared
+  + Doesn't necessarily cause issues with predictions or adjusted R squared
   + Does mess with our coefficients, making relationships difficult to interpret
 
 ---
@@ -74,7 +74,7 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 ## Okay, So Now What?
 
 - Linear regression is a good introduction to the modeling process, but it has issues
-  + There are a lot of things that we want to model that aren’t linear
+  + There are a lot of things that we want to model that aren't linear
   + Being a parametric model, linear regression has a lot of assumptions
 - What can we do to make linear models more flexible and address assumption issues?
 
@@ -84,7 +84,7 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 
 - When relationships between variables start becoming much more advanced than a linear model can determine, might be easier to go non-parametric route
   + Ensemble tree models: boosting, random forest
-- These non-parametric approaches don’t need to meet a laundry list of assumptions
+- These non-parametric approaches don't need to meet a laundry list of assumptions
 - They can better identify non-linear patterns and complex interactions
 - Their main con: difficult to explain results to others
 
@@ -92,7 +92,7 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 
 ## Transforming the Response
 
-- Sometimes the response isn’t normally distributed
+- Sometimes the response isn't normally distributed
   + This can lead to issues in residual normality
   + Can lead to non-constant variance
   + Common issue when predicting monetary values
@@ -102,7 +102,7 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 ## Box-Cox Transformation
 
 - Searches all possible values of lambda for the one that maximizes the likelihood that `y` comes from a normal distribution
-- Instead of looking at the lambda that produces the most normal y, look at the range to see if it includes a more common value
+- Instead of looking at the lambda that produces the most normal `y`, look at the range to see if it includes a more common value
   + Using a specific lambda can make our results more confusing
 
 ---
@@ -110,24 +110,21 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 ## Common Box-Cox Transformations
 
 
-```
-## # A tibble: 7 x 2
-##   lambda Y_transformation
-##    <dbl> <chr>           
-## 1   -2   1/(Y^2)         
-## 2   -1   1/Y             
-## 3   -0.5 1/sqrt(Y)       
-## 4    0   log(Y)          
-## 5    0.5 sqrt(Y)         
-## 6    1   Y               
-## 7    2   Y^2
-```
+| lambda|Y_transformation |
+|------:|:----------------|
+|   -2.0|1/(Ysquared)     |
+|   -1.0|1/Y              |
+|   -0.5|1/sqrt(Y)        |
+|    0.0|log(Y)           |
+|    0.5|sqrt(Y)          |
+|    1.0|Y                |
+|    2.0|Ysquared         |
 
 ---
 
 ## Maybe Your Data Isn't Linear
 
-- Linear regression is fitting a straight line relationship through your data
+- Linear regression fits a straight line to your data
 - Maybe your data has a curved relationship
   + Polynomial Regression
 - Maybe your data has a complicated, hard to determine relationship (maybe a sin wave)
@@ -157,5 +154,5 @@ $$VIF_k = \frac{1}{1 - R^2_k}$$
 - Each coefficient is an additional degree; for example, consider a model predicting salary by age to the second degree.
   + $Predicted Salary = B_0 + B_1(age) + B_2(age^2)$
 - `poly()` can be used to take the polynomial in R
-  + Specify degree=x to set degree
-  + Orthogonal or raw return… What’s the difference?
+  + Specify `degree = x` to set degree
+  + Orthogonal or raw return: What's the difference?

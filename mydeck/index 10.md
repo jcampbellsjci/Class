@@ -1,6 +1,6 @@
 ---
 title       : "Week 10: Model Validation"
-subtitle    : '10/31/2019'
+subtitle    : '03/31/2020'
 author      : "Jake Campbell"
 job         : 
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
@@ -15,7 +15,7 @@ knit        : slidify::knit2slides
 
 # The Importance of Cross-validation
 
-- Building a model is great, but what is important are the predictions
+- Building a model is great, but what we really care about are the predictions
 - Gauging model performance on predictions on data the model was trained on is a no-no
   + Your model has already seen this data; predictions are likely to be overly-optimistic
 - A real test of model performance is looking at how well the model predicts data it hasn't seen
@@ -30,10 +30,10 @@ knit        : slidify::knit2slides
 - `createDataPartition` can be used to create a stratified random sample of indices to use as a training set
 
 ```r
-data.split <- createDataPartition(Sonar$Class, p = .75, list = F)
+data_split <- createDataPartition(Sonar$Class, p = .75, list = F)
 # Index Sonar by data.split to get a training and testing set
-training <- Sonar[data.split, ]
-testing <- Sonar[-data.split, ]
+training <- Sonar[data_split, ]
+testing <- Sonar[-data_split, ]
 ```
 
 ---
@@ -90,7 +90,7 @@ testing <- Sonar[-data.split, ]
 # Common Cross-validation Methods with `caret`
 
 - We need to specify the cross validation method within the `trainControl()` function
-  + Specify within `method` argument
+  + Specify with `method` argument
 - K-Fold CV: `method = "repeatedcv"`
   + Specify number of folds and number of repeats
 - Leave One Out: `method = "LOOCV"`
@@ -113,7 +113,7 @@ testing <- Sonar[-data.split, ]
 
 
 ```r
-ggplot(data = sonar.glm.cv$resample, aes(x = Accuracy)) +
+ggplot(data = sonar_glm_cv$resample, aes(x = Accuracy)) +
   geom_density(alpha = .2, fill="red")
 ```
 
@@ -137,7 +137,7 @@ ggplot(data = sonar.glm.cv$resample, aes(x = Accuracy)) +
 
 
 ```r
-confusionMatrix(data = class.predictions, reference = testing$Class,
+confusionMatrix(data = class_predictions, reference = testing$Class,
                 positive = "R")
 ```
 
@@ -146,26 +146,26 @@ confusionMatrix(data = class.predictions, reference = testing$Class,
 ## 
 ##           Reference
 ## Prediction  M  R
-##          M 19  5
-##          R  8 19
+##          M 18  5
+##          R  9 19
 ##                                           
-##                Accuracy : 0.7451          
-##                  95% CI : (0.6037, 0.8567)
+##                Accuracy : 0.7255          
+##                  95% CI : (0.5826, 0.8411)
 ##     No Information Rate : 0.5294          
-##     P-Value [Acc > NIR] : 0.001311        
+##     P-Value [Acc > NIR] : 0.003347        
 ##                                           
-##                   Kappa : 0.492           
+##                   Kappa : 0.4541          
 ##                                           
-##  Mcnemar's Test P-Value : 0.579100        
+##  Mcnemar's Test P-Value : 0.422678        
 ##                                           
 ##             Sensitivity : 0.7917          
-##             Specificity : 0.7037          
-##          Pos Pred Value : 0.7037          
-##          Neg Pred Value : 0.7917          
+##             Specificity : 0.6667          
+##          Pos Pred Value : 0.6786          
+##          Neg Pred Value : 0.7826          
 ##              Prevalence : 0.4706          
 ##          Detection Rate : 0.3725          
-##    Detection Prevalence : 0.5294          
-##       Balanced Accuracy : 0.7477          
+##    Detection Prevalence : 0.5490          
+##       Balanced Accuracy : 0.7292          
 ##                                           
 ##        'Positive' Class : R               
 ## 

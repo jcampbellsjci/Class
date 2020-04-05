@@ -12,7 +12,7 @@ library(tidyverse)
 data("mpg")
 ```
 
-1. Create a plot comparing the miles per gallon by different driving location (`cty` or `hwy`). You may find this easier to do if you transform the data set using a method we learned in a previous lesson. What do you see in this plot/what should be the main takeaways?
+1. Create a basic plot comparing the miles per gallon by different driving location (`cty` or `hwy`). To do this, you'll need to transform those two columns to be in a key-value pair using `gather`. What do you see in this plot/what should be the main takeaways?
 
 2. Take the plot you created in 1 and make it publication ready however you see fit (scale, labels, color, theme, etc.).
 

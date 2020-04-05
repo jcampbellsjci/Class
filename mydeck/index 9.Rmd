@@ -14,7 +14,7 @@ knit        : slidify::knit2slides
 ```{r, echo=F, message=F, warning=F}
 library(caret)
 library(pROC)
-library(Metrics)
+library(yardstick)
 library(MASS)
 library(tidyverse)
 
@@ -26,13 +26,7 @@ biopsy_model <- glm(class ~ V1 + V5 + V7, data = biopsy, family = "binomial")
 
 # For linear regression, we can look at resdiuals to determine
 # model performance
-actual_mpg <- mpg$hwy
-predicted_mpg <- predict(mpg_model)
-
-actual_biopsy_class <- factor(biopsy$class)
-predicted_biopsy_class <- factor(ifelse(
-  predict(biopsy_model, type = "response") >= .5, "malignant", "benign"))
-predicted_biopsy_probability <- predict(biopsy_model, type = "response")
+mpg_output <- augment(mpg_model)
 ```
 
 # Measuring Model Performance
@@ -57,7 +51,8 @@ predicted_biopsy_probability <- predict(biopsy_model, type = "response")
 - MAE: Mean Absolute Error
   + Takes the average absolute value of your residuals
 ```{r}
-mae(actual = actual_mpg, predicted = predicted_mpg)
+mpg_output %>%
+  mae(truth = hwy, estimate = .fitted)
 ```
 
 ---
@@ -69,19 +64,19 @@ mae(actual = actual_mpg, predicted = predicted_mpg)
 - RMSE: Root Mean Square Error
   + Takes the square root of the MSE
 ```{r}
-mse(actual = actual_mpg, predicted = predicted_mpg)
-rmse(actual = actual_mpg, predicted = predicted_mpg)
+mean(mpg_output$.resid^2)
+mpg_output %>%
+  rmse(truth = hwy, estimate = .fitted)
 ```
 
 ---
 
 ```{r, echo=F, message=F, warning=F}
-actual_biopsy_class <- factor(biopsy$class)
-predicted_biopsy_class <- factor(ifelse(
-  predict(biopsy_model, type = "response") >= .5, "malignant", "benign"))
-predicted_biopsy_probability <- predict(biopsy_model, type = "response")
-
-cm_biopsy <- xtabs(~ predicted_biopsy_class + actual_biopsy_class)
+biopsy_output <- augment(biopsy_model, type.predict = "prob") %>%
+  mutate(.fitted_class = factor(ifelse(.fitted >= .5,
+                                       "malignant", "benign"))) %>%
+  dplyr::select(class, V1, V5, V7, .fitted, .fitted_class)
+cm_biopsy <- xtabs(~ .fitted_class + class, data = biopsy_output)
 
 set.seed(1234)
 mpg <- mpg %>%
@@ -93,7 +88,7 @@ mpg <- mpg %>%
 
 # Logistic Regression Metrics
 
-- Accuracy: $$\frac{All_correct_predictions}{All_possible_predictions}$$
+- Accuracy: $$\frac{All Correct Predictions}{All Possible Predictions}$$
 - True Positives and Negatives: predictions that were correct from the positive and negative class, respectively
 - False Positives and Negatives: predictions that were predicted in the wrong class(positive and negative respectively)
 
@@ -104,8 +99,9 @@ mpg <- mpg %>%
 - Sensitivity: $$\frac{TP}{TP + FN}$$
   + Accuracy rate of the positive class
 ```{r}
-sensitivity(reference = actual_biopsy_class, data = predicted_biopsy_class,
-            positive = "malignant")
+options(yardstick.event_first = FALSE)
+biopsy_output %>%
+  sens(truth = class, estimate = .fitted_class)
 ```
 
 ---
@@ -115,15 +111,16 @@ sensitivity(reference = actual_biopsy_class, data = predicted_biopsy_class,
 - Specificity: $$\frac{TN}{TN + FP}$$
   + Accuracy rate of the negative class
 ```{r}
-specificity(reference = actual_biopsy_class, data = predicted_biopsy_class,
-            negative = "benign")
+options(yardstick.event_first = FALSE)
+biopsy_output %>%
+  spec(truth = class, estimate = .fitted_class)
 ```
 
 ---
 
 # ROC and AUC
 
-- ROC (Receiver Operating Characteristic) is a curve that plots the sensitivity and 1 - specificity at different predictive threshholds
+- ROC (Receiver Operating Characteristic) is a curve that plots the sensitivity and specificity at different predictive threshholds
   + By threshhold, we mean how to split our predictive probabilities into classes
   + Raising the threshhold increases our specificity and vice versa
 - AUC (Area Under the Curve) is the area under the ROC curve
@@ -134,8 +131,8 @@ specificity(reference = actual_biopsy_class, data = predicted_biopsy_class,
 # ROC and AUC
 
 ```{r, warning=F, message=F, fig.align='center'}
-roc(response = actual_biopsy_class,
-    predictor = predicted_biopsy_probability, plot = T)
+roc(response = biopsy_output$class,
+    predictor = biopsy_output$.fitted, plot = T)
 ```
 
 ---

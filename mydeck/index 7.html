@@ -34,7 +34,7 @@
   
   <hgroup class="auto-fadein">
     <h1>Week 7: Linear Regression Pt. 2</h1>
-    <h2>10/10/2019</h2>
+    <h2>03/03/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -52,9 +52,9 @@
   
   <article data-timings="">
     <ul>
-<li>A lot of the time you’ll have access to several variables you can use to develop a model</li>
-<li>Adding additional variables can have a positive on a regression model to a degree</li>
-<li>Adding too many can cause our model to overfit the data</li>
+<li>A lot of the time you&#39;ll have access to several variables you can use to develop a model</li>
+<li>Adding additional variables can have a positive impact on our regression model</li>
+<li>Adding too many predictors can cause our model to overfit</li>
 <li>There are additional assumptions and things to take into account when dealing with multiple independent variables</li>
 </ul>
 
@@ -71,12 +71,12 @@
   
   <article data-timings="">
     <ul>
-<li>Like in simple linear regression, we use <code>lm()</code> and R’s formula interface to develop a linear model</li>
+<li>Like in simple linear regression, we use <code>lm()</code> and <code>R</code>&#39;s formula interface to develop a linear model</li>
 <li>To add additional independent variables to the formula interface, we use a <code>+</code> </li>
-<li>Think about variables that you are putting in the model… does their relationship with the response make sense?
+<li>Think about variables that you are putting in the model; does their relationship with the response make sense?
 
 <ul>
-<li>Adding too many independent variables to our model can cause it to overfit our data, creating issues in predicting future values</li>
+<li>Adding too many independent variables to our model can cause it to overfit to our data, creating issues in predicting future values</li>
 </ul></li>
 </ul>
 
@@ -94,12 +94,12 @@
   <article data-timings="">
     <ul>
 <li>Our summary output is very similar to the output in simple linear regression</li>
-<li>Coefficient estimates are the change in <code>y</code> with each additional unit of <code>x</code> WITH all other independent variables held constant</li>
+<li>Coefficient estimates are the change in <code>y</code> with each additional unit of <code>x</code> WITH all other independent predictors held constant</li>
 <li>R squared never decreases with each additional variable
 
 <ul>
 <li>Adding variables of little to no importance can inflate our R squared value</li>
-<li>Adjusted R squared takes into account the number of variables in the model and penalizes additional variables that don’t improve the model</li>
+<li>Adjusted R squared takes into account the number of variables in the model and penalizes additional variables that don&#39;t improve model performance</li>
 </ul></li>
 </ul>
 
@@ -121,7 +121,7 @@
 
 <ul>
 <li>This is when our independent variables are highly correlated amongst each other</li>
-<li>Doesn’t necessarily cause issues with predictions or adjusted R squared</li>
+<li>Doesn&#39;t necessarily cause issues with predictions or adjusted R squared</li>
 <li>Does mess with our coefficients, making relationships difficult to interpret</li>
 </ul></li>
 </ul>
@@ -186,7 +186,7 @@
 <li>Linear regression is a good introduction to the modeling process, but it has issues
 
 <ul>
-<li>There are a lot of things that we want to model that aren’t linear</li>
+<li>There are a lot of things that we want to model that aren&#39;t linear</li>
 <li>Being a parametric model, linear regression has a lot of assumptions</li>
 </ul></li>
 <li>What can we do to make linear models more flexible and address assumption issues?</li>
@@ -210,7 +210,7 @@
 <ul>
 <li>Ensemble tree models: boosting, random forest</li>
 </ul></li>
-<li>These non-parametric approaches don’t need to meet a laundry list of assumptions</li>
+<li>These non-parametric approaches don&#39;t need to meet a laundry list of assumptions</li>
 <li>They can better identify non-linear patterns and complex interactions</li>
 <li>Their main con: difficult to explain results to others</li>
 </ul>
@@ -228,7 +228,7 @@
   
   <article data-timings="">
     <ul>
-<li>Sometimes the response isn’t normally distributed
+<li>Sometimes the response isn&#39;t normally distributed
 
 <ul>
 <li>This can lead to issues in residual normality</li>
@@ -251,7 +251,7 @@
   <article data-timings="">
     <ul>
 <li>Searches all possible values of lambda for the one that maximizes the likelihood that <code>y</code> comes from a normal distribution</li>
-<li>Instead of looking at the lambda that produces the most normal y, look at the range to see if it includes a more common value
+<li>Instead of looking at the lambda that produces the most normal <code>y</code>, look at the range to see if it includes a more common value
 
 <ul>
 <li>Using a specific lambda can make our results more confusing</li>
@@ -270,17 +270,41 @@
   </hgroup>
   
   <article data-timings="">
-    <pre><code>## # A tibble: 7 x 2
-##   lambda Y_transformation
-##    &lt;dbl&gt; &lt;chr&gt;           
-## 1   -2   1/(Y^2)         
-## 2   -1   1/Y             
-## 3   -0.5 1/sqrt(Y)       
-## 4    0   log(Y)          
-## 5    0.5 sqrt(Y)         
-## 6    1   Y               
-## 7    2   Y^2
-</code></pre>
+    <table><thead>
+<tr>
+<th align="right">lambda</th>
+<th align="left">Y_transformation</th>
+</tr>
+</thead><tbody>
+<tr>
+<td align="right">-2.0</td>
+<td align="left">1/(Ysquared)</td>
+</tr>
+<tr>
+<td align="right">-1.0</td>
+<td align="left">1/Y</td>
+</tr>
+<tr>
+<td align="right">-0.5</td>
+<td align="left">1/sqrt(Y)</td>
+</tr>
+<tr>
+<td align="right">0.0</td>
+<td align="left">log(Y)</td>
+</tr>
+<tr>
+<td align="right">0.5</td>
+<td align="left">sqrt(Y)</td>
+</tr>
+<tr>
+<td align="right">1.0</td>
+<td align="left">Y</td>
+</tr>
+<tr>
+<td align="right">2.0</td>
+<td align="left">Ysquared</td>
+</tr>
+</tbody></table>
 
   </article>
   <!-- Presenter Notes -->
@@ -295,7 +319,7 @@
   
   <article data-timings="">
     <ul>
-<li>Linear regression is fitting a straight line relationship through your data</li>
+<li>Linear regression fits a straight line to your data</li>
 <li>Maybe your data has a curved relationship
 
 <ul>
@@ -370,8 +394,8 @@
 <li><code>poly()</code> can be used to take the polynomial in R
 
 <ul>
-<li>Specify degree=x to set degree</li>
-<li>Orthogonal or raw return… What’s the difference?</li>
+<li>Specify <code>degree = x</code> to set degree</li>
+<li>Orthogonal or raw return: What&#39;s the difference?</li>
 </ul></li>
 </ul>
 

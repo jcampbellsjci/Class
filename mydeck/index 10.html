@@ -34,7 +34,7 @@
   
   <hgroup class="auto-fadein">
     <h1>Week 10: Model Validation</h1>
-    <h2>10/31/2019</h2>
+    <h2>03/31/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -52,7 +52,7 @@
   
   <article data-timings="">
     <ul>
-<li>Building a model is great, but what is important are the predictions</li>
+<li>Building a model is great, but what we really care about are the predictions</li>
 <li>Gauging model performance on predictions on data the model was trained on is a no-no
 
 <ul>
@@ -80,10 +80,10 @@
 <li><code>createDataPartition</code> can be used to create a stratified random sample of indices to use as a training set</li>
 </ul>
 
-<pre><code class="r">data.split &lt;- createDataPartition(Sonar$Class, p = .75, list = F)
+<pre><code class="r">data_split &lt;- createDataPartition(Sonar$Class, p = .75, list = F)
 # Index Sonar by data.split to get a training and testing set
-training &lt;- Sonar[data.split, ]
-testing &lt;- Sonar[-data.split, ]
+training &lt;- Sonar[data_split, ]
+testing &lt;- Sonar[-data_split, ]
 </code></pre>
 
   </article>
@@ -218,7 +218,7 @@ testing &lt;- Sonar[-data.split, ]
 <li>We need to specify the cross validation method within the <code>trainControl()</code> function
 
 <ul>
-<li>Specify within <code>method</code> argument</li>
+<li>Specify with <code>method</code> argument</li>
 </ul></li>
 <li>K-Fold CV: <code>method = &quot;repeatedcv&quot;</code>
 
@@ -266,7 +266,7 @@ testing &lt;- Sonar[-data.split, ]
   </hgroup>
   
   <article data-timings="">
-    <pre><code class="r">ggplot(data = sonar.glm.cv$resample, aes(x = Accuracy)) +
+    <pre><code class="r">ggplot(data = sonar_glm_cv$resample, aes(x = Accuracy)) +
   geom_density(alpha = .2, fill=&quot;red&quot;)
 </code></pre>
 
@@ -306,7 +306,7 @@ testing &lt;- Sonar[-data.split, ]
   </hgroup>
   
   <article data-timings="">
-    <pre><code class="r">confusionMatrix(data = class.predictions, reference = testing$Class,
+    <pre><code class="r">confusionMatrix(data = class_predictions, reference = testing$Class,
                 positive = &quot;R&quot;)
 </code></pre>
 
@@ -314,26 +314,26 @@ testing &lt;- Sonar[-data.split, ]
 ## 
 ##           Reference
 ## Prediction  M  R
-##          M 19  5
-##          R  8 19
+##          M 18  5
+##          R  9 19
 ##                                           
-##                Accuracy : 0.7451          
-##                  95% CI : (0.6037, 0.8567)
+##                Accuracy : 0.7255          
+##                  95% CI : (0.5826, 0.8411)
 ##     No Information Rate : 0.5294          
-##     P-Value [Acc &gt; NIR] : 0.001311        
+##     P-Value [Acc &gt; NIR] : 0.003347        
 ##                                           
-##                   Kappa : 0.492           
+##                   Kappa : 0.4541          
 ##                                           
-##  Mcnemar&#39;s Test P-Value : 0.579100        
+##  Mcnemar&#39;s Test P-Value : 0.422678        
 ##                                           
 ##             Sensitivity : 0.7917          
-##             Specificity : 0.7037          
-##          Pos Pred Value : 0.7037          
-##          Neg Pred Value : 0.7917          
+##             Specificity : 0.6667          
+##          Pos Pred Value : 0.6786          
+##          Neg Pred Value : 0.7826          
 ##              Prevalence : 0.4706          
 ##          Detection Rate : 0.3725          
-##    Detection Prevalence : 0.5294          
-##       Balanced Accuracy : 0.7477          
+##    Detection Prevalence : 0.5490          
+##       Balanced Accuracy : 0.7292          
 ##                                           
 ##        &#39;Positive&#39; Class : R               
 ## 

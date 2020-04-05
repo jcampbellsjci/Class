@@ -34,7 +34,7 @@
   
   <hgroup class="auto-fadein">
     <h1>Week 8: Logistic Regression</h1>
-    <h2>10/17/2019</h2>
+    <h2>03/12/2020</h2>
     <p>Jake Campbell<br/></p>
   </hgroup>
   
@@ -60,7 +60,7 @@
 <li>There are several problems where we need to model a categorical response
 
 <ul>
-<li>Does a team win a game?; Does a student accept an offer of admission?</li>
+<li>Does a team win a game, does a student accept an offer of admission?</li>
 </ul></li>
 <li>These problems involving categorical response variables are classification problems</li>
 </ul>
@@ -79,8 +79,8 @@
   <article data-timings="">
     <ul>
 <li>Let&#39;s say we were trying to model a yes/no problem</li>
-<li>We can treat all yes as <code>1</code> and no as <code>0</code> and predict the probability of either a <code>1</code> or <code>0</code></li>
-<li>A simple linear line isn&#39;t really flexible to this scenario</li>
+<li>We can treat all yes responses as <code>1</code> and no responses as <code>0</code> and predict the probability of either a <code>1</code> or <code>0</code></li>
+<li>A simple linear model isn&#39;t really flexible to this scenario</li>
 <li>Predictions can go above and beyond <code>0</code> or <code>100%</code> probability</li>
 </ul>
 
@@ -111,7 +111,7 @@
   
   <article data-timings="">
     <ul>
-<li>We can deal with binary classification using the logistic function
+<li>We can attack binary classification problems using the logistic function
 
 <ul>
 <li>Can take any input and return a value between 0 and 1
@@ -138,10 +138,10 @@
   
   <article data-timings="">
     <ul>
-<li>We aren&#39;t predicting probability in logistic regression, we are predicting the log of the odds ratio</li>
-<li>Probability can be easily changed to odds and vice versa</li>
-<li>The odds ratio is simply the odds of event A happening in the numerator and the odds of it not happening in the denominator</li>
-<li>For example, if a football team had an <code>80%</code> chance of winning, their odds of winning would be <code>.8 / 1 - .8</code> or <code>4 / 1</code>
+<li>We aren&#39;t directly predicting probability in logistic regression; we are predicting the log of the odds ratio</li>
+<li>Probability can be easily changed to odds and vice-versa</li>
+<li>The odds ratio is simply the odds of event <code>A</code> happening in the numerator and the odds of it not happening in the denominator</li>
+<li>For example, if a football team had an <code>80%</code> chance of winning, their odds of winning would be <code>.8 / (1 - .8)</code> or <code>4 / 1</code>
 
 <ul>
 <li>The team has <code>4</code> to <code>1</code> odds of winning; if the game was played <code>5</code> times, the team would win <code>4</code> times</li>
@@ -161,8 +161,8 @@
   
   <article data-timings="">
     <ul>
-<li>We will use <code>glm()</code> or generalized linear model to fit logistic regression models</li>
-<li><code>glm</code> can fit several non-linear functions</li>
+<li>We will use <code>glm()</code> (generalized linear model) to fit logistic regression models</li>
+<li><code>glm</code> can fit several linear and non-linear models</li>
 <li>Specify the argument <code>family = &quot;binomial&quot;</code> to perform logistic regression</li>
 <li><code>summary()</code> can be used similarly to how we use it for <code>lm()</code> models</li>
 </ul>
@@ -190,7 +190,7 @@
 <li>Residual deviance is the model&#39;s deviance, while null deviance is the deviance with only an intercept
 
 <ul>
-<li>Similar to F-test in <code>lm</code> output</li>
+<li>Similar to an overall F-test in <code>lm</code> output</li>
 </ul></li>
 </ul>
 
@@ -218,10 +218,10 @@
 <pre><code class="r">exp(coef(tumor.glm))
 </code></pre>
 
-<pre><code>##  (Intercept)           V1           V3           V4           V5 
-## 0.0000411763 1.7067054139 1.3745942848 1.3908643372 1.1008866850 
-##           V6           V7           V8           V9 
-## 1.4667887059 1.5628015794 1.2368248052 1.7058506868
+<pre><code>##  (Intercept)           V1           V3           V4           V5           V6 
+## 0.0000411763 1.7067054139 1.3745942848 1.3908643372 1.1008866850 1.4667887059 
+##           V7           V8           V9 
+## 1.5628015794 1.2368248052 1.7058506868
 </code></pre>
 
 <ul>
@@ -243,11 +243,11 @@
     <ul>
 <li>Response is binary (two classes)</li>
 <li>Independent observations</li>
-<li>No multicollinearity issues</li>
+<li>No multi-collinearity issues</li>
 <li>Large sample sizes
 
 <ul>
-<li>Logistic regression fit by maximum likelihood which requires larger sample sizes</li>
+<li>Logistic regression is fit by maximum likelihood which requires larger sample sizes</li>
 </ul></li>
 </ul>
 
@@ -282,8 +282,11 @@
   
   <article data-timings="">
     <ul>
-<li>We can make class probability predictions using <code>predict()</code> and specifying <code>type = &quot;response&quot;</code></li>
+<li>We can make class probability predictions using <code>predict()</code> and specifying <code>type = &quot;response&quot;</code>
+
+<ul>
 <li>Without specifying type, we get log odds predictions</li>
+</ul></li>
 <li>We can round the predicted probabilities to the nearest whole number and measure how accurate our model is</li>
 <li>Straightforward method of determining how good our model is</li>
 </ul>

@@ -10,9 +10,9 @@ data("iris")
 
 #### Summary Statistics ####
 
-# The mean calculates the average
+# mean calculates the average
 mean(iris$Sepal.Length)
-# The median calculates the middle value
+# median calculates the middle value
 median(iris$Sepal.Length)
 
 # Quantiles bin the values based on order
@@ -20,10 +20,13 @@ quantile(iris$Sepal.Length)
 # By specifying probs, we can specify where those bins are cut
 quantile(iris$Sepal.Length, probs = c(0, .33, .66, 1))
 
+# table can be used to get counts of different levels
+table(iris$Species)
+
 # Variance measures how much our data is spread out
-var(iris$Sepal.Length)
-# Standard deviation puts the variance on the same magnitude as the variable
-sd(iris$Sepal.Length)
+var(iris$Petal.Length)
+# Standard deviation puts the variance on the same level as the variable
+sd(iris$Petal.Length)
 
 # Covariance measures how related two variables are
 cov(iris$Sepal.Length, iris$Sepal.Width)
@@ -38,7 +41,7 @@ summary(iris)
 iris %>%
   group_by(Species) %>%
   summarize(max_width = max(Petal.Width),
-            max_length = max(Petal.Length))
+            min_length = min(Petal.Length))
 
 
 #### Plotting ####

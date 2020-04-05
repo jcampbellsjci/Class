@@ -23,7 +23,7 @@ data(biopsy)
 - Up to now, we've only looked at modeling continuous response variables
   + Miles per gallon, rate of crime, etc.
 - There are several problems where we need to model a categorical response
-  + Does a team win a game?; Does a student accept an offer of admission?
+  + Does a team win a game, does a student accept an offer of admission?
 - These problems involving categorical response variables are classification problems
 
 ---
@@ -31,8 +31,8 @@ data(biopsy)
 # Issues With Modeling This Problem Linearly
 
 - Let's say we were trying to model a yes/no problem
-- We can treat all yes as `1` and no as `0` and predict the probability of either a `1` or `0`
-- A simple linear line isn't really flexible to this scenario
+- We can treat all yes responses as `1` and no responses as `0` and predict the probability of either a `1` or `0`
+- A simple linear model isn't really flexible to this scenario
 - Predictions can go above and beyond `0` or `100%` probability
 
 ---
@@ -40,23 +40,19 @@ data(biopsy)
 # Issues With Modeling This Problem Linearly
 
 ```{r, echo = F, fig.align='center'}
-#We'll make a numeric version of class for plotting purposes
-biopsy<-
-  biopsy %>%
+biopsy <- biopsy %>%
   mutate(class2 = ifelse(class == "benign", 0, 1))
 
 ggplot(data = biopsy, aes(x = V7, y = class2)) +
   geom_jitter(height = .01, alpha = .3) +
-  geom_smooth(method = "glm", method.args = list(family = "binomial"),
-              formula = y~x, se = F, color = "red") +
-  geom_smooth(method = "lm", se=F)
+  geom_smooth(method = "lm", se = F)
 ```
 
 ---
 
 # Logistic Regression
 
-- We can deal with binary classification using the logistic function
+- We can attack binary classification problems using the logistic function
   + Can take any input and return a value between 0 and 1
   $$P=\frac{e^{(B_0 + B_x)}}{1 + e^{(B_0 + B_x)}}$$
 - By using some simple math, we can edit the logistic function to get something similar to the linear regression equation
@@ -67,18 +63,18 @@ ggplot(data = biopsy, aes(x = V7, y = class2)) +
 
 # Odds and Probability
 
-- We aren't predicting probability in logistic regression, we are predicting the log of the odds ratio
-- Probability can be easily changed to odds and vice versa
-- The odds ratio is simply the odds of event A happening in the numerator and the odds of it not happening in the denominator
-- For example, if a football team had an `80%` chance of winning, their odds of winning would be `.8 / 1 - .8` or `4 / 1`
+- We aren't directly predicting probability in logistic regression; we are predicting the log of the odds ratio
+- Probability can be easily changed to odds and vice-versa
+- The odds ratio is simply the odds of event `A` happening in the numerator and the odds of it not happening in the denominator
+- For example, if a football team had an `80%` chance of winning, their odds of winning would be `.8 / (1 - .8)` or `4 / 1`
   + The team has `4` to `1` odds of winning; if the game was played `5` times, the team would win `4` times
 
 ---
 
 # Logistic Regression in R
 
-- We will use `glm()` or generalized linear model to fit logistic regression models
-- `glm` can fit several non-linear functions
+- We will use `glm()` (generalized linear model) to fit logistic regression models
+- `glm` can fit several linear and non-linear models
 - Specify the argument `family = "binomial"` to perform logistic regression
 - `summary()` can be used similarly to how we use it for `lm()` models
 
@@ -91,7 +87,7 @@ ggplot(data = biopsy, aes(x = V7, y = class2)) +
 - Deviance is a measure of model fit
   + The lower the better
 - Residual deviance is the model's deviance, while null deviance is the deviance with only an intercept
-  + Similar to F-test in `lm` output
+  + Similar to an overall F-test in `lm` output
 ```{r, echo=F}
 tumor.glm <- glm(class ~ V1 + V3 + V4 + V5 + V6 + V7 + V8 + V9, data = biopsy,
                  family = "binomial")
@@ -115,9 +111,9 @@ exp(coef(tumor.glm))
 
 - Response is binary (two classes)
 - Independent observations
-- No multicollinearity issues
+- No multi-collinearity issues
 - Large sample sizes
-  + Logistic regression fit by maximum likelihood which requires larger sample sizes
+  + Logistic regression is fit by maximum likelihood which requires larger sample sizes
 
 ---
 
@@ -132,6 +128,6 @@ exp(coef(tumor.glm))
 # Measuring Accuracy
 
 - We can make class probability predictions using `predict()` and specifying `type = "response"`
-- Without specifying type, we get log odds predictions
+  + Without specifying type, we get log odds predictions
 - We can round the predicted probabilities to the nearest whole number and measure how accurate our model is
 - Straightforward method of determining how good our model is

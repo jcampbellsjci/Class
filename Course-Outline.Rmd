@@ -1,8 +1,6 @@
 ---
 title: "Class Overview"
-output: 
-  html_document: 
-    df_print: paged 
+output: pdf_document
 ---
 
 ```{r, echo = F, warning = F, message = F}
@@ -36,7 +34,7 @@ I don't have a set book for the course, but if you are interested in expanding o
 
 The letter grade system is as follows: 
 
-```{r echo = F, rows.print = 5}
+```{r echo = F}
 tibble(Grade = c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "D-", 
                  "F"), 
        Number = c("95-100", "90-94", "87-89", "84-86", "80-83", "77-79", "74-76", 

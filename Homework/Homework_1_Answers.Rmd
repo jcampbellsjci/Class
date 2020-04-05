@@ -5,15 +5,13 @@ output: pdf_document
 
 # Week 1
 
-1. Explain the R studio layout. What do the different panes do?
-
-2. What do we use to assign output to an object? Why might it be better to use than an `=`?
+1. Explain the R studio layout. What do the four different panes do?
 
 # Week 2
 
-3. Explain the difference between a factor and character data type. When would we want to use either?
+2. Explain the difference between a factor and character data type. When would we want to use either?
 
-4. Run the following line of code: 
+3. Run the following line of code: 
 ```{r}
 hw_factor <- factor(c(2, 1, 5, 3), levels = c(1, 2, 3, 5))
 ```
@@ -26,7 +24,7 @@ as.numeric(as.character(hw_factor))
 ```
 
 
-5. I want to create a logical data object called `hw_logical`. I run the following code.
+4. I want to create a logical data object called `hw_logical`. I run the following code.
 
 ```{r}
 hw_logical <- "TRUE"
@@ -45,7 +43,7 @@ class(hw_logical)
 ```
 
 
-6. Create a function called `test_function`. It should take two arguments, `x` and `y`. It should do the following:
+5. Create a function called `test_function`. It should take two arguments, `x` and `y`. It should do the following:
 
 * Find the sum of input `x` and the number `6`
 * Find the product of input `y` and the number `2`
@@ -68,7 +66,7 @@ test_function(x = 1, y = 2)
 ```
 
 
-7. Explain the difference between `install.packages` and `library`. When would you use each of these functions?
+6. Explain the difference between `install.packages` and `library`. When would you use each of these functions?
 
 # Week 3
 
@@ -77,7 +75,7 @@ test_function(x = 1, y = 2)
 data("iris")
 ```
 
-8. Calculate the average `Petal.Length` and `Petal.Width` by `Species`. Save the output to a `tibble` called `avg_petal`.
+7. Calculate the average `Petal.Length` and `Petal.Width` by `Species`. Save the output to a `tibble` called `avg_petal`.
 
 ```{r, message=F, warning=F}
 library(tidyverse)
@@ -91,7 +89,7 @@ avg_petal
 ```
 
 
-9. `avg_petal` is in wide format; change it to long format (you should have three columns: Species, a key column, and a value column). Filter the new `tibble` for all values greater than or equal to `2`.
+8. `avg_petal` is in wide format; change it to long format (you should have three columns: Species, a key column, and a value column). Filter the new `tibble` for all values greater than or equal to `2`.
 
 ```{r}
 avg_petal %>%
@@ -99,5 +97,11 @@ avg_petal %>%
   filter(Value >= 2)
 ```
 
+9. Create your own code chunk to manipulate the `iris` `tibble` using at least three different `dplyr` functions. Explain what you chose to do and the output.
 
-10. Explain the difference between a `tibble` and a `data.frame`.
+```{r}
+iris %>%
+  mutate(Petal_LW = Petal.Length * Petal.Width) %>%
+  arrange(Petal_LW) %>%
+  summarize(avg_LW = mean(Petal_LW, na.rm = T))
+```

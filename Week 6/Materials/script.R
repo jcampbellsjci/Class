@@ -10,12 +10,12 @@
   # Can we develop a model to predict a job's prestige using information from 
   # the survey?
 
-install.packages("broom")
 library(broom)
 library(tidyverse)
 
 # The prestige dataset is stored in a csv file
-prestige <- read_csv(file = "~/Class/Week 6/Materials/prestige.csv")
+prestige <- read_csv(file = "~/Class/Week 6/Materials/prestige.csv",
+                     col_types = cols(type = "f"))
   
   
 #### Checking out the data ####
@@ -26,13 +26,11 @@ str(prestige)
 # Summary can be used to look at distribution and counts of our data
 summary(prestige)
 
-# Let's look at the graphical distribution of prestige using a histogram
+# Let's look at the graphical distribution of prestige
 prestige %>%
   ggplot(aes(x = prestige)) +
   geom_histogram() +
   labs(title = "Distribution of Prestige")
-# Sometimes histograms can be manipulated based on the number of bins chosen
-  # It might be better to measure the density of the dataset
 prestige %>%
   ggplot(aes(x = prestige)) +
   geom_density(fill = "lightcoral") +
@@ -50,13 +48,16 @@ prestige %>%
     labs(title = "Relationship Between Education and Prestige")
 
 # We can create a linear model in r using lm()
-  # Let's create a model using lm() called pres.lm1
 pres.lm1 <- lm(prestige ~ education, data = prestige)
 # To get info from the model, we need to call summary
 summary(pres.lm1)
-# We can put a lot of this into a dataframe using the tidy function from the 
-# broom package
+# We can clean up the output using broom package functions
+# Put coefficient output into a tibble
 tidy(pres.lm1)
+# Put general model output into a tibble
+glance(pres.lm1)
+# Combine predictions into original tibble
+output_pres <- augment(pres.lm1)
 
 # We can plot our regression line on our previous scatterplot using the 
 # geom_smooth function
@@ -68,24 +69,27 @@ prestige %>%
   labs(title = "Relationship Between Education and Prestige")
 
 # Linear regression has assumptions
-  # 1. Normality of residuals
-  qqnorm(pres.lm1$residuals)
-  qqline(pres.lm1$residuals)
-  # 2. Constant variance
-  # 3. Linearity
-  scatter.smooth(pres.lm1$fitted.values, pres.lm1$residuals)
-  # 4. Independence of observations
-# You can also plot your model directly to get these graphs immediately
-par(mfrow=c(2,2))
-plot(pres.lm1)
-par(mfrow=c(1,1))
-  
+# 1. Normality of residuals
+output_pres %>%
+  ggplot(aes(sample = .resid)) +
+  geom_qq() +
+  geom_qq_line()
+# 2. Constant variance
+# 3. Linearity
+output_pres %>%
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0)
+# 4. Independence of observations
+
 # We may want to use our model to make future predictions
-  # Let's say we had a vector of 10 new education levels
-  set.seed(1234)
-  new.edu <- data.frame(education = rnorm(10, mean = 10, sd = 3))
+predict(pres.lm1)
+# Let's say we had a vector of 10 new education levels
+set.seed(1234)
+new.edu <- data.frame(education = rnorm(10, mean = 10, sd = 3))
 # We can use predict() to predict the prestige of these numbers
 predict(pres.lm1, newdata = new.edu)
+
 
 #### Simple Linear Regression with Categorical Independent ####
 
@@ -104,7 +108,12 @@ summary(pres.lm2)
 # To see if the variable as a whole is significant, we can use anova()
 anova(pres.lm2)
 
-# Again, the same assumptions that apply with a continuous predictor apply here
-par(mfrow=c(2,2))
-plot(pres.lm2)
-par(mfrow=c(1,1))
+# Same assumptions still apply
+augment(pres.lm2) %>%
+  ggplot(aes(sample = .resid)) +
+  geom_qq() +
+  geom_qq_line()
+augment(pres.lm2) %>%
+  ggplot(aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = .2) +
+  geom_hline(yintercept = 0)
